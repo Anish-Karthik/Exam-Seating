@@ -11,12 +11,14 @@ import { useRouter } from "next/navigation";
 
 type ExcelData = Student;
 const MainForm = () => {
-  const [totalStudents, setTotalStudents] = useState<number>(window.localStorage.getItem("data") ? JSON.parse(window.localStorage.getItem("data")!).totalStudents : 0);
-  const [totalHallCapacity, setTotalHallCapacity] = useState<number>(window.localStorage.getItem("data") ? JSON.parse(window.localStorage.getItem("data")!).totalHallCapacity : 0);
-  const [halls, setHalls] = useState<Hall[]>(window.localStorage.getItem("data") ? JSON.parse(window.localStorage.getItem("data")!).halls : []);
-  const [excelData, setExcelData] = useState<ExcelData[][]>(window.localStorage.getItem("data") ? JSON.parse(window.localStorage.getItem("data")!).excelData : []);
-  const [mergedData, setMergedData] = useState<ExcelData[][]>(window.localStorage.getItem("data") ? JSON.parse(window.localStorage.getItem("data")!).mergedData : []);
-
+  const [totalStudents, setTotalStudents] = useState<number>(window?.localStorage.getItem("data") ? JSON.parse(window?.localStorage.getItem("data")!).totalStudents : 0);
+  const [totalHallCapacity, setTotalHallCapacity] = useState<number>(window?.localStorage.getItem("data") ? JSON.parse(window?.localStorage.getItem("data")!).totalHallCapacity : 0);
+  const [halls, setHalls] = useState<Hall[]>(window?.localStorage.getItem("data") ? JSON.parse(window?.localStorage.getItem("data")!).halls : []);
+  const [excelData, setExcelData] = useState<ExcelData[][]>(window?.localStorage.getItem("data") ? JSON.parse(window?.localStorage.getItem("data")!).excelData : []);
+  const [mergedData, setMergedData] = useState<ExcelData[][]>(window?.localStorage.getItem("data") ? JSON.parse(window?.localStorage.getItem("data")!).mergedData : []);
+  if (!window || !window?.localStorage) {
+    return <h1>Local Storage not supported</h1>
+  }
   const router = useRouter();
   const handleSubmit = () => {
     if (totalHallCapacity === 0) {
@@ -31,8 +33,8 @@ const MainForm = () => {
       toast.error("Total Students are greater than Total Hall Capacity");
       return;
     }
-    // store the data in window.localstorage
-    window.localStorage.setItem("data", JSON.stringify({
+    // store the data in window?.localstorage
+    window?.localStorage.setItem("data", JSON.stringify({
       totalHallCapacity,
       totalStudents,
       excelData,
@@ -47,7 +49,7 @@ const MainForm = () => {
     setExcelData([]);
     setMergedData([]);
     setHalls([]);
-    window.localStorage.removeItem("data");
+    window?.localStorage.removeItem("data");
     router.refresh();
   }
   const isValid = () => {
@@ -62,9 +64,7 @@ const MainForm = () => {
     }
     return true;
   }
-  if (!window || !window.localStorage) {
-    return <h1>Local Storage not supported</h1>
-  }
+
   return (
     <div className="container flex flex-col gap-2 form-group">
       <div className="flex justify-between items-center">
