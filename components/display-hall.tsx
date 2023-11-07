@@ -16,21 +16,38 @@ const DisplayHall = ({ defaultIsEdit, hall, onDelete, onEdit, index, setEditingI
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = event.target;
-    setHallData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+    if (["studentsPerHall", "studentsPerbench"].includes(name)) {
+      setHallData(prevState => ({
+        ...prevState,
+        [name]: parseInt(value)
+      }));
+    } else {
+      setHallData(prevState => ({
+        ...prevState,
+        [name]: value
+      }));
+    }
   };
 
   const handleBenchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setHallData(prevState => ({
-      ...prevState,
-      benches: {
-        ...prevState.benches,
-        [name]: value
-      }
-    }));
+    if (["rows", "cols"].includes(name)) {
+      setHallData(prevState => ({
+        ...prevState,
+        benches: {
+          ...prevState.benches,
+          [name]: parseInt(value)
+        }
+      }));
+    } else {
+      setHallData(prevState => ({
+        ...prevState,
+        benches: {
+          ...prevState.benches,
+          [name]: value
+        }
+      }));
+    }
   };
 
   const toggleEdit = (index: number) => {

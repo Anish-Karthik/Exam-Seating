@@ -1,17 +1,23 @@
 import { Hall } from "@/lib/type";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import DisplayHall from "./display-hall";
 
 
 const HallForm = () => {
+  const [totalHallCapacity, setTotalHallCapacity] = useState<number>(0); 
   const [halls, setHalls] = useState<Hall[]>([]);
   const [editingArray, setEditingArray] = useState<boolean[]>([]);
+
+  useEffect(() => {
+    const total = halls.reduce((acc, curr) => acc + curr.studentsPerHall, 0);
+    setTotalHallCapacity(total);
+  }, [halls]);
 
   const handleSubmit = () => {
     setEditingArray(prevArray => [...prevArray, true]);
     setHalls(prevHalls => [...prevHalls, {
-      hallno: 0,
+      hallno: "0",
       dept: '',
       studentsPerBench: 1,
       studentsPerHall: 0,
@@ -39,7 +45,10 @@ const HallForm = () => {
     });
   }
   return (
-    <div className="container">
+    <div className="container !pl-0">
+      <div>
+        <h1 className="text-2xl font-bold">Total Hall Capacity: {totalHallCapacity}</h1>  
+      </div>
       <Button variant={"outline"} className='rounded-full text-blue-800 border-blue-800 text-xl px-3'
         onClick={handleSubmit}
       >
