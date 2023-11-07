@@ -10,7 +10,6 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-
 const DisplayHall = ({ defaultIsEdit, hall, onDelete, onEdit, index, setEditingIndex }: { setEditingIndex:  React.Dispatch<React.SetStateAction<boolean[]>>,defaultIsEdit: boolean, hall: Hall, onDelete: (index: number) => void, index: number, onEdit: (index: number, hallData: Hall) => void }) => {
   const [hallData, setHallData] = useState<Hall>(hall);
   const [isEditing, setIsEditing] = useState<boolean>(defaultIsEdit);
@@ -77,6 +76,32 @@ const DisplayHall = ({ defaultIsEdit, hall, onDelete, onEdit, index, setEditingI
         />: (
           <div className="form-control">
             {hallData.dept}
+          </div>
+        )}
+      </div>
+      <div className="form-group">
+        <label htmlFor={`studentsPerBench-${index}`}>Students Per Bench</label>
+        {isEditing ? <Select
+          name="isSameYearPerBenchAllowed"
+          value={hallData.isSameYearPerBenchAllowed.toString()}
+          onValueChange={(value: string) => {
+            setHallData((prevState) => ({
+              ...prevState,
+              isSameYearPerBenchAllowed: value === "true"
+            }));
+          }}
+        >
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Students Per Bench" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="true">Yes</SelectItem>
+            <SelectItem value="false">No</SelectItem>
+          </SelectContent>
+        </Select> : (
+          <div className="form-control" >
+
+            {hallData.isSameYearPerBenchAllowed}
           </div>
         )}
       </div>

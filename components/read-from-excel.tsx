@@ -2,11 +2,13 @@
 import React, { useState } from 'react'
 import * as XLSX from 'xlsx';
 import { Input } from '@/components/ui/input';
+import { Student } from '@/lib/type';
+import { dataWrangleTheExcelData } from '@/lib/utils';
 
 const ReadFromExcel = ({
   setData
 }: {
-  setData: (data: any) => void
+  setData: (data: Student[]) => void
 }) => {
   const readExcel = (file: File | null) => {
     if (!file) {
@@ -39,8 +41,9 @@ const ReadFromExcel = ({
       };
     });
     promise.then((d) => {
-      setData(d);
-      console.log(d);
+      const data = dataWrangleTheExcelData(d);
+      setData(data);
+      console.log(data);
     });
   }
   return (

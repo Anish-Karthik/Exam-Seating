@@ -15,6 +15,7 @@ const HallForm = () => {
       dept: '',
       studentsPerBench: 1,
       studentsPerHall: 0,
+      isSameYearPerBenchAllowed: false,
       benches: {
         rows: 0,
         cols: 0,
