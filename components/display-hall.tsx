@@ -9,7 +9,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 
+
+import { Check, Trash, X, Edit } from "lucide-react";
 const DisplayHall = ({ defaultIsEdit, hall, onDelete, onEdit, index, setEditingIndex }: { setEditingIndex:  React.Dispatch<React.SetStateAction<boolean[]>>,defaultIsEdit: boolean, hall: Hall, onDelete: (index: number) => void, index: number, onEdit: (index: number, hallData: Hall) => void }) => {
   const [hallData, setHallData] = useState<Hall>(hall);
   const [isEditing, setIsEditing] = useState<boolean>(defaultIsEdit);
@@ -65,9 +75,9 @@ const DisplayHall = ({ defaultIsEdit, hall, onDelete, onEdit, index, setEditingI
   };
 
   return (
-    <div className='flex flex-col-reverse'>
-    <div className="flex gap-2">
-      <div className="form-group">
+    <div className='flex flex-col-reverse w-full rounded-md p-2 bg-slate-700/20'>
+    <div className="flex gap-2 flex-col lg:flex-row flex-wrap xl:flex-nowrap items-center">
+      <div className="max-lg:w-full form-group">
         <label htmlFor={`hallno-${index}`}>Hall Number</label>
         {isEditing ? <Input
           type="number"
@@ -82,7 +92,7 @@ const DisplayHall = ({ defaultIsEdit, hall, onDelete, onEdit, index, setEditingI
           </div>
         )}
       </div>
-      <div className="form-group">
+      <div className="max-lg:w-full form-group">
         <label htmlFor={`dept-${index}`}>Department</label>
         {isEditing ? <Input
           type="text"
@@ -96,9 +106,10 @@ const DisplayHall = ({ defaultIsEdit, hall, onDelete, onEdit, index, setEditingI
           </div>
         )}
       </div>
-      <div className="form-group">
-        <label htmlFor={`studentsPerBench-${index}`}>Students Per Bench</label>
+      <div className="max-lg:w-full form-group">
+        <label htmlFor={`studentsPerBench-${index}`}>Allow same year to sit</label>
         {isEditing ? <Select
+        
           name="isSameYearPerBenchAllowed"
           value={hallData.isSameYearPerBenchAllowed.toString()}
           onValueChange={(value: string) => {
@@ -108,21 +119,20 @@ const DisplayHall = ({ defaultIsEdit, hall, onDelete, onEdit, index, setEditingI
             }));
           }}
         >
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="min-w-[210px] lg:min-w-[170px]">
             <SelectValue placeholder="Students Per Bench" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent defaultValue={"false"}>
             <SelectItem value="true">Yes</SelectItem>
             <SelectItem value="false">No</SelectItem>
           </SelectContent>
         </Select> : (
           <div className="form-control" >
-
-            {hallData.isSameYearPerBenchAllowed}
+            {hallData.isSameYearPerBenchAllowed == true ? "Yes": "No"}
           </div>
         )}
       </div>
-      <div className="form-group">
+      <div className="max-lg:w-full form-group">
         <label htmlFor={`studentsPerBench-${index}`}>Students Per Bench</label>
         {isEditing ? <Select
           name="studentsPerBench"
@@ -134,7 +144,7 @@ const DisplayHall = ({ defaultIsEdit, hall, onDelete, onEdit, index, setEditingI
             }));
           }}
         >
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="min-w-[210px] lg:min-w-[170px]">
             <SelectValue placeholder="Students Per Bench" />
           </SelectTrigger>
           <SelectContent>
@@ -148,8 +158,8 @@ const DisplayHall = ({ defaultIsEdit, hall, onDelete, onEdit, index, setEditingI
           </div>
         )}
       </div>
-      <div className="form-group">
-        <label htmlFor={`studentsPerHall-${index}`}>Students Per Hall</label>
+      <div className="max-lg:w-full form-group">
+        <label htmlFor={`studentsPerHall-${index}`}>Students/Hall</label>
         {isEditing ? <Input
           type="number"
           className="form-control"
@@ -162,8 +172,8 @@ const DisplayHall = ({ defaultIsEdit, hall, onDelete, onEdit, index, setEditingI
           </div>
         )}
       </div>
-      <div className="form-group">
-        <label htmlFor={`benchesRows-${index}`}>Number of Rows</label>
+      <div className="max-lg:w-full form-group">
+        <label htmlFor={`benchesRows-${index}`}>No. of Rows</label>
         {isEditing ? <Input
           type="number"
           className="form-control" 
@@ -176,8 +186,8 @@ const DisplayHall = ({ defaultIsEdit, hall, onDelete, onEdit, index, setEditingI
           </div>
         )}
       </div>
-      <div className="form-group">
-        <label htmlFor={`benchesCols-${index}`}>Number of Columns</label>
+      <div className="max-lg:w-full form-group">
+        <label htmlFor={`benchesCols-${index}`}>No. of Columns</label>
         {isEditing ? <Input
           type="number"
           className="form-control"
@@ -191,31 +201,59 @@ const DisplayHall = ({ defaultIsEdit, hall, onDelete, onEdit, index, setEditingI
           </div>
         )}
       </div>
-      {isEditing ? (
-        <Button variant={"outline"} className='rounded-full text-green-800 border-green-800 text-xl px-3'
-          onClick={() => handleSave(index)}
-        >
-          Save
-        </Button>
-      ) : (
-        <Button variant={"outline"} className='rounded-full text-blue-800 border-blue-800 text-xl px-3'
-          onClick={() => toggleEdit(index)}
-        >
-          Edit
-        </Button>
-      )}
-      {isEditing && (
-        <Button variant={"outline"} className='rounded-full text-red-800 border-red-800 text-xl px-3'
-          onClick={() => toggleEdit(index)}
-        >
-          Cancel
-        </Button>
-      )}
-      <Button variant={"outline"} className='rounded-full text-red-800 border-red-800 text-xl px-3'
-        onClick={() => onDelete(index)}
-      >
-        Delete
-      </Button>
+      <div className="flex max-lg:justify-start max-lg:w-full gap-2 flex-wrap lg:flex-nowrap">
+        {isEditing ? (
+          <Button variant={"outline"} className='rounded-full text-green-800 border-green-800 text-xl px-3'
+            onClick={() => handleSave(index)}
+          >
+            <div className="lg:hidden">
+              Save
+            </div>
+            <Check className="w-6 h-6 max-lg:hidden" />
+          </Button>
+        ) : (
+          <Button variant={"outline"} className='rounded-full text-blue-800 border-blue-800 text-xl px-3'
+            onClick={() => toggleEdit(index)}
+          >
+            <div className="lg:hidden">
+              Edit
+            </div>
+            <Edit className="w-6 h-6 max-lg:hidden" />
+          </Button>
+        )}
+        {isEditing && (
+          <Button variant={"outline"} className='rounded-full text-red-800 border-red-800 text-xl px-3'
+            onClick={() => toggleEdit(index)}
+          >
+            <div className="lg:hidden">
+              Cancel
+            </div>
+            <X className="w-6 h-6 max-lg:hidden" />
+          </Button>
+        )}
+        <Dialog>
+          <DialogTrigger>
+            <Button variant={"outline"} className='rounded-full text-red-800 border-red-800 text-xl px-3'
+              onClick={() => onDelete(index)}
+            >
+              <div className="lg:hidden">
+                Delete
+              </div>
+              <Trash className="w-6 h-6 max-lg:hidden" />
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Are you sure absolutely sure?</DialogTitle>
+              <DialogDescription>
+                This action cannot be undone. This will delete your data.
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
+
+        
+      </div>
     </div>
   </div>
   );

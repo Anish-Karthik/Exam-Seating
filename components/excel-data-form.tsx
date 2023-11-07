@@ -3,19 +3,29 @@
 import ReadFromExcel from '@/components/read-from-excel';
 import { Button } from '@/components/ui/button';
 import { Student } from '@/lib/type';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Trash } from "lucide-react";
 
 type ExcelData = Student;
 const ExcelDataForm = ({
   excelData,
+  setTotalStudents,
   setExcelData,
   setMergedData
 }: {
   excelData: ExcelData[][],
+  setTotalStudents: React.Dispatch<React.SetStateAction<number>>,
   setExcelData: React.Dispatch<React.SetStateAction<ExcelData[][]>>,
   setMergedData: React.Dispatch<React.SetStateAction<ExcelData[][]>>
 }) => {
-  const [totalStudents, setTotalStudents] = useState<number>(0);
   const handleAddData = () => {
     setExcelData(prevData => [...prevData, []]);
   }
@@ -68,33 +78,43 @@ const ExcelDataForm = ({
   }, [excelData]);
 
   return (
-    <div>
-      <div className="row">
-        <div className="col-12">
-          <h1>Read from Excel</h1>
-        </div>
-      </div>
-      <Button variant={"outline"} className='rounded-full text-blue-800 border-blue-800 ml-2 text-xl px-3'
+    <div className='container !pl-0 !ml-0'>
+      <Button variant={"outline"} className='rounded-full text-blue-800 border-blue-800 text-xl px-3 mb-2'
         onClick={handleAddData}
       >
         Add Student Data
       </Button>
-      <div className='flex flex-col-reverse'>
+      <div className='flex flex-col-reverse gap-2'>
         {excelData.length > 0  && excelData.map((data, index) => (
           <div key={index} className="row">
             <div className="flex ">
               <ReadFromExcel setData={(data) => handleExcelData(data, index)} />
-              <Button variant={"outline"} className='rounded-full text-red-800 border-red-800 text-xl px-3'
-                onClick={() => handleDeleteData(index)}
-              >
-                -
-              </Button>
+              <Dialog>
+                <DialogTrigger>
+                  <Button variant={"outline"} className='rounded-full text-red-800 border-red-800 text-xl px-3'
+                    onClick={() => handleDeleteData(index)}
+                  >
+                    <div className="lg:hidden">
+                      Delete
+                    </div>
+                    <Trash className="w-6 h-6 max-lg:hidden" />
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Are you sure absolutely sure?</DialogTitle>
+                    <DialogDescription>
+                      This action cannot be undone. This will permanently delete your account
+                      and remove your data from our servers.
+                    </DialogDescription>
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
+
+              
             </div>
           </div>
         ))}
-      </div>
-      <div>
-        <h1 className="text-2xl font-bold">Total Students: {totalStudents}</h1>  
       </div>
     </div>
   )

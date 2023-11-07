@@ -3,9 +3,13 @@ import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import DisplayHall from "./display-hall";
 
-
-const HallForm = () => {
-  const [totalHallCapacity, setTotalHallCapacity] = useState<number>(0); 
+// make this as functional argument
+  // const [totalHallCapacity, setTotalHallCapacity] = useState<number>(0); 
+const HallForm = ({
+  setTotalHallCapacity
+}: {
+  setTotalHallCapacity: React.Dispatch<React.SetStateAction<number>>
+}) => {
   const [halls, setHalls] = useState<Hall[]>([]);
   const [editingArray, setEditingArray] = useState<boolean[]>([]);
 
@@ -18,7 +22,7 @@ const HallForm = () => {
     setEditingArray(prevArray => [...prevArray, true]);
     setHalls(prevHalls => [...prevHalls, {
       hallno: "0",
-      dept: '',
+      dept: 'CSE',
       studentsPerBench: 1,
       studentsPerHall: 0,
       isSameYearPerBenchAllowed: false,
@@ -46,19 +50,18 @@ const HallForm = () => {
   }
   return (
     <div className="container !pl-0">
-      <div>
-        <h1 className="text-2xl font-bold">Total Hall Capacity: {totalHallCapacity}</h1>  
-      </div>
-      <Button variant={"outline"} className='rounded-full text-blue-800 border-blue-800 text-xl px-3'
+      <Button variant={"outline"} className='rounded-full text-blue-800 border-blue-800 text-xl px-3 mb-2'
         onClick={handleSubmit}
       >
         Add Hall
       </Button>
-      {halls.map((hall, index) => (
-        <div className='flex' key={index}>
-          <DisplayHall hall={hall} onDelete={handleDeleteData} index={index} onEdit={handleEditData} setEditingIndex={setEditingArray} defaultIsEdit={editingArray[index]} />
-        </div>
-      ))}
+      <div className="flex flex-col-reverse gap-2">
+        {halls.map((hall, index) => (
+          <div className='flex' key={index}>
+            <DisplayHall hall={hall} onDelete={handleDeleteData} index={index} onEdit={handleEditData} setEditingIndex={setEditingArray} defaultIsEdit={editingArray[index]} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
