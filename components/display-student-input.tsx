@@ -9,7 +9,7 @@ const DisplayStudentInputData = ({
   data: Student[][]
 }) => {
   return (
-    <div>
+    <div className='max-sm:hidden'>
       <div className="table-responsive">
         <table className="table table-bordered mx-auto">
           <thead>

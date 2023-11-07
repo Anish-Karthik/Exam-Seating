@@ -67,12 +67,12 @@ const MainForm = () => {
   }
   return (
     <div className="container flex flex-col gap-2 form-group">
-      <div className="flex justify-between items-center ">
-        <div className="flex gap-6">
+      <div className="flex justify-between items-center">
+        <div className="flex gap-6 max-md:flex-col">
           <h1 className="text-2xl font-bold">Total Hall Capacity: {totalHallCapacity}</h1>  
           <h1 className="text-2xl font-bold">Total Students: {totalStudents}</h1>
         </div>
-        <div className="flex gap-6">
+        <div className="flex gap-6 max-md:flex-col">
           <Button onClick={handleReset} variant="outline" className="!border-[3px]">
             Reset
           </Button>
