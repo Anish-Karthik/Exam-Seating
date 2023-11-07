@@ -20,20 +20,30 @@ import toast from 'react-hot-toast/headless';
 type ExcelData = Student;
 const ExcelDataForm = ({
   excelData,
+  fileNames,
   setTotalStudents,
   setExcelData,
-  setMergedData
+  setMergedData,
+  setFileNames,
 }: {
   excelData: ExcelData[][],
+  fileNames: string[],
   setTotalStudents: React.Dispatch<React.SetStateAction<number>>,
   setExcelData: React.Dispatch<React.SetStateAction<ExcelData[][]>>,
   setMergedData: React.Dispatch<React.SetStateAction<ExcelData[][]>>
+  setFileNames: React.Dispatch<React.SetStateAction<string[]>>
 }) => {
   const handleAddData = () => {
     setExcelData(prevData => [...prevData, []]);
+    setFileNames(prevData => [...prevData, ""]);
   }
 
   const handleDeleteData = (index: number) => {
+    setFileNames(prevData => {
+      const newData = [...prevData];
+      newData.splice(index, 1);
+      return newData;
+    });
     setExcelData(prevData => {
       const newData = [...prevData];
       newData.splice(index, 1);
@@ -42,7 +52,12 @@ const ExcelDataForm = ({
     toast.success("Deleted");
   }
 
-  const handleExcelData = (data: ExcelData[], index: number) => {
+  const handleExcelData = (fileName: string, data: ExcelData[], index: number) => {
+    setFileNames(prevData => {
+      const newData = [...prevData];
+      newData[index] = fileName;
+      return newData;
+    });
     setExcelData(prevData => {
       const newData = [...prevData];
       newData[index] = data;
@@ -92,7 +107,7 @@ const ExcelDataForm = ({
         {excelData.length > 0  && excelData.map((data, index) => (
           <div key={index} className="row">
             <div className="flex ">
-              <ReadFromExcel setData={(data) => handleExcelData(data, index)} />
+              <ReadFromExcel setData={(data, fileName) => handleExcelData(fileName, data, index)} defaultFileName={fileNames[index]} />
               <Dialog>
                 <DialogTrigger>
                   <Button variant={"outline"} className='rounded-full text-red-800 border-red-800 text-xl px-3' >

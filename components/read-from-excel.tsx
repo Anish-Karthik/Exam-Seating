@@ -6,15 +6,18 @@ import { Student } from '@/lib/type';
 import { dataWrangleTheExcelData } from '@/lib/utils';
 
 const ReadFromExcel = ({
+  defaultFileName,
   setData
 }: {
-  setData: (data: Student[]) => void
+  defaultFileName: string,
+  setData: (data: Student[], fileNameArr: string) => void
 }) => {
+  
   const readExcel = (file: File | null) => {
     if (!file) {
       return;
     }
-
+    
     const promise = new Promise((resolve, reject) => {
       const fileReader = new FileReader();
       fileReader.readAsArrayBuffer(file);
@@ -42,18 +45,25 @@ const ReadFromExcel = ({
     });
     promise.then((d) => {
       const data = dataWrangleTheExcelData(d);
-      setData(data);
+      setData(data, file.name);
       console.log(data);
     });
   }
   return (
-    <div>
+    <div className='flex gap-2'>
       <Input
         type="file"
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           const file = e?.target?.files![0];
           readExcel(file);
         }}
+      />
+      <Input
+        type="text"
+        placeholder="File Name"
+        defaultValue={defaultFileName}
+        disabled
+        readOnly
       />
     </div>
   )

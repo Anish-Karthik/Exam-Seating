@@ -201,7 +201,7 @@ const DisplayHall = ({ defaultIsEdit, hall, onDelete, onEdit, index, setEditingI
           )}
         </div>
         <div className="max-lg:w-full form-group">
-          <label htmlFor={`benchesCols-${index}`}>Extra</label>
+          <label htmlFor={`benchesCols-${index}`}>Extra Bench</label>
           {isEditing ? <Input
             type="number"
             className="form-control"

@@ -1,6 +1,4 @@
 "use client"
-import dynamic from 'next/dynamic'
- 
 import ExcelDataForm from "@/components/excel-data-form"
 import { Hall, Student } from '@/lib/type';
 import React, { useEffect, useState } from 'react'
@@ -17,20 +15,19 @@ const MainForm = () => {
   const [halls, setHalls] = useState<Hall[]>([]);
   const [excelData, setExcelData] = useState<ExcelData[][]>([]);
   const [mergedData, setMergedData] = useState<ExcelData[][]>([]);
+  const [fileNames, setFileNames] = useState<string[]>([]);
+  
   const router = useRouter();
   useEffect(() => {
-    if (window === undefined || !window.localStorage) {
-      toast.error("Local Storage not supported");
-      return;
-    }
-    setTotalStudents(window?.localStorage.getItem("data") ? JSON.parse(window?.localStorage.getItem("data")!).totalStudents : 0)
-    setTotalHallCapacity(window?.localStorage.getItem("data") ? JSON.parse(window?.localStorage.getItem("data")!).totalHallCapacity : 0)
-    setHalls(window?.localStorage.getItem("data") ? JSON.parse(window?.localStorage.getItem("data")!).halls : [])
-    setExcelData(window?.localStorage.getItem("data") ? JSON.parse(window?.localStorage.getItem("data")!).excelData : [])
-    setMergedData(window?.localStorage.getItem("data") ? JSON.parse(window?.localStorage.getItem("data")!).mergedData : [])
+    setFileNames(window.localStorage.getItem("data") ? JSON.parse(window.localStorage.getItem("data")!).fileNames : [])
+    setTotalStudents(window.localStorage.getItem("data") ? JSON.parse(window.localStorage.getItem("data")!).totalStudents : 0)
+    setTotalHallCapacity(window.localStorage.getItem("data") ? JSON.parse(window.localStorage.getItem("data")!).totalHallCapacity : 0)
+    setHalls(window.localStorage.getItem("data") ? JSON.parse(window.localStorage.getItem("data")!).halls : [])
+    setExcelData(window.localStorage.getItem("data") ? JSON.parse(window.localStorage.getItem("data")!).excelData : [])
+    setMergedData(window.localStorage.getItem("data") ? JSON.parse(window.localStorage.getItem("data")!).mergedData : [])
   }, []);
     
-  if (!window || !window?.localStorage) {
+  if (!window || !window.localStorage) {
     return <h1>Local Storage not supported</h1>
   }
 
@@ -47,13 +44,14 @@ const MainForm = () => {
       toast.error("Total Students are greater than Total Hall Capacity");
       return;
     }
-    // store the data in window?.localstorage
-    window?.localStorage.setItem("data", JSON.stringify({
+    // store the data in window.localstorage
+    window.localStorage.setItem("data", JSON.stringify({
       totalHallCapacity,
       totalStudents,
       excelData,
       mergedData,
-      halls
+      halls,
+      fileNames
     }));
     toast.success("Data saved permanently");
   }
@@ -63,7 +61,8 @@ const MainForm = () => {
     setExcelData([]);
     setMergedData([]);
     setHalls([]);
-    window?.localStorage.removeItem("data");
+    setFileNames([]);
+    window.localStorage.removeItem("data");
     router.refresh();
   }
   const isValid = () => {
@@ -100,6 +99,8 @@ const MainForm = () => {
         excelData={excelData}
         setExcelData={setExcelData}
         setMergedData={setMergedData}
+        fileNames={fileNames}
+        setFileNames={setFileNames}
       />
       <HallForm setTotalHallCapacity={setTotalHallCapacity} halls={halls} setHalls={setHalls} />
       <DisplayStudentInputData data={mergedData} />

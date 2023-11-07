@@ -15,9 +15,8 @@ const HallForm = ({
   setHalls: React.Dispatch<React.SetStateAction<Hall[]>>,
   setTotalHallCapacity: React.Dispatch<React.SetStateAction<number>>
 }) => {
+  const [editingArray, setEditingArray] = useState<boolean[]>((new Array(halls.length)).fill(false));
   
-  const [editingArray, setEditingArray] = useState<boolean[]>([]);
-
   useEffect(() => {
     const total = halls.reduce((acc, curr) => acc + curr.studentsPerHall, 0);
     setTotalHallCapacity(total);
@@ -38,7 +37,6 @@ const HallForm = ({
       }
     }]);
   };
-
   const handleDeleteData = (index: number) => {
     setHalls(prevData => {
       const newData = [...prevData];
@@ -53,7 +51,7 @@ const HallForm = ({
       newData[index] = hallData;
       return newData;
     });
-    toast.success("Edited Hall data")
+    toast.success("Saved Hall data")
   }
   return (
     <div className="container form-group !p-2">
