@@ -11,8 +11,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
+import * as DialogPrimitive from "@radix-ui/react-dialog";
+
 import { Trash } from "lucide-react";
+import toast from 'react-hot-toast/headless';
 
 type ExcelData = Student;
 const ExcelDataForm = ({
@@ -36,6 +39,7 @@ const ExcelDataForm = ({
       newData.splice(index, 1);
       return newData;
     });
+    toast.success("Deleted");
   }
 
   const handleExcelData = (data: ExcelData[], index: number) => {
@@ -78,7 +82,7 @@ const ExcelDataForm = ({
   }, [excelData]);
 
   return (
-    <div className='container !pl-0 !ml-0'>
+    <div className='container  !ml-0 form-group !p-2'>
       <Button variant={"outline"} className='rounded-full text-blue-800 border-blue-800 text-xl px-3 mb-2'
         onClick={handleAddData}
       >
@@ -91,9 +95,7 @@ const ExcelDataForm = ({
               <ReadFromExcel setData={(data) => handleExcelData(data, index)} />
               <Dialog>
                 <DialogTrigger>
-                  <Button variant={"outline"} className='rounded-full text-red-800 border-red-800 text-xl px-3'
-                    onClick={() => handleDeleteData(index)}
-                  >
+                  <Button variant={"outline"} className='rounded-full text-red-800 border-red-800 text-xl px-3' >
                     <div className="lg:hidden">
                       Delete
                     </div>
@@ -107,6 +109,18 @@ const ExcelDataForm = ({
                       This action cannot be undone. This will permanently delete your account
                       and remove your data from our servers.
                     </DialogDescription>
+                    <div className='flex justify-end gap-2'>
+                      <DialogPrimitive.Close>
+                        <Button variant={"outline"}>
+                          Cancel
+                        </Button>
+                      </DialogPrimitive.Close> 
+                      <DialogPrimitive.Close>
+                        <Button variant={"destructive"} onClick={() => handleDeleteData(index)}>
+                          Delete
+                        </Button>
+                      </DialogPrimitive.Close> 
+                    </div>
                   </DialogHeader>
                 </DialogContent>
               </Dialog>

@@ -17,9 +17,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-
+import * as DialogPrimitive from "@radix-ui/react-dialog";
 
 import { Check, Trash, X, Edit } from "lucide-react";
+
 const DisplayHall = ({ defaultIsEdit, hall, onDelete, onEdit, index, setEditingIndex }: { setEditingIndex:  React.Dispatch<React.SetStateAction<boolean[]>>,defaultIsEdit: boolean, hall: Hall, onDelete: (index: number) => void, index: number, onEdit: (index: number, hallData: Hall) => void }) => {
   const [hallData, setHallData] = useState<Hall>(hall);
   const [isEditing, setIsEditing] = useState<boolean>(defaultIsEdit);
@@ -233,9 +234,7 @@ const DisplayHall = ({ defaultIsEdit, hall, onDelete, onEdit, index, setEditingI
         )}
         <Dialog>
           <DialogTrigger>
-            <Button variant={"outline"} className='rounded-full text-red-800 border-red-800 text-xl px-3'
-              onClick={() => onDelete(index)}
-            >
+            <Button variant={"outline"} className='rounded-full text-red-800 border-red-800 text-xl px-3' >
               <div className="lg:hidden">
                 Delete
               </div>
@@ -248,6 +247,18 @@ const DisplayHall = ({ defaultIsEdit, hall, onDelete, onEdit, index, setEditingI
               <DialogDescription>
                 This action cannot be undone. This will delete your data.
               </DialogDescription>
+              <div className='flex justify-end gap-2'>
+                <DialogPrimitive.Close>
+                  <Button variant={"outline"}>
+                    Cancel
+                  </Button>
+                </DialogPrimitive.Close> 
+                <DialogPrimitive.Close>
+                  <Button variant={"destructive"} onClick={() => onDelete(index)}>
+                    Delete
+                  </Button>
+                </DialogPrimitive.Close> 
+              </div>
             </DialogHeader>
           </DialogContent>
         </Dialog>
