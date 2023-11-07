@@ -34,7 +34,7 @@ const HallForm = ({
       benches: {
         rows: 0,
         cols: 0,
-        total: 0
+        extra: 0
       }
     }]);
   };

@@ -14,13 +14,14 @@ export function dataWrangleTheExcelData(data: any) {
     // remove the rows that don't match the format slno, regno, name, rollno, section
   const studentData: Student[] = []
   const invalidRows: any[] = []
-
+  let i = 1;
   data.forEach((row: any, index: number) => {
     console.log(row)
 
     if ( row.__EMPTY && row.__EMPTY_1 && row.__EMPTY_2 && row.__EMPTY_3 && !isNaN(parseInt(row.__EMPTY_1))) {
       try {
         const student: Student = {
+          sno: i++,
           name: row.__EMPTY_2,
           regno: row.__EMPTY_1,
           rollno: row.__EMPTY,

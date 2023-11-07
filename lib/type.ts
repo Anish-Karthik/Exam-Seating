@@ -1,5 +1,6 @@
 export type Student = {
   name: string;
+  sno: number;
   regno: number;
   rollno: string;
   section: string;
@@ -21,7 +22,7 @@ export type Hall = {
   benches: {
     rows: number;
     cols: number;
-    total?: number;
+    extra: number;
   };
 };
 

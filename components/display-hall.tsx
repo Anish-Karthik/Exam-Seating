@@ -79,7 +79,7 @@ const DisplayHall = ({ defaultIsEdit, hall, onDelete, onEdit, index, setEditingI
     <div className='flex flex-col-reverse w-full rounded-md p-2 bg-slate-700/20'>
     <div className="flex gap-2 flex-col lg:flex-row flex-wrap xl:flex-nowrap items-center">
       <div className="max-lg:w-full form-group">
-        <label htmlFor={`hallno-${index}`}>Hall Number</label>
+        <label htmlFor={`hallno-${index}`}>Hall No.</label>
         {isEditing ? <Input
           type="number"
           className="form-control"
@@ -108,7 +108,7 @@ const DisplayHall = ({ defaultIsEdit, hall, onDelete, onEdit, index, setEditingI
         )}
       </div>
       <div className="max-lg:w-full form-group">
-        <label htmlFor={`studentsPerBench-${index}`}>Allow same year to sit</label>
+        <label htmlFor={`studentsPerBench-${index}`}>Same year together</label>
         {isEditing ? <Select
         
           name="isSameYearPerBenchAllowed"
@@ -120,7 +120,7 @@ const DisplayHall = ({ defaultIsEdit, hall, onDelete, onEdit, index, setEditingI
             }));
           }}
         >
-          <SelectTrigger className="min-w-[210px] lg:min-w-[170px]">
+          <SelectTrigger className="min-w-[210px] lg:min-w-[150px]">
             <SelectValue placeholder="Students Per Bench" />
           </SelectTrigger>
           <SelectContent defaultValue={"false"}>
@@ -134,7 +134,7 @@ const DisplayHall = ({ defaultIsEdit, hall, onDelete, onEdit, index, setEditingI
         )}
       </div>
       <div className="max-lg:w-full form-group">
-        <label htmlFor={`studentsPerBench-${index}`}>Students Per Bench</label>
+        <label htmlFor={`studentsPerBench-${index}`}>Students/Bench</label>
         {isEditing ? <Select
           name="studentsPerBench"
           value={hallData.studentsPerBench.toString()}
@@ -145,7 +145,7 @@ const DisplayHall = ({ defaultIsEdit, hall, onDelete, onEdit, index, setEditingI
             }));
           }}
         >
-          <SelectTrigger className="min-w-[210px] lg:min-w-[170px]">
+          <SelectTrigger className="min-w-[210px] lg:min-w-[130px]">
             <SelectValue placeholder="Students Per Bench" />
           </SelectTrigger>
           <SelectContent>
@@ -188,17 +188,30 @@ const DisplayHall = ({ defaultIsEdit, hall, onDelete, onEdit, index, setEditingI
         )}
       </div>
       <div className="max-lg:w-full form-group">
-        <label htmlFor={`benchesCols-${index}`}>No. of Columns</label>
+        <label htmlFor={`benchesCols-${index}`}>No. of Cols</label>
         {isEditing ? <Input
           type="number"
           className="form-control"
-          id={`benchesCols-${index}`}
           name="cols"
           value={hallData.benches.cols}
           onChange={handleBenchInputChange}
         />: (
-          <div className="form-control" id={`benchesCols-${index}`}>
+          <div className="form-control" >
             {hallData.benches.cols}
+          </div>
+        )}
+      </div>
+      <div className="max-lg:w-full form-group">
+        <label htmlFor={`benchesCols-${index}`}>Extra</label>
+        {isEditing ? <Input
+          type="number"
+          className="form-control"
+          name="extra"
+          value={hallData.benches.extra}
+          onChange={handleBenchInputChange}
+        />: (
+          <div className="form-control" >
+            {hallData.benches.extra}
           </div>
         )}
       </div>
