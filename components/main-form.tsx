@@ -1,5 +1,6 @@
 "use client"
-
+import dynamic from 'next/dynamic'
+ 
 import ExcelDataForm from "@/components/excel-data-form"
 import { Hall, Student } from '@/lib/type';
 import React, { useEffect, useState } from 'react'
