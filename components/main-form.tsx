@@ -2,7 +2,7 @@
 
 import ExcelDataForm from "@/components/excel-data-form"
 import { Hall, Student } from '@/lib/type';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DisplayStudentInputData from "./display-student-input";
 import HallForm from "./hall-form";
 import { Button } from "./ui/button";
@@ -11,15 +11,28 @@ import { useRouter } from "next/navigation";
 
 type ExcelData = Student;
 const MainForm = () => {
-  const [totalStudents, setTotalStudents] = useState<number>(window?.localStorage.getItem("data") ? JSON.parse(window?.localStorage.getItem("data")!).totalStudents : 0);
-  const [totalHallCapacity, setTotalHallCapacity] = useState<number>(window?.localStorage.getItem("data") ? JSON.parse(window?.localStorage.getItem("data")!).totalHallCapacity : 0);
-  const [halls, setHalls] = useState<Hall[]>(window?.localStorage.getItem("data") ? JSON.parse(window?.localStorage.getItem("data")!).halls : []);
-  const [excelData, setExcelData] = useState<ExcelData[][]>(window?.localStorage.getItem("data") ? JSON.parse(window?.localStorage.getItem("data")!).excelData : []);
-  const [mergedData, setMergedData] = useState<ExcelData[][]>(window?.localStorage.getItem("data") ? JSON.parse(window?.localStorage.getItem("data")!).mergedData : []);
+  const [totalStudents, setTotalStudents] = useState<number>(0);
+  const [totalHallCapacity, setTotalHallCapacity] = useState<number>(0);
+  const [halls, setHalls] = useState<Hall[]>([]);
+  const [excelData, setExcelData] = useState<ExcelData[][]>([]);
+  const [mergedData, setMergedData] = useState<ExcelData[][]>([]);
+  const router = useRouter();
+  useEffect(() => {
+    if (window === undefined || !window.localStorage) {
+      toast.error("Local Storage not supported");
+      return;
+    }
+    setTotalStudents(window?.localStorage.getItem("data") ? JSON.parse(window?.localStorage.getItem("data")!).totalStudents : 0)
+    setTotalHallCapacity(window?.localStorage.getItem("data") ? JSON.parse(window?.localStorage.getItem("data")!).totalHallCapacity : 0)
+    setHalls(window?.localStorage.getItem("data") ? JSON.parse(window?.localStorage.getItem("data")!).halls : [])
+    setExcelData(window?.localStorage.getItem("data") ? JSON.parse(window?.localStorage.getItem("data")!).excelData : [])
+    setMergedData(window?.localStorage.getItem("data") ? JSON.parse(window?.localStorage.getItem("data")!).mergedData : [])
+  }, []);
+    
   if (!window || !window?.localStorage) {
     return <h1>Local Storage not supported</h1>
   }
-  const router = useRouter();
+
   const handleSubmit = () => {
     if (totalHallCapacity === 0) {
       toast.error("Total Hall Capacity is 0");
