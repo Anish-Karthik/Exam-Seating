@@ -3,10 +3,11 @@ import ExcelDataForm from "@/components/excel-data-form"
 import { Hall, Student } from '@/lib/type';
 import React, { useEffect, useState } from 'react'
 import DisplayStudentInputData from "./display-student-input";
-import HallForm from "./hall-form";
+import HallForm from "./multiples-hall-form";
 import { Button } from "./ui/button";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import SampleData from "./sample-data";
 
 type ExcelData = Student;
 const MainForm = () => {
@@ -94,6 +95,7 @@ const MainForm = () => {
           </Button>
         </div>
       </div>
+      <SampleData />
       <ExcelDataForm
         setTotalStudents={setTotalStudents}
         excelData={excelData}
