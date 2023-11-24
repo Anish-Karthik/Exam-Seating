@@ -1,20 +1,17 @@
+import React from "react"
 
+import { Student } from "@/lib/type"
 
-import { Student } from '@/lib/type'
-import React from 'react'
-
-const DisplayStudentInputData = ({
-  data
-}: {
-  data: Student[][]
-}) => {
+const DisplayStudentInputData = ({ data }: { data: Student[][] }) => {
   return (
-    <div className='max-sm:hidden'>
+    <div className="max-sm:hidden">
       <div className="table-responsive">
-        <table className="table table-bordered mx-auto">
+        <table className="table-bordered mx-auto table">
           <thead>
             <tr>
-              <th className="px-4 py-2" colSpan={4}>Student Data</th>
+              <th className="px-4 py-2" colSpan={4}>
+                Student Data
+              </th>
             </tr>
             <tr>
               <th className="px-4 py-2">S.No</th>
@@ -25,7 +22,7 @@ const DisplayStudentInputData = ({
             </tr>
           </thead>
           <tbody>
-            {data.map((data, index) => (
+            {data.map((data, index) =>
               data.map((d, i) => (
                 <tr key={i}>
                   <td className="border px-4 py-2">{d.sno}</td>
@@ -35,7 +32,7 @@ const DisplayStudentInputData = ({
                   <td className="border px-4 py-2">{d.section}</td>
                 </tr>
               ))
-            ))}
+            )}
           </tbody>
         </table>
       </div>

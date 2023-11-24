@@ -1,11 +1,10 @@
+import dynamic from "next/dynamic"
 
-import dynamic from 'next/dynamic'
-const MainForm = dynamic(() => import('@/components/main-form'), { ssr: false })
+const MainForm = dynamic(() => import("@/components/forms/main-form"), {
+  ssr: false,
+})
 const Page = async () => {
-  return (
-    <MainForm /> 
-  )
+  return <MainForm />
 }
 
 export default Page
-
