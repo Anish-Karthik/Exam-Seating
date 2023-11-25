@@ -1,26 +1,38 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import { useEffect } from "react"
 import { toast } from "react-hot-toast"
 
-import { Hall, Student } from "@/lib/type"
 import ExcelDataForm from "@/components/forms/excel-data-form"
 
+import { Link } from "lucide-react"
 import DisplayStudentInputData from "../display/display-student-input"
 import SampleData from "../display/sample-data"
 import { Button } from "../ui/button"
 import HallForm from "./multiples-hall-form"
 
-type ExcelData = Student
-const MainForm = () => {
-  const [totalStudents, setTotalStudents] = useState<number>(0)
-  const [totalHallCapacity, setTotalHallCapacity] = useState<number>(0)
-  const [halls, setHalls] = useState<Hall[]>([])
-  const [excelData, setExcelData] = useState<ExcelData[][]>([])
-  const [mergedData, setMergedData] = useState<ExcelData[][]>([])
-  const [fileNames, setFileNames] = useState<string[]>([])
+import {
+  useRecoilState
+} from 'recoil'
 
+import {
+  excelDataState,
+  fileNamesState,
+  hallsState,
+  mergedDataState,
+  totalHallCapacityState,
+  totalStudentsState,
+} from '@/store/atoms/form'
+
+const MainForm = () => {
+  
+  const [fileNames, setFileNames] = useRecoilState(fileNamesState);
+  const [totalStudents, setTotalStudents] = useRecoilState(totalStudentsState);
+  const [totalHallCapacity, setTotalHallCapacity] = useRecoilState(totalHallCapacityState);
+  const [halls, setHalls] = useRecoilState(hallsState);
+  const [excelData, setExcelData] = useRecoilState(excelDataState);
+  const [mergedData, setMergedData] = useRecoilState(mergedDataState);
   const router = useRouter()
   useEffect(() => {
     setFileNames(
@@ -129,25 +141,20 @@ const MainForm = () => {
             Reset
           </Button>
           <Button onClick={handleSubmit} disabled={!isValid()}>
-            Submit
+            Save
           </Button>
+          {isValid() && <Link onClick={() => router.push("/display")}>  
+              <Button>
+                Generate Plan
+              </Button>
+            </Link>
+          }
         </div>
       </div>
       <SampleData />
-      <ExcelDataForm
-        setTotalStudents={setTotalStudents}
-        excelData={excelData}
-        setExcelData={setExcelData}
-        setMergedData={setMergedData}
-        fileNames={fileNames}
-        setFileNames={setFileNames}
-      />
-      <HallForm
-        setTotalHallCapacity={setTotalHallCapacity}
-        halls={halls}
-        setHalls={setHalls}
-      />
-      <DisplayStudentInputData data={mergedData} />
+      <ExcelDataForm />
+      <HallForm />
+      <DisplayStudentInputData />
     </div>
   )
 }

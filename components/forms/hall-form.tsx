@@ -1,12 +1,10 @@
-import { SetStateAction, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as DialogPrimitive from "@radix-ui/react-dialog"
-import { Check, Edit, Trash, X } from "lucide-react"
+import { Check, Trash, X } from "lucide-react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
-import toast from "react-hot-toast"
 import * as z from "zod"
 
-import { Hall } from "@/lib/type"
 import {
   Dialog,
   DialogContent,
@@ -18,11 +16,10 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from "@/components/ui/form"
 import {
   Select,
@@ -31,6 +28,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { Hall } from "@/lib/type"
 
 import DisplayHallData from "../display/display-hall-data"
 import { Button } from "../ui/button"
@@ -47,6 +45,7 @@ const formSchema = z
     studentsPerBench: z.number().min(1).max(2),
     studentsPerHall: z.number().min(1).max(100),
     isSameYearPerBenchAllowed: z.boolean(),
+    isInterchange: z.boolean(),
     benches: z
       .object({
         rows: z
@@ -96,6 +95,7 @@ const DisplayHall = ({
   index: number
   onEdit: (index: number, hallData: Hall) => void
 }) => {
+
   const [hallData, setHallData] = useState<Hall>(hall)
   const [isEditing, setIsEditing] = useState<boolean>(defaultIsEdit)
   const form = useForm({
@@ -117,14 +117,14 @@ const DisplayHall = ({
     setIsEditing((prevState) => !prevState)
   }
 
-  const handleSave = (index: number) => {
+  const handleSave = (index: number, data: Hall) => {
     toggleEdit(index)
-    onEdit(index, hallData)
+    onEdit(index, data)
   }
   const onSubmit = (data: Hall) => {
     console.log(data)
-    setHallData(data)
-    handleSave(index)
+    setHallData((prev) => ({...prev, ...data}))
+    handleSave(index, data)
   }
 
   console.log(form.getValues())
@@ -153,7 +153,7 @@ const DisplayHall = ({
               </FormMessage>
             )}
           <div className="flex flex-col flex-wrap items-center gap-2 lg:flex-row xl:flex-nowrap">
-            <div className="form-group max-lg:w-full">
+            <div className="form-group max-lg:w-full xl:max-w-[85px]">
               <FormField
                 control={form.control}
                 name="hallno"
@@ -162,7 +162,6 @@ const DisplayHall = ({
                     <FormLabel htmlFor={`hallno-${index}`}>Hall No.</FormLabel>
                     <FormControl>
                       <Input
-                        type="number"
                         className="form-control"
                         id={`hallno-${index}`}
                         {...field}
@@ -209,7 +208,37 @@ const DisplayHall = ({
                           field.onChange(value === "true")
                         }}
                       >
-                        <SelectTrigger className="min-w-[210px] lg:min-w-[150px]">
+                        <SelectTrigger className="min-w-[210px] lg:min-w-[150px] xl:min-w-[135px]">
+                          <SelectValue placeholder="Students Per Bench" />
+                        </SelectTrigger>
+                        <SelectContent defaultValue={"false"}>
+                          <SelectItem value="true">Yes</SelectItem>
+                          <SelectItem value="false">No</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="form-group max-lg:w-full">
+              <FormField
+                control={form.control}
+                name="isInterchange"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel htmlFor={`isInterchange-${index}`}>
+                      Cols Interchange
+                    </FormLabel>
+                    <FormControl>
+                      <Select
+                        defaultValue={field.value.toString()}
+                        onValueChange={(value) => {
+                          field.onChange(value === "true")
+                        }}
+                      >
+                        <SelectTrigger className="min-w-[210px] lg:min-w-[130px] xl:min-w-[115px]">
                           <SelectValue placeholder="Students Per Bench" />
                         </SelectTrigger>
                         <SelectContent defaultValue={"false"}>
@@ -239,7 +268,7 @@ const DisplayHall = ({
                           field.onChange(parseInt(value))
                         }}
                       >
-                        <SelectTrigger className="min-w-[210px] lg:min-w-[130px]">
+                        <SelectTrigger className="min-w-[210px] lg:min-w-[130px] xl:min-w-[100px]">
                           <SelectValue placeholder="Students Per Bench" />
                         </SelectTrigger>
                         <SelectContent>

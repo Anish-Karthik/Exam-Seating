@@ -42,6 +42,20 @@ const DisplayHallData = ({
         </div>
         <div className="form-group max-lg:w-full">
           <div className="flex flex-col items-center gap-2">
+            <p>Same Year/Bench</p>
+            <p className="text-xl">
+              {hall.isSameYearPerBenchAllowed ? "Yes" : "No"}
+            </p>
+          </div>
+        </div>
+        <div className="form-group max-lg:w-full">
+          <div className="flex flex-col items-center gap-2">
+            <p>Cols Interchange</p>
+            <p className="text-xl">{hall.isInterchange ? "Yes": "No"}</p>
+          </div>
+        </div>
+        <div className="form-group max-lg:w-full">
+          <div className="flex flex-col items-center gap-2">
             <p>Students/Bench</p>
             <p className="text-xl">{hall.studentsPerBench}</p>
           </div>
@@ -70,14 +84,7 @@ const DisplayHallData = ({
             <p className="text-xl">{hall.benches.extra}</p>
           </div>
         </div>
-        <div className="form-group max-lg:w-full">
-          <div className="flex flex-col items-center gap-2">
-            <p>Same Year/Bench</p>
-            <p className="text-xl">
-              {hall.isSameYearPerBenchAllowed ? "Yes" : "No"}
-            </p>
-          </div>
-        </div>
+        
         <div className="flex flex-wrap gap-2 max-lg:w-full max-lg:justify-start lg:flex-nowrap">
           <Button
             variant={"outline"}

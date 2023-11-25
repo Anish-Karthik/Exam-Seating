@@ -1,9 +1,9 @@
-import React, { useState } from "react"
+import React from "react"
 import * as XLSX from "xlsx"
 
+import { Input } from "@/components/ui/input"
 import { Student } from "@/lib/type"
 import { dataWrangleTheExcelData } from "@/lib/utils"
-import { Input } from "@/components/ui/input"
 
 const ReadFromExcel = ({
   defaultFileName,

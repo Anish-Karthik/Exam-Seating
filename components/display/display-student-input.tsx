@@ -1,8 +1,9 @@
-import React from "react"
 
-import { Student } from "@/lib/type"
+import { mergedDataState } from "@/store/atoms/form"
+import { useRecoilValue } from "recoil"
 
-const DisplayStudentInputData = ({ data }: { data: Student[][] }) => {
+const DisplayStudentInputData = () => {
+  const data = useRecoilValue(mergedDataState)
   return (
     <div className="max-sm:hidden">
       <div className="table-responsive">
