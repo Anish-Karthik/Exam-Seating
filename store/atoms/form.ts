@@ -1,14 +1,9 @@
-import { Hall, Student } from '@/lib/type';
-import {
-  RecoilRoot,
-  atom,
-  selector,
-  useRecoilState,
-  useRecoilValue,
-} from 'recoil';
+import { atom } from "recoil"
+
+import { Hall, Student } from "@/lib/type"
 
 export const hallState = atom<Hall>({
-  key: 'hallState',
+  key: "hallState",
   default: {
     hallno: "101",
     dept: "CSE",
@@ -22,34 +17,34 @@ export const hallState = atom<Hall>({
       extra: 0,
     },
   },
-});
+})
 
 export const hallsState = atom<Hall[]>({
-  key: 'hallsState',
+  key: "hallsState",
   default: [],
-});
+})
 
 export const totalStudentsState = atom<number>({
-  key: 'totalStudentsState',
+  key: "totalStudentsState",
   default: 0,
-});
+})
 
 export const totalHallCapacityState = atom<number>({
-  key: 'totalHallCapacityState',
+  key: "totalHallCapacityState",
   default: 0,
-});
+})
 
 export const mergedDataState = atom<Student[][]>({
-  key: 'mergedDataState',
+  key: "mergedDataState",
   default: [],
-});
+})
 
 export const excelDataState = atom<Student[][]>({
-  key: 'excelDataState',
+  key: "excelDataState",
   default: [],
-});
+})
 
 export const fileNamesState = atom<string[]>({
-  key: 'fileNamesState',
+  key: "fileNamesState",
   default: [],
-});
+})

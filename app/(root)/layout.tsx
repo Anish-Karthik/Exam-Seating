@@ -1,16 +1,10 @@
 "use client"
 
-import {
-  RecoilRoot,
-} from 'recoil';
-import React, { PropsWithChildren } from 'react'
+import React, { PropsWithChildren } from "react"
+import { RecoilRoot } from "recoil"
 
 const layout = ({ children }: PropsWithChildren) => {
-  return (
-    <RecoilRoot>
-      {children}
-    </RecoilRoot>
-  )
+  return <RecoilRoot>{children}</RecoilRoot>
 }
 
 export default layout

@@ -51,7 +51,7 @@ const DisplayHallData = ({
         <div className="form-group max-lg:w-full">
           <div className="flex flex-col items-center gap-2">
             <p>Cols Interchange</p>
-            <p className="text-xl">{hall.isInterchange ? "Yes": "No"}</p>
+            <p className="text-xl">{hall.isInterchange ? "Yes" : "No"}</p>
           </div>
         </div>
         <div className="form-group max-lg:w-full">
@@ -84,7 +84,7 @@ const DisplayHallData = ({
             <p className="text-xl">{hall.benches.extra}</p>
           </div>
         </div>
-        
+
         <div className="flex flex-wrap gap-2 max-lg:w-full max-lg:justify-start lg:flex-nowrap">
           <Button
             variant={"outline"}

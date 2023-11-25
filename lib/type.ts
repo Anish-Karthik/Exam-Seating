@@ -18,7 +18,6 @@ export type Hall = {
   hallno: string
   dept: string
   studentsPerBench: 1 | 2
-  isInterchange: boolean
   studentsPerHall: number
   isSameYearPerBenchAllowed: boolean
   benches: {
@@ -26,6 +25,7 @@ export type Hall = {
     cols: number
     extra: number
   }
+  isInterchange: boolean
 }
 
 export type ExamTimings = {
@@ -62,10 +62,10 @@ export type HallArrangementPlan = {
 // expected output type is AttendanceSheet[] (i.e. AttendaceSheet for all halls)
 export type AttendanceSheet = {
   hallno: string
-  studentData: StudentAttendaceData[]
+  studentData: StudentAttendanceData[]
 }
 
-export type StudentAttendaceData = {
+export type StudentAttendanceData = {
   sno: number
   regno: number
   name: string

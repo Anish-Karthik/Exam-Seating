@@ -1,27 +1,18 @@
 import { useEffect, useState } from "react"
+import { hallsState, totalHallCapacityState } from "@/store/atoms/form"
 import { toast } from "react-hot-toast"
+import { useRecoilState, useSetRecoilState } from "recoil"
 
 import { Hall } from "@/lib/type"
 
 import { Button } from "../ui/button"
 import DisplayHall from "./hall-form"
 
-import {
-  useRecoilState,
-  useSetRecoilState
-} from 'recoil'
-
-import {
-  hallsState,
-  totalHallCapacityState
-} from '@/store/atoms/form'
-
 // make this as functional argument
 // const [halls, setHalls] = useState<Hall[]>([]);
 const HallForm = () => {
-
-  const [halls, setHalls] = useRecoilState(hallsState);
-  const setTotalHallCapacity = useSetRecoilState(totalHallCapacityState);
+  const [halls, setHalls] = useRecoilState(hallsState)
+  const setTotalHallCapacity = useSetRecoilState(totalHallCapacityState)
   const [editingArray, setEditingArray] = useState<boolean[]>(
     new Array(halls.length).fill(false)
   )

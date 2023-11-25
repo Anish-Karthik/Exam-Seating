@@ -1,10 +1,11 @@
+import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { Check, Trash, X } from "lucide-react"
-import { useState } from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
+import { Hall } from "@/lib/type"
 import {
   Dialog,
   DialogContent,
@@ -19,7 +20,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from "@/components/ui/form"
 import {
   Select,
@@ -28,7 +29,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Hall } from "@/lib/type"
 
 import DisplayHallData from "../display/display-hall-data"
 import { Button } from "../ui/button"
@@ -95,7 +95,6 @@ const DisplayHall = ({
   index: number
   onEdit: (index: number, hallData: Hall) => void
 }) => {
-
   const [hallData, setHallData] = useState<Hall>(hall)
   const [isEditing, setIsEditing] = useState<boolean>(defaultIsEdit)
   const form = useForm({
@@ -123,7 +122,7 @@ const DisplayHall = ({
   }
   const onSubmit = (data: Hall) => {
     console.log(data)
-    setHallData((prev) => ({...prev, ...data}))
+    setHallData((prev) => ({ ...prev, ...data }))
     handleSave(index, data)
   }
 

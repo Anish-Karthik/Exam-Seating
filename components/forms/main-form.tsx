@@ -1,21 +1,8 @@
 "use client"
 
-import { useRouter } from "next/navigation"
 import { useEffect } from "react"
-import { toast } from "react-hot-toast"
-
-import ExcelDataForm from "@/components/forms/excel-data-form"
-
-import { Link } from "lucide-react"
-import DisplayStudentInputData from "../display/display-student-input"
-import SampleData from "../display/sample-data"
-import { Button } from "../ui/button"
-import HallForm from "./multiples-hall-form"
-
-import {
-  useRecoilState
-} from 'recoil'
-
+import Link from "next/link"
+import { useRouter } from "next/navigation"
 import {
   excelDataState,
   fileNamesState,
@@ -23,16 +10,27 @@ import {
   mergedDataState,
   totalHallCapacityState,
   totalStudentsState,
-} from '@/store/atoms/form'
+} from "@/store/atoms/form"
+import { toast } from "react-hot-toast"
+import { useRecoilState } from "recoil"
+
+import ExcelDataForm from "@/components/forms/excel-data-form"
+
+import DisplayStudentInputData from "../display/display-student-input"
+import SampleData from "../display/sample-data"
+import { Button } from "../ui/button"
+import HallForm from "./multiples-hall-form"
 
 const MainForm = () => {
-  
-  const [fileNames, setFileNames] = useRecoilState(fileNamesState);
-  const [totalStudents, setTotalStudents] = useRecoilState(totalStudentsState);
-  const [totalHallCapacity, setTotalHallCapacity] = useRecoilState(totalHallCapacityState);
-  const [halls, setHalls] = useRecoilState(hallsState);
-  const [excelData, setExcelData] = useRecoilState(excelDataState);
-  const [mergedData, setMergedData] = useRecoilState(mergedDataState);
+  const [fileNames, setFileNames] = useRecoilState(fileNamesState)
+  const [totalStudents, setTotalStudents] = useRecoilState(totalStudentsState)
+  const [totalHallCapacity, setTotalHallCapacity] = useRecoilState(
+    totalHallCapacityState
+  )
+  const [halls, setHalls] = useRecoilState(hallsState)
+  const [excelData, setExcelData] = useRecoilState(excelDataState)
+  const [mergedData, setMergedData] = useRecoilState(mergedDataState)
+
   const router = useRouter()
   useEffect(() => {
     setFileNames(
@@ -143,10 +141,9 @@ const MainForm = () => {
           <Button onClick={handleSubmit} disabled={!isValid()}>
             Save
           </Button>
-          {isValid() && <Link onClick={() => router.push("/display")}>  
-              <Button>
-                Generate Plan
-              </Button>
+          {
+            <Link href={"/display"}>
+              <Button>Generate Plan</Button>
             </Link>
           }
         </div>

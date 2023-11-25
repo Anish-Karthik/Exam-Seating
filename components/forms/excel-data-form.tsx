@@ -1,11 +1,18 @@
 "use client"
 
+import { useEffect } from "react"
+import {
+  excelDataState,
+  fileNamesState,
+  mergedDataState,
+  totalStudentsState,
+} from "@/store/atoms/form"
 import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { Trash } from "lucide-react"
-import { useEffect } from "react"
 import toast from "react-hot-toast/headless"
+import { useRecoilState, useSetRecoilState } from "recoil"
 
-import ReadFromExcel from "@/components/forms/read-from-excel"
+import { Student } from "@/lib/type"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -15,26 +22,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Student } from "@/lib/type"
-
-import {
-  useRecoilState,
-  useSetRecoilState
-} from 'recoil'
-
-import {
-  excelDataState,
-  fileNamesState,
-  mergedDataState,
-  totalStudentsState
-} from '@/store/atoms/form'
+import ReadFromExcel from "@/components/forms/read-from-excel"
 
 type ExcelData = Student
 const ExcelDataForm = () => {
-  const [excelData, setExcelData] = useRecoilState(excelDataState);
-  const [fileNames, setFileNames] = useRecoilState(fileNamesState);
-  const setTotalStudents = useSetRecoilState(totalStudentsState);
-  const setMergedData = useSetRecoilState(mergedDataState);
+  const [excelData, setExcelData] = useRecoilState(excelDataState)
+  const [fileNames, setFileNames] = useRecoilState(fileNamesState)
+  const setTotalStudents = useSetRecoilState(totalStudentsState)
+  const setMergedData = useSetRecoilState(mergedDataState)
 
   const handleAddData = () => {
     setExcelData((prevData) => [...prevData, []])

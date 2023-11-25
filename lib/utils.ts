@@ -47,3 +47,26 @@ export function dataWrangleTheExcelData(data: any) {
     return []
   }
 }
+
+export function yearFromStartYear(startYear: number): 1 | 2 | 3 | 4 {
+  const currentYear = new Date().getFullYear()
+  const currentMonth = new Date().getMonth()
+
+  const currentStartYear = currentMonth >= 6 ? currentYear : currentYear - 1
+
+  return Math.max(1, Math.min(4, currentStartYear - startYear + 1)) as
+    | 1
+    | 2
+    | 3
+    | 4
+}
+
+export function extractRollNo(rollno: string) {
+  // 21CSXX
+  const startYear = parseInt(rollno.slice(0, 2))
+  const dept = rollno.slice(2, rollno.length - 3)
+  const rno = parseInt(rollno.slice(rollno.length - 3))
+  const year = yearFromStartYear(startYear)
+
+  return { year, dept, rno }
+}
