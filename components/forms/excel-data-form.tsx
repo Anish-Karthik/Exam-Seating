@@ -105,7 +105,7 @@ const ExcelDataForm = () => {
   }, [excelData])
 
   return (
-    <div className="form-group container !ml-0 !p-2">
+    <div className="form-group container !ml-0 max-sm:min-h-screen max-sm:!p-0 md:p-2">
       <Button
         variant={"outline"}
         className="mb-2 rounded-full border-blue-800 px-3 text-xl text-blue-800"

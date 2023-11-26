@@ -120,7 +120,7 @@ const MainForm = () => {
   }
 
   return (
-    <div className="form-group container flex flex-col gap-2">
+    <div className="form-group container flex flex-col gap-2 max-sm:min-h-screen max-sm:!p-0">
       <div className="flex items-center justify-between">
         <div className="flex gap-6 max-md:flex-col">
           <h1 className="text-2xl font-bold">

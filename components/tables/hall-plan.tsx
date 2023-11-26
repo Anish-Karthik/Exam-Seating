@@ -15,36 +15,43 @@ const HallPLanTable = ({
           <tr>
             <th
               rowSpan={2}
-              className="max-w-[100px] border px-4 py-2 text-center"
+              className="max-w-[100px] border px-4 py-2 text-center md:max-w-[200px]"
             >
               Year / Semester
             </th>
-            <th rowSpan={2} className="border px-4 py-2 text-center">
+            <th
+              rowSpan={2}
+              className="border px-4 py-2 text-center md:min-w-[140px]"
+            >
               Section
             </th>
             <th
               colSpan={2}
               rowSpan={1}
-              className="border px-4 py-2 text-center"
+              className="border px-4 py-2 text-center md:min-w-[160px]"
             >
               Roll No
             </th>
             <th
               rowSpan={2}
-              className="max-w-[100px] border px-4 py-2 text-center"
+              className="max-w-[100px] border px-4 py-2 text-center md:max-w-[200px]"
             >
               Hall No. & Total Strength
             </th>
             <th
               rowSpan={2}
-              className="max-w-[100px] border px-4 py-2 text-center"
+              className="max-w-[100px] border px-4 py-2 text-center md:max-w-[200px]"
             >
               Block / Floor
             </th>
           </tr>
           <tr>
-            <th className="border px-4 py-2">From</th>
-            <th className="border px-4 py-2">To</th>
+            <th className="min-w-[70px] border px-4 py-2 md:min-w-[80px]">
+              From
+            </th>
+            <th className="min-w-[70px] border px-4 py-2 md:min-w-[80px]">
+              To
+            </th>
           </tr>
         </thead>
         <tbody>

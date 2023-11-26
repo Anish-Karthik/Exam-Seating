@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Toaster />
-        <main className="container flex max-h-full w-screen items-center justify-center pt-4">
+        <main className="container flex max-h-full w-screen items-center justify-center pt-4 max-sm:min-h-screen max-sm:!p-0">
           {children}
         </main>
       </body>

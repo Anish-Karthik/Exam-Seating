@@ -1,8 +1,7 @@
+import { Student } from "@/server/type"
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import * as XLSX from "xlsx"
-
-import { Student } from "@/server/type"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -72,7 +71,7 @@ export function extractRollNo(rollno: string) {
   return { year, dept, rno }
 }
 
-export function ExportSkillsToExcel(
+export function exportHTMLTableToExcel(
   type: XLSX.BookType,
   tableId: string,
   fileName: string,
