@@ -1,11 +1,11 @@
 import { useState } from "react"
+import { Hall } from "@/server/type"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { Check, Trash, X } from "lucide-react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
-import { Hall } from "@/lib/type"
 import {
   Dialog,
   DialogContent,

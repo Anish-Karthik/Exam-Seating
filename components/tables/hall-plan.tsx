@@ -1,6 +1,5 @@
 import React from "react"
-
-import { HallPlan } from "@/lib/type"
+import { HallPlan } from "@/server/type"
 
 const HallPLanTable = ({
   hallPlan,

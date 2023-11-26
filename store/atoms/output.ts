@@ -1,6 +1,5 @@
+import { AttendanceSheet, HallPlan, HallPlanPerYear } from "@/server/type"
 import { atom } from "recoil"
-
-import { AttendanceSheet, HallPlan, HallPlanPerYear } from "@/lib/type"
 
 export const HallPlansState = atom<HallPlanPerYear[]>({
   key: "HallPlansState",

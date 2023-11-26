@@ -1,4 +1,4 @@
-import { HallPlanPerYear } from "@/lib/type"
+import { HallPlanPerYear } from "@/server/type"
 
 export const sampleHallPlans: HallPlanPerYear[] = [
   [

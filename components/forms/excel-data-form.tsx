@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect } from "react"
+import { Student } from "@/server/type"
 import {
   excelDataState,
   fileNamesState,
@@ -12,7 +13,6 @@ import { Trash } from "lucide-react"
 import toast from "react-hot-toast/headless"
 import { useRecoilState, useSetRecoilState } from "recoil"
 
-import { Student } from "@/lib/type"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,

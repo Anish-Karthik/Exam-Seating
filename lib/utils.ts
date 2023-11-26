@@ -2,7 +2,7 @@ import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import * as XLSX from "xlsx"
 
-import { Student } from "./type"
+import { Student } from "@/server/type"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))

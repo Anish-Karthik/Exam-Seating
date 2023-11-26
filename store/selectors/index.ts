@@ -1,6 +1,6 @@
+import { Student, StudentsPerYear } from "@/server/type"
 import { selector } from "recoil"
 
-import { Student, StudentsPerYear } from "@/lib/type"
 import { extractRollNo } from "@/lib/utils"
 
 import { mergedDataState } from "../atoms/form"
