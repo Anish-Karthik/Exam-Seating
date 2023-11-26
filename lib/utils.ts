@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
+import * as XLSX from "xlsx"
 
 import { Student } from "./type"
 
@@ -69,4 +70,18 @@ export function extractRollNo(rollno: string) {
   const year = yearFromStartYear(startYear)
 
   return { year, dept, rno }
+}
+
+export function ExportSkillsToExcel(
+  type: XLSX.BookType,
+  tableId: string,
+  fileName: string,
+  isBase64: boolean = false
+): File | null | string {
+  var tableElement = document.getElementById(tableId)
+  if (null == tableElement) return null
+  var workBook = XLSX.utils.table_to_book(tableElement, { sheet: "skills" })
+  return isBase64
+    ? XLSX.write(workBook, { bookType: type, bookSST: true, type: "base64" })
+    : XLSX.writeFile(workBook, (fileName || "Skills") + "." + (type || "xlsx"))
 }

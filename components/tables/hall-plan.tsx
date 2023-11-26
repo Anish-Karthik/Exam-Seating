@@ -2,10 +2,16 @@ import React from "react"
 
 import { HallPlan } from "@/lib/type"
 
-const HallPLanTable = ({ hallPlan }: { hallPlan: HallPlan[] }) => {
+const HallPLanTable = ({
+  hallPlan,
+  id,
+}: {
+  hallPlan: HallPlan[]
+  id: string
+}) => {
   return (
     <div className="table-responsive">
-      <table className="table-bordered mx-auto table">
+      <table className="table-bordered mx-auto table" id={id}>
         <thead>
           <tr>
             <th
@@ -17,7 +23,11 @@ const HallPLanTable = ({ hallPlan }: { hallPlan: HallPlan[] }) => {
             <th rowSpan={2} className="border px-4 py-2 text-center">
               Section
             </th>
-            <th colSpan={2} className="border px-4 py-2 text-center">
+            <th
+              colSpan={2}
+              rowSpan={1}
+              className="border px-4 py-2 text-center"
+            >
               Roll No
             </th>
             <th
@@ -34,8 +44,8 @@ const HallPLanTable = ({ hallPlan }: { hallPlan: HallPlan[] }) => {
             </th>
           </tr>
           <tr>
-            <th className="px-4 py-2">From</th>
-            <th className="px-4 py-2">To</th>
+            <th className="border px-4 py-2">From</th>
+            <th className="border px-4 py-2">To</th>
           </tr>
         </thead>
         <tbody>

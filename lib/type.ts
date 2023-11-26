@@ -54,7 +54,7 @@ export type HallPlanPerYear = HallPlan[]
 
 // expected output type is HallArrangementPlan[]
 export type HallArrangementPlan = {
-  hallArrangement: [string, string?][][]
+  hallArrangement: ([string, string] | [string])[][]
   hallStrength: number
   hallno: string
 }
