@@ -8,11 +8,13 @@
 
 # testing
 /coverage
-/server
+/server/dist
+/server/tsconfig.json
 
 # next.js
 /.next/
 /out/
+.dist
 
 # production
 /build

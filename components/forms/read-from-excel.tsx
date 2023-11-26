@@ -1,7 +1,7 @@
 import React from "react"
+import { Student } from "@/server/type"
 import * as XLSX from "xlsx"
 
-import { Student } from "@/lib/type"
 import { dataWrangleTheExcelData } from "@/lib/utils"
 import { Input } from "@/components/ui/input"
 

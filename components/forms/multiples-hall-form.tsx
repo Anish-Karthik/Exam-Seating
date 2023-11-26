@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react"
+import { Hall } from "@/server/type"
 import { hallsState, totalHallCapacityState } from "@/store/atoms/form"
 import { toast } from "react-hot-toast"
 import { useRecoilState, useSetRecoilState } from "recoil"
-
-import { Hall } from "@/lib/type"
 
 import { Button } from "../ui/button"
 import DisplayHall from "./hall-form"

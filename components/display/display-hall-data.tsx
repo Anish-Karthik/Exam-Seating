@@ -1,8 +1,8 @@
 import React from "react"
+import { Hall } from "@/server/type"
 import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { Edit, Trash } from "lucide-react"
 
-import { Hall } from "@/lib/type"
 import {
   Dialog,
   DialogContent,

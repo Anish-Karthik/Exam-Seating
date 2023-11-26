@@ -6,7 +6,7 @@ import {
   HallArrangementPlan,
   HallPlanPerYear,
   StudentsPerYear,
-} from "../type"
+} from "@/server/type"
 
 export const generateHallPlan = async (
   studentData: StudentsPerYear[],

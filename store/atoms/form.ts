@@ -1,6 +1,5 @@
+import { Hall, Student } from "@/server/type"
 import { atom } from "recoil"
-
-import { Hall, Student } from "@/lib/type"
 
 export const hallState = atom<Hall>({
   key: "hallState",
