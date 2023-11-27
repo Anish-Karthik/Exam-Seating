@@ -1,4 +1,4 @@
-import { mapYear, studentData } from "./data"
+import { hallData, mapYear, studentData } from "./data"
 import { Hall, HallArrangementPlan, Seat, StudentsPerYear } from "./type"
 
 const totalStudents = studentData.reduce((acc, curr) => acc + curr.strength, 0)
@@ -54,7 +54,6 @@ export const generateSeatingPlan = (
                 seatvalue
               studentCount++
               overallStudentCount++
-
               if (overallStudentCount === totalStudents) {
                 break
               }
@@ -69,16 +68,17 @@ export const generateSeatingPlan = (
       } else {
         // Handle other logic for two students per bench
       }
+      console.log(hallArrangementPlans[hallIndex].hallArrangement)
     } else {
-      for (let j = 0; j < hallData[hallIndex].benches.rows; j++) {
-        for (let k = 0; k < hallData[hallIndex].benches.cols; k++) {
+      for (let j = 0; j < hallData[hallIndex].benches.cols; j++) {
+        for (let k = 0; k < hallData[hallIndex].benches.rows; k++) {
           let year = mapYear(studentData[studentArrayIndex].year)
           let currentSection =
             studentData[studentArrayIndex].studentData[studentCount].section
           let serielno =
             studentData[studentArrayIndex].studentData[studentCount].sno
           seatvalue = year + "-" + currentSection + `(${serielno})`
-          hallArrangementPlans[hallIndex].hallArrangement[j][k][0] = seatvalue
+          hallArrangementPlans[hallIndex].hallArrangement[k][j][0] = seatvalue
           studentCount++
           overallStudentCount++
 
@@ -101,3 +101,4 @@ export const generateSeatingPlan = (
   }
   return hallArrangementPlans
 }
+console.log(generateSeatingPlan(studentData, hallData))
