@@ -1,15 +1,21 @@
 "use client"
 
-import { useState } from "react"
 import { totalHallCapacityState, totalStudentsState } from "@/store/atoms/form"
+import {
+  sampleArrangementPlans,
+  sampleAttendancePlans,
+  sampleHallPlans,
+} from "@/test/sample-data"
 import { useRecoilValue } from "recoil"
 
+import {
+  generateAttendaceSheet,
+  generateHallArrangement,
+  generateHallPlan,
+} from "@/lib/actions"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-import { Button } from "../ui/button"
-import DisplayHallArrangement from "./display-hall-arrangement"
-import DisplayHallAttendance from "./display-hall-attendance"
-import DisplayHallplan from "./display-hall-plan"
+import DisplayPlan from "./display-plans"
 
 const DisplayPage = () => {
   // const halls = useRecoilValue(hallsState);
@@ -50,13 +56,25 @@ const DisplayPage = () => {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="plan">
-          <DisplayHallplan />
+          <DisplayPlan
+            name="hallplan"
+            generatePlan={generateHallPlan}
+            sampledata={sampleHallPlans}
+          />
         </TabsContent>
         <TabsContent value="arrangement">
-          <DisplayHallArrangement />
+          <DisplayPlan
+            name="seatarrangement"
+            generatePlan={generateHallArrangement}
+            sampledata={sampleArrangementPlans}
+          />
         </TabsContent>
         <TabsContent value="attendance">
-          <DisplayHallAttendance />
+          <DisplayPlan
+            name="attendance"
+            generatePlan={generateAttendaceSheet}
+            sampledata={sampleAttendancePlans}
+          />
         </TabsContent>
       </Tabs>
 

@@ -13,7 +13,7 @@ const Page = () => {
   const id = pathname.split("/").pop()
   const index = Number(id?.charAt(id.length - 1))
   return (
-    <HallPLanTable hallPlan={hallPlans[index] || []} id={`hallplan${index}`} />
+    <HallPLanTable data={hallPlans[index] || []} id={`hallplan${index}`} />
   )
 }
 

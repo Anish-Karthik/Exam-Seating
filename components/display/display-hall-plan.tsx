@@ -56,7 +56,7 @@ const DisplayHallplan = () => {
                   <Button>Print Preview</Button>
                 </Link>
               </div>
-              <HallPLanTable hallPlan={hallPlan} id={`hallplan${index}`} />
+              <HallPLanTable data={hallPlan} id={`hallplan${index}`} />
             </div>
           ))}
         </div>

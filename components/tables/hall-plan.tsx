@@ -1,13 +1,7 @@
 import React from "react"
 import { HallPlan } from "@/server/type"
 
-const HallPLanTable = ({
-  hallPlan,
-  id,
-}: {
-  hallPlan: HallPlan[]
-  id: string
-}) => {
+const HallPLanTable = ({ data, id }: { data: HallPlan[]; id: string }) => {
   return (
     <div className="table-responsive">
       <table className="table-bordered mx-auto table" id={id}>
@@ -55,7 +49,7 @@ const HallPLanTable = ({
           </tr>
         </thead>
         <tbody>
-          {hallPlan.map((hall, ind) => (
+          {data.map((hall, ind) => (
             <tr>
               <td className="border px-4 py-2 text-center">{hall.year}</td>
               <td className="border px-4 py-2 text-center">{hall.section}</td>
@@ -66,7 +60,7 @@ const HallPLanTable = ({
               <td className="border px-4 py-2 text-center">{hall.hallno}</td>
               {ind == 0 && (
                 <td
-                  rowSpan={hallPlan.length}
+                  rowSpan={data.length}
                   className="border px-4 py-2 text-center"
                 >
                   {hall.dept}

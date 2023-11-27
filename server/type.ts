@@ -63,11 +63,5 @@ export type HallArrangementPlan = {
 // expected output type is AttendanceSheet[] (i.e. AttendaceSheet for all halls)
 export type AttendanceSheet = {
   hallno: string
-  studentData: StudentAttendanceData[]
-}
-
-export type StudentAttendanceData = {
-  sno: number
-  regno: number
-  name: string
+  studentData: Student[]
 }
