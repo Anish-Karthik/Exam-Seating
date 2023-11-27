@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react"
 import { Hall } from "@/server/type"
-import { hallsState, totalHallCapacityState } from "@/store/atoms/form"
+import { useHallsState, useTotalHallCapacityState } from "@/store/hooks"
 import { toast } from "react-hot-toast"
-import { useRecoilState, useSetRecoilState } from "recoil"
 
 import { Button } from "../ui/button"
 import DisplayHall from "./hall-form"
@@ -10,53 +9,49 @@ import DisplayHall from "./hall-form"
 // make this as functional argument
 // const [halls, setHalls] = useState<Hall[]>([]);
 const HallForm = () => {
-  const [halls, setHalls] = useRecoilState(hallsState)
-  const setTotalHallCapacity = useSetRecoilState(totalHallCapacityState)
+  const { hallsState: halls, addHall, deleteHall, editHall } = useHallsState()
+  const setTotalHallCapacity = useTotalHallCapacityState(
+    (state) => state.setTotalHallCapacityState
+  )
+  // TODO
   const [editingArray, setEditingArray] = useState<boolean[]>(
     new Array(halls.length).fill(false)
   )
-  console.log(halls)
   useEffect(() => {
     const total = halls.reduce((acc, curr) => acc + curr.studentsPerHall, 0)
     console.log(halls)
     console.log(total)
     setTotalHallCapacity(total)
   }, [halls, setTotalHallCapacity])
+  // Fix Hydration Error
+  const [isMounted, setIsMounted] = useState(false)
+  useEffect(() => {
+    if (!isMounted) setIsMounted(true)
+  }, [isMounted])
+  if (!isMounted) return null;
 
   const handleSubmit = () => {
     setEditingArray((prevArray) => [...prevArray, true])
-    setHalls((prevHalls) => [
-      ...prevHalls,
-      {
-        hallno: "101",
-        dept: "CSE",
-        studentsPerBench: 1,
-        studentsPerHall: 0,
-        isSameYearPerBenchAllowed: false,
-        isInterchange: false,
-        benches: {
-          rows: 5,
-          cols: 6,
-          extra: 0,
-        },
+    addHall({
+      hallno: "101",
+      dept: "CSE",
+      studentsPerBench: 1,
+      studentsPerHall: 0,
+      isSameYearPerBenchAllowed: false,
+      isInterchange: false,
+      benches: {
+        rows: 5,
+        cols: 6,
+        extra: 0,
       },
-    ])
+    })
   }
   const handleDeleteData = (index: number) => {
-    setHalls((prevData) => {
-      const newData = [...prevData]
-      newData.splice(index, 1)
-      return newData
-    })
+    deleteHall(index)
     toast.success("Deleted hall data")
   }
   const handleEditData = (index: number, hallData: Hall) => {
-    setHalls((prevData) => {
-      const newData = [...prevData]
-      newData[index] = hallData
-      console.log(newData)
-      return newData
-    })
+    editHall(index, hallData)
     toast.success("Saved Hall data")
   }
   return (

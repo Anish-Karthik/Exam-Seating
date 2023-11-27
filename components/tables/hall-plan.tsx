@@ -1,10 +1,9 @@
-import React from "react"
-import { HallPlan } from "@/server/type"
+import { HallPlan } from "@/server/type";
 
-const HallPLanTable = ({ data, id }: { data: HallPlan[]; id: string }) => {
+const HallPLanTable = ({ data, id }: { data: HallPlan[]; id: number }) => {
   return (
     <div className="table-responsive">
-      <table className="table-bordered mx-auto table" id={id}>
+      <table className="table-bordered mx-auto table" id={`hallplan${id}`}>
         <thead>
           <tr>
             <th
@@ -50,7 +49,7 @@ const HallPLanTable = ({ data, id }: { data: HallPlan[]; id: string }) => {
         </thead>
         <tbody>
           {data.map((hall, ind) => (
-            <tr>
+            <tr key={`${hall.hallno}-hallplan-${ind}`}>
               <td className="border px-4 py-2 text-center">{hall.year}</td>
               <td className="border px-4 py-2 text-center">{hall.section}</td>
               <td className="border px-4 py-2 text-center">

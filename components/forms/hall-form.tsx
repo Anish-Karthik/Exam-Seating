@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Hall } from "@/server/type"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as DialogPrimitive from "@radix-ui/react-dialog"
@@ -103,6 +103,12 @@ const DisplayHall = ({
     mode: "onChange",
   })
   const { isValid, isSubmitting } = form.formState
+  // Fix Hydration Error
+  const [isMounted, setIsMounted] = useState(false)
+  useEffect(() => {
+    if (!isMounted) setIsMounted(true)
+  }, [isMounted])
+  if (!isMounted) return null;
   const handleCancel = (index: number) => {
     form.reset(hallData)
     toggleEdit(index)

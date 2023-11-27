@@ -1,10 +1,5 @@
-"use client"
+import MainForm from "@/components/forms/main-form"
 
-import dynamic from "next/dynamic"
-
-const MainForm = dynamic(() => import("@/components/forms/main-form"), {
-  ssr: false,
-})
 const Page = () => {
   return <MainForm />
 }

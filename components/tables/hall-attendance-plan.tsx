@@ -1,16 +1,17 @@
 import React from "react"
 import { AttendanceSheet } from "@/server/type"
+import { useHallAttendancesState } from "@/store/hooks/output"
 
 const AttendanceTable = ({
   data,
   id,
 }: {
   data: AttendanceSheet
-  id: string
+  id: number
 }) => {
   return (
     <div className="table-responsive">
-      <table className="table-bordered mx-auto table" id={id}>
+      <table className="table-bordered mx-auto table" id={`attendance${id}`}>
         <thead>
           <tr>
             <th rowSpan={2} className="border px-4 py-2 text-center">

@@ -7,11 +7,15 @@ import {
   HallPlanPerYear,
   StudentsPerYear,
 } from "@/server/type"
-import { hallsState } from "@/store/atoms/form"
-import { studentPerYearState } from "@/store/selectors"
-import { useRecoilValue } from "recoil"
+import {
+  useHallArrangementsState,
+  useHallAttendancesState,
+  useHallPlansState,
+  useHallsState,
+  useMergedDataState,
+} from "@/store/hooks"
 
-import { exportHTMLTableToExcel } from "@/lib/utils"
+import { exportHTMLTableToExcel, extractRollNo } from "@/lib/utils"
 
 import HallArrangementTable from "../tables/hall-arrangement-plan"
 import AttendanceTable from "../tables/hall-attendance-plan"
@@ -31,19 +35,70 @@ const DisplayPlan = ({
   name: "hallplan" | "seatarrangement" | "attendance"
   sampledata: HallArrangementPlan[] | HallPlanPerYear[] | AttendanceSheet[]
 }) => {
-  const studentsPerYearData = useRecoilValue(studentPerYearState)
-  const hallsData = useRecoilValue(hallsState)
-  const [data, setData] = useState(sampledata)
+  const mergedDataState = useMergedDataState(
+    (state) => state.mergedDataState
+  )
+  const hallsData = useHallsState((state) => state.hallsState)
+  const [data, setData] = useState<
+    HallArrangementPlan[] | HallPlanPerYear[] | AttendanceSheet[]
+  >([])
+  const { setHallPlansState } = useHallPlansState()
+  const { setHallArrangementsState } = useHallArrangementsState()
+  const { setHallAttendancesState } = useHallAttendancesState()
 
   useEffect(() => {
     // TODO
-    ;(async () => {
+    (async () => {
+      const studentsPerYearData = mergedDataState.map(
+            (studentPerYear): StudentsPerYear => {
+              const { year, dept } = extractRollNo(studentPerYear[0].rollno)
+              return {
+                year: year as 1 | 2 | 3 | 4,
+                semester: NaN,
+                dept,
+                strength: studentPerYear.length,
+                studentData: studentPerYear,
+              }
+            }
+          ) || []
+      console.log("generating plan")
+      console.log(studentsPerYearData)
+      console.log(hallsData)
       const res = await generatePlan(studentsPerYearData, hallsData)
+      switch (name) {
+        case "hallplan":
+          setHallPlansState(res as HallPlanPerYear[])
+          break
+        case "seatarrangement":
+          setHallArrangementsState(res as HallArrangementPlan[])
+          break
+        case "attendance":
+          setHallAttendancesState(res as AttendanceSheet[])
+          break
+      }
+      console.log(res)
       // @ts-ignore
-      setData((prev) => [...prev, ...res])
+      setData((prev) => [...res])
     })()
     console.log(sampledata)
-  }, [generatePlan, hallsData, sampledata, setData, studentsPerYearData])
+  }, [
+    generatePlan,
+    hallsData,
+    name,
+    sampledata,
+    setData,
+    setHallArrangementsState,
+    setHallAttendancesState,
+    setHallPlansState,
+    mergedDataState,
+  ])
+
+  // Fix Hydration Error
+  const [isMounted, setIsMounted] = useState(false)
+  useEffect(() => {
+    if (!isMounted) setIsMounted(true)
+  }, [isMounted])
+  if (!isMounted) return null;
 
   return (
     <section className="h-full">
@@ -75,21 +130,15 @@ const DisplayPlan = ({
                 </Link>
               </div>
               {name === "hallplan" && (
-                <HallPLanTable
-                  data={plan as HallPlanPerYear}
-                  id={`${name}${index}`}
-                />
+                <HallPLanTable data={plan as HallPlanPerYear} id={index} />
               )}
               {name === "attendance" && (
-                <AttendanceTable
-                  data={plan as AttendanceSheet}
-                  id={`${name}${index}`}
-                />
+                <AttendanceTable data={plan as AttendanceSheet} id={index} />
               )}
               {name === "seatarrangement" && (
                 <HallArrangementTable
                   data={plan as HallArrangementPlan}
-                  id={`${name}${index}`}
+                  id={index}
                 />
               )}
             </div>

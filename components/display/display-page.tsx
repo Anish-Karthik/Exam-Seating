@@ -1,12 +1,13 @@
 "use client"
 
-import { totalHallCapacityState, totalStudentsState } from "@/store/atoms/form"
+import Link from "next/link"
+import { useTotalHallCapacityState, useTotalStudentsState } from "@/store/hooks"
 import {
   sampleArrangementPlans,
   sampleAttendancePlans,
   sampleHallPlans,
 } from "@/test/sample-data"
-import { useRecoilValue } from "recoil"
+import { ArrowLeft } from "lucide-react"
 
 import {
   generateAttendaceSheet,
@@ -15,19 +16,34 @@ import {
 } from "@/lib/actions"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
+import { Button } from "../ui/button"
 import DisplayPlan from "./display-plans"
+import { useEffect, useState } from "react"
 
 const DisplayPage = () => {
-  // const halls = useRecoilValue(hallsState);
-  // const excelData = useRecoilValue(excelDataState);
-  // const mergedData = useRecoilValue(mergedDataState);
-  const totalHallCapacity = useRecoilValue(totalHallCapacityState)
-  const totalStudents = useRecoilValue(totalStudentsState)
+  const totalHallCapacity = useTotalHallCapacityState(
+    (state) => state.totalHallCapacityState
+  )
+  const totalStudents = useTotalStudentsState(
+    (state) => state.totalStudentsState
+  )
+
+  // Fix Hydration Error
+  const [isMounted, setIsMounted] = useState(false)
+  useEffect(() => {
+    if (!isMounted) setIsMounted(true)
+  }, [isMounted])
+  if (!isMounted) return null;
   // const [tab, setTab] = useState<"plan" | "arrangement" | "attendance">("plan");
   return (
     <div className="form-group container flex flex-col gap-2 max-sm:min-h-screen max-sm:!p-0">
       <div className="flex items-center justify-between">
-        <div className="flex gap-6 max-md:flex-col">
+        <div className="flex items-center gap-6 max-md:flex-col">
+          <Link href="/">
+            <Button>
+              <ArrowLeft size={16} />
+            </Button>
+          </Link>
           <h1 className="text-2xl font-bold">
             Total Hall Capacity: {totalHallCapacity}
           </h1>

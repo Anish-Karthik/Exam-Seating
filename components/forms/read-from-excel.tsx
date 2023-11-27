@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Student } from "@/server/type"
 import * as XLSX from "xlsx"
 
@@ -12,6 +12,12 @@ const ReadFromExcel = ({
   defaultFileName: string
   setData: (data: Student[], fileNameArr: string) => void
 }) => {
+  // Fix Hydration Error
+  const [isMounted, setIsMounted] = useState(false)
+  useEffect(() => {
+    if (!isMounted) setIsMounted(true)
+  }, [isMounted])
+  if (!isMounted) return null;
   const readExcel = (file: File | null) => {
     if (!file) {
       return

@@ -62,6 +62,7 @@ export function yearFromStartYear(startYear: number): 1 | 2 | 3 | 4 {
 }
 
 export function extractRollNo(rollno: string) {
+  if (!rollno) return { year: 1, dept: "", rno: NaN }
   // 21CSXX
   const startYear = parseInt(rollno.slice(0, 2))
   const dept = rollno.slice(2, rollno.length - 3)

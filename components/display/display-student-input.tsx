@@ -1,8 +1,14 @@
-import { mergedDataState } from "@/store/atoms/form"
-import { useRecoilValue } from "recoil"
+import { useMergedDataState } from "@/store/hooks"
+import { useEffect, useState } from "react"
 
 const DisplayStudentInputData = () => {
-  const data = useRecoilValue(mergedDataState)
+  const data = useMergedDataState((state) => state.mergedDataState)
+  // Fix Hydration Error
+  const [isMounted, setIsMounted] = useState(false)
+  useEffect(() => {
+    if (!isMounted) setIsMounted(true)
+  }, [isMounted])
+  if (!isMounted) return null;
   return (
     <div className="max-sm:hidden">
       <div className="table-responsive">

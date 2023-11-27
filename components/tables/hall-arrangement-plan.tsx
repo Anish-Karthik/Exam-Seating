@@ -1,16 +1,20 @@
 import React from "react"
 import { HallArrangementPlan } from "@/server/type"
+import { useHallArrangementsState } from "@/store/hooks/output"
 
 const HallArrangementTable = ({
   data,
   id,
 }: {
   data: HallArrangementPlan
-  id: string
+  id: number
 }) => {
   return (
     <div className="table-responsive">
-      <table className="table-bordered mx-auto table" id={id}>
+      <table
+        className="table-bordered mx-auto table"
+        id={`seatarrangement${id}`}
+      >
         <thead>
           <tr>
             {data.hallArrangement[0].map((_, index) => (
@@ -28,7 +32,7 @@ const HallArrangementTable = ({
                   <td
                     key={`${data.hallno}-${ind}-${data.hallno}-${seat.length}`}
                     colSpan={2}
-                    className="border px-4 py-2 text-center w-[100px]"
+                    className="w-[100px] border px-4 py-2 text-center"
                   >
                     {seat[0]}
                   </td>
@@ -37,14 +41,14 @@ const HallArrangementTable = ({
                     <td
                       key={`${data.hallno}-${ind}-${data.hallno}-${seat.length}1`}
                       colSpan={1}
-                      className="border px-4 py-2 text-center w-[100px]"
+                      className="w-[100px] border px-4 py-2 text-center"
                     >
                       {seat[0]}
                     </td>
                     <td
                       key={`${data.hallno}-${ind}-${data.hallno}-${seat.length}2`}
                       colSpan={1}
-                      className="border px-4 py-2 text-center w-[100px]"
+                      className="w-[100px] border px-4 py-2 text-center"
                     >
                       {seat[1]}
                     </td>

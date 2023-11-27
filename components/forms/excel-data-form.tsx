@@ -1,17 +1,16 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { Student } from "@/server/type"
 import {
-  excelDataState,
-  fileNamesState,
-  mergedDataState,
-  totalStudentsState,
-} from "@/store/atoms/form"
+  useExcelDataState,
+  useFileNamesState,
+  useMergedDataState,
+  useTotalStudentsState,
+} from "@/store/hooks"
 import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { Trash } from "lucide-react"
 import toast from "react-hot-toast/headless"
-import { useRecoilState, useSetRecoilState } from "recoil"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -26,27 +25,31 @@ import ReadFromExcel from "@/components/forms/read-from-excel"
 
 type ExcelData = Student
 const ExcelDataForm = () => {
-  const [excelData, setExcelData] = useRecoilState(excelDataState)
-  const [fileNames, setFileNames] = useRecoilState(fileNamesState)
-  const setTotalStudents = useSetRecoilState(totalStudentsState)
-  const setMergedData = useSetRecoilState(mergedDataState)
+  const {
+    excelDataState: excelData,
+    addStudentArr,
+    deleteStudentArr,
+    editStudentArr,
+  } = useExcelDataState()
+  const {
+    fileNamesState: fileNames,
+    addFileName,
+    deleteFileName,
+    editFileName,
+  } = useFileNamesState()
+  const setTotalStudents = useTotalStudentsState(
+    (state) => state.setTotalStudentsState
+  )
+  const setMergedData = useMergedDataState((state) => state.setMergedDataState)
 
   const handleAddData = () => {
-    setExcelData((prevData) => [...prevData, []])
-    setFileNames((prevData) => [...prevData, ""])
+    addStudentArr([])
+    addFileName("")
   }
 
   const handleDeleteData = (index: number) => {
-    setFileNames((prevData) => {
-      const newData = [...prevData]
-      newData.splice(index, 1)
-      return newData
-    })
-    setExcelData((prevData) => {
-      const newData = [...prevData]
-      newData.splice(index, 1)
-      return newData
-    })
+    deleteStudentArr(index)
+    deleteFileName(index)
     toast.success("Deleted")
   }
 
@@ -55,16 +58,9 @@ const ExcelDataForm = () => {
     data: ExcelData[],
     index: number
   ) => {
-    setFileNames((prevData) => {
-      const newData = [...prevData]
-      newData[index] = fileName
-      return newData
-    })
-    setExcelData((prevData) => {
-      const newData = [...prevData]
-      newData[index] = data
-      return newData
-    })
+    editStudentArr(index, data)
+    editFileName(index, fileName)
+    toast.success("Saved")
   }
 
   useEffect(() => {
@@ -102,7 +98,13 @@ const ExcelDataForm = () => {
     newData.pop()
     console.log(newData)
     setMergedData(newData)
-  }, [excelData])
+  }, [excelData, setMergedData, setTotalStudents])
+  // Fix Hydration Error
+  const [isMounted, setIsMounted] = useState(false)
+  useEffect(() => {
+    if (!isMounted) setIsMounted(true)
+  }, [isMounted])
+  if (!isMounted) return null;
 
   return (
     <div className="form-group container !ml-0 max-sm:min-h-screen max-sm:!p-0 md:p-2">

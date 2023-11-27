@@ -1,20 +1,21 @@
 "use client"
 
 import React from "react"
-import { usePathname } from "next/navigation"
-import { HallPlansState } from "@/store/atoms"
-import { useRecoilValue } from "recoil"
+import { redirect, usePathname } from "next/navigation"
+import { useHallPlansState } from "@/store/hooks"
 
 import HallPLanTable from "@/components/tables/hall-plan"
 
 const Page = () => {
-  const hallPlans = useRecoilValue(HallPlansState)
+  const { hallPlansState } = useHallPlansState()
   const pathname = usePathname()
   const id = pathname.split("/").pop()
   const index = Number(id?.charAt(id.length - 1))
-  return (
-    <HallPLanTable data={hallPlans[index] || []} id={`hallplan${index}`} />
-  )
+  const hallPlan = hallPlansState[index]
+  if (!hallPlan) {
+    redirect("/404")
+  }
+  return <HallPLanTable data={[]} id={index} />
 }
 
 export default Page
