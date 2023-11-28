@@ -1,5 +1,6 @@
 "use server"
 
+import { generateSeatingPlan } from "@/server/seatplan"
 import {
   AttendanceSheet,
   Hall,
@@ -19,7 +20,7 @@ export const generateHallArrangement = async (
   studentData: StudentsPerYear[],
   hallData: Hall[]
 ): Promise<HallArrangementPlan[]> => {
-  return []
+  return generateSeatingPlan(studentData, hallData)
 }
 
 export const generateAttendaceSheet = async (

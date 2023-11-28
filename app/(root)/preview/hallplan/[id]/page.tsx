@@ -12,9 +12,7 @@ const Page = () => {
   const pathname = usePathname()
   const id = pathname.split("/").pop()
   const index = Number(id?.charAt(id.length - 1))
-  return (
-    <HallPLanTable data={hallPlans[index] || []} id={`hallplan${index}`} />
-  )
+  return <HallPLanTable data={hallPlans[index] || []} id={`hallplan${index}`} />
 }
 
 export default Page
