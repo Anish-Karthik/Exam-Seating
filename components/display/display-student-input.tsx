@@ -1,8 +1,8 @@
-import { mergedDataState } from "@/store/atoms/form"
-import { useRecoilValue } from "recoil"
+import { mergedDataState } from "@/store/atoms/form";
+import { useRecoilValue } from "recoil";
 
 const DisplayStudentInputData = () => {
-  const data = useRecoilValue(mergedDataState)
+  const data = useRecoilValue(mergedDataState);
   return (
     <div className="max-sm:hidden">
       <div className="table-responsive">
@@ -37,7 +37,7 @@ const DisplayStudentInputData = () => {
         </table>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default DisplayStudentInputData
+export default DisplayStudentInputData;

@@ -1,7 +1,30 @@
-import React from "react"
-import { HallPlan } from "@/server/type"
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { HallPlan } from "@/server/type";
+import { HallPlansState } from "@/store/atoms";
+import { useRecoilValue } from "recoil";
 
-const HallPLanTable = ({ data, id }: { data: HallPlan[]; id: string }) => {
+import { LOCAL_STORAGE_KEYS } from "@/lib/constants";
+
+const HallPLanTable = ({ index }: { index: number }) => {
+  const router = useRouter();
+  const hallPlans = useRecoilValue(HallPlansState);
+  const [data, setData] = useState<HallPlan[]>();
+  const id = `seatarrangement${index}}`;
+  useEffect(() => {
+    const data =
+      hallPlans && hallPlans.length
+        ? hallPlans
+        : JSON.parse(
+            window.localStorage.getItem(LOCAL_STORAGE_KEYS.hallPlans) || "[]"
+          );
+    console.log(data);
+    // @ts-ignore
+    setData(data[index]);
+  }, [hallPlans, index]);
+
+  if (!data) return <>Not found</>;
+
   return (
     <div className="table-responsive">
       <table className="table-bordered mx-auto table" id={id}>
@@ -71,7 +94,7 @@ const HallPLanTable = ({ data, id }: { data: HallPlan[]; id: string }) => {
         </tbody>
       </table>
     </div>
-  )
-}
+  );
+};
 
-export default HallPLanTable
+export default HallPLanTable;

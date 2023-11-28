@@ -1,30 +1,30 @@
-import { useEffect, useState } from "react"
-import { Hall } from "@/server/type"
-import { hallsState, totalHallCapacityState } from "@/store/atoms/form"
-import { toast } from "react-hot-toast"
-import { useRecoilState, useSetRecoilState } from "recoil"
+import { useEffect, useState } from "react";
+import { Hall } from "@/server/type";
+import { hallsState, totalHallCapacityState } from "@/store/atoms/form";
+import { toast } from "react-hot-toast";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
-import { Button } from "../ui/button"
-import DisplayHall from "./hall-form"
+import { Button } from "../ui/button";
+import DisplayHall from "./hall-form";
 
 // make this as functional argument
 // const [halls, setHalls] = useState<Hall[]>([]);
 const HallForm = () => {
-  const [halls, setHalls] = useRecoilState(hallsState)
-  const setTotalHallCapacity = useSetRecoilState(totalHallCapacityState)
+  const [halls, setHalls] = useRecoilState(hallsState);
+  const setTotalHallCapacity = useSetRecoilState(totalHallCapacityState);
   const [editingArray, setEditingArray] = useState<boolean[]>(
     new Array(halls.length).fill(false)
-  )
-  console.log(halls)
+  );
+  console.log(halls);
   useEffect(() => {
-    const total = halls.reduce((acc, curr) => acc + curr.studentsPerHall, 0)
-    console.log(halls)
-    console.log(total)
-    setTotalHallCapacity(total)
-  }, [halls, setTotalHallCapacity])
+    const total = halls.reduce((acc, curr) => acc + curr.studentsPerHall, 0);
+    console.log(halls);
+    console.log(total);
+    setTotalHallCapacity(total);
+  }, [halls, setTotalHallCapacity]);
 
   const handleSubmit = () => {
-    setEditingArray((prevArray) => [...prevArray, true])
+    setEditingArray((prevArray) => [...prevArray, true]);
     setHalls((prevHalls) => [
       ...prevHalls,
       {
@@ -40,25 +40,25 @@ const HallForm = () => {
           extra: 0,
         },
       },
-    ])
-  }
+    ]);
+  };
   const handleDeleteData = (index: number) => {
     setHalls((prevData) => {
-      const newData = [...prevData]
-      newData.splice(index, 1)
-      return newData
-    })
-    toast.success("Deleted hall data")
-  }
+      const newData = [...prevData];
+      newData.splice(index, 1);
+      return newData;
+    });
+    toast.success("Deleted hall data");
+  };
   const handleEditData = (index: number, hallData: Hall) => {
     setHalls((prevData) => {
-      const newData = [...prevData]
-      newData[index] = hallData
-      console.log(newData)
-      return newData
-    })
-    toast.success("Saved Hall data")
-  }
+      const newData = [...prevData];
+      newData[index] = hallData;
+      console.log(newData);
+      return newData;
+    });
+    toast.success("Saved Hall data");
+  };
   return (
     <div className="form-group container max-sm:min-h-screen max-sm:!p-0 md:!p-2">
       <Button
@@ -83,7 +83,7 @@ const HallForm = () => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default HallForm
+export default HallForm;

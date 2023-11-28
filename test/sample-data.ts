@@ -2,7 +2,7 @@ import {
   AttendanceSheet,
   HallArrangementPlan,
   HallPlanPerYear,
-} from "@/server/type"
+} from "@/server/type";
 
 export const sampleArrangementPlans: HallArrangementPlan[] = [
   {
@@ -38,7 +38,7 @@ export const sampleArrangementPlans: HallArrangementPlan[] = [
     hallno: "103",
     hallStrength: 10,
   },
-]
+];
 
 export const sampleAttendancePlans: AttendanceSheet[] = [
   // generate me 30 sample data for attendance sheet
@@ -458,7 +458,7 @@ export const sampleAttendancePlans: AttendanceSheet[] = [
       },
     ],
   },
-]
+];
 
 export const sampleHallPlans: HallPlanPerYear[] = [
   [
@@ -565,4 +565,4 @@ export const sampleHallPlans: HallPlanPerYear[] = [
       totalStrength: 30,
     },
   ],
-]
+];

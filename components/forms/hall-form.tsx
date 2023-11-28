@@ -1,10 +1,10 @@
-import { useState } from "react"
-import { Hall } from "@/server/type"
-import { zodResolver } from "@hookform/resolvers/zod"
-import * as DialogPrimitive from "@radix-ui/react-dialog"
-import { Check, Trash, X } from "lucide-react"
-import { useForm } from "react-hook-form"
-import * as z from "zod"
+import { useState } from "react";
+import { Hall } from "@/server/type";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { Check, Trash, X } from "lucide-react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 
 import {
   Dialog,
@@ -13,7 +13,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -21,18 +21,18 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
+} from "@/components/ui/form";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 
-import DisplayHallData from "../display/display-hall-data"
-import { Button } from "../ui/button"
-import { Input } from "../ui/input"
+import DisplayHallData from "../display/display-hall-data";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 
 const formSchema = z
   .object({
@@ -68,17 +68,17 @@ const formSchema = z
         data.studentsPerHall <=
           data.studentsPerBench *
             (data.benches.rows * data.benches.cols + data.benches.extra)
-      )
+      );
       return (
         data.studentsPerHall <=
         data.studentsPerBench *
           (data.benches.rows * data.benches.cols + data.benches.extra)
-      )
+      );
     },
     {
       message: "Insufficient number of benches",
     }
-  )
+  );
 
 const DisplayHall = ({
   defaultIsEdit,
@@ -88,45 +88,45 @@ const DisplayHall = ({
   index,
   setEditingIndex,
 }: {
-  setEditingIndex: React.Dispatch<React.SetStateAction<boolean[]>>
-  defaultIsEdit: boolean
-  hall: Hall
-  onDelete: (index: number) => void
-  index: number
-  onEdit: (index: number, hallData: Hall) => void
+  setEditingIndex: React.Dispatch<React.SetStateAction<boolean[]>>;
+  defaultIsEdit: boolean;
+  hall: Hall;
+  onDelete: (index: number) => void;
+  index: number;
+  onEdit: (index: number, hallData: Hall) => void;
 }) => {
-  const [hallData, setHallData] = useState<Hall>(hall)
-  const [isEditing, setIsEditing] = useState<boolean>(defaultIsEdit)
+  const [hallData, setHallData] = useState<Hall>(hall);
+  const [isEditing, setIsEditing] = useState<boolean>(defaultIsEdit);
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: hallData,
     mode: "onChange",
-  })
-  const { isValid, isSubmitting } = form.formState
+  });
+  const { isValid, isSubmitting } = form.formState;
   const handleCancel = (index: number) => {
-    form.reset(hallData)
-    toggleEdit(index)
-  }
+    form.reset(hallData);
+    toggleEdit(index);
+  };
   const toggleEdit = (index: number) => {
     setEditingIndex((prevState) => {
-      const newArr = [...prevState]
-      newArr[index] = !newArr[index]
-      return newArr
-    })
-    setIsEditing((prevState) => !prevState)
-  }
+      const newArr = [...prevState];
+      newArr[index] = !newArr[index];
+      return newArr;
+    });
+    setIsEditing((prevState) => !prevState);
+  };
 
   const handleSave = (index: number, data: Hall) => {
-    toggleEdit(index)
-    onEdit(index, data)
-  }
+    toggleEdit(index);
+    onEdit(index, data);
+  };
   const onSubmit = (data: Hall) => {
-    console.log(data)
-    setHallData((prev) => ({ ...prev, ...data }))
-    handleSave(index, data)
-  }
+    console.log(data);
+    setHallData((prev) => ({ ...prev, ...data }));
+    handleSave(index, data);
+  };
 
-  console.log(form.getValues())
+  console.log(form.getValues());
   if (!isEditing) {
     return (
       <DisplayHallData
@@ -135,7 +135,7 @@ const DisplayHall = ({
         index={index}
         onEdit={toggleEdit}
       />
-    )
+    );
   }
   return (
     <Form {...form}>
@@ -204,7 +204,7 @@ const DisplayHall = ({
                       <Select
                         defaultValue={field.value.toString()}
                         onValueChange={(value) => {
-                          field.onChange(value === "true")
+                          field.onChange(value === "true");
                         }}
                       >
                         <SelectTrigger className="min-w-[210px] lg:min-w-[150px] xl:min-w-[135px]">
@@ -234,7 +234,7 @@ const DisplayHall = ({
                       <Select
                         defaultValue={field.value.toString()}
                         onValueChange={(value) => {
-                          field.onChange(value === "true")
+                          field.onChange(value === "true");
                         }}
                       >
                         <SelectTrigger className="min-w-[210px] lg:min-w-[130px] xl:min-w-[115px]">
@@ -264,7 +264,7 @@ const DisplayHall = ({
                       <Select
                         defaultValue={field.value.toString()}
                         onValueChange={(value) => {
-                          field.onChange(parseInt(value))
+                          field.onChange(parseInt(value));
                         }}
                       >
                         <SelectTrigger className="min-w-[210px] lg:min-w-[130px] xl:min-w-[100px]">
@@ -297,7 +297,7 @@ const DisplayHall = ({
                         id={`studentsPerHall-${index}`}
                         {...field}
                         onChange={(event) => {
-                          field.onChange(event.target.valueAsNumber)
+                          field.onChange(event.target.valueAsNumber);
                         }}
                       />
                     </FormControl>
@@ -322,7 +322,7 @@ const DisplayHall = ({
                         id={`benchesRows-${index}`}
                         {...field}
                         onChange={(event) => {
-                          field.onChange(event.target.valueAsNumber)
+                          field.onChange(event.target.valueAsNumber);
                         }}
                       />
                     </FormControl>
@@ -347,7 +347,7 @@ const DisplayHall = ({
                         id={`benchesCols-${index}`}
                         {...field}
                         onChange={(event) => {
-                          field.onChange(event.target.valueAsNumber)
+                          field.onChange(event.target.valueAsNumber);
                         }}
                       />
                     </FormControl>
@@ -372,7 +372,7 @@ const DisplayHall = ({
                         id={`benchesExtra-${index}`}
                         {...field}
                         onChange={(event) => {
-                          field.onChange(event.target.valueAsNumber)
+                          field.onChange(event.target.valueAsNumber);
                         }}
                       />
                     </FormControl>
@@ -438,7 +438,7 @@ const DisplayHall = ({
         </div>
       </form>
     </Form>
-  )
-}
+  );
+};
 
-export default DisplayHall
+export default DisplayHall;

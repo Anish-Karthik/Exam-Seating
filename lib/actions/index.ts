@@ -1,31 +1,31 @@
-"use server"
+"use server";
 
-import { generateSeatingPlan } from "@/server/seatplan"
+import { generateSeatingPlan } from "@/server/seatplan";
 import {
   AttendanceSheet,
   Hall,
   HallArrangementPlan,
   HallPlanPerYear,
   StudentsPerYear,
-} from "@/server/type"
+} from "@/server/type";
 
 export const generateHallPlan = async (
   studentData: StudentsPerYear[],
   hallData: Hall[]
 ): Promise<HallPlanPerYear[]> => {
-  return []
-}
+  return [];
+};
 
 export const generateHallArrangement = async (
   studentData: StudentsPerYear[],
   hallData: Hall[]
 ): Promise<HallArrangementPlan[]> => {
-  return generateSeatingPlan(studentData, hallData)
-}
+  return generateSeatingPlan(studentData, hallData);
+};
 
 export const generateAttendaceSheet = async (
   studentData: StudentsPerYear[],
   hallData: Hall[]
 ): Promise<AttendanceSheet[]> => {
-  return []
-}
+  return [];
+};

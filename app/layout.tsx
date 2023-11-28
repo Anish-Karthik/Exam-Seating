@@ -1,22 +1,22 @@
-import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 
-import "./globals.css"
+import "./globals.css";
 
-import { Toaster } from "react-hot-toast"
+import { Toaster } from "react-hot-toast";
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Exam Seating",
   description:
     "Website to generate Hall Plan, Hall Arrangement and Student Attendance",
-}
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
@@ -27,5 +27,5 @@ export default function RootLayout({
         </main>
       </body>
     </html>
-  )
+  );
 }

@@ -1,4 +1,4 @@
-import { Hall, StudentsPerYear } from "./type"
+import { Hall, StudentsPerYear } from "./type";
 
 export const studentData: StudentsPerYear[] = [
   {
@@ -235,7 +235,7 @@ export const studentData: StudentsPerYear[] = [
       },
     ],
   },
-]
+];
 export const hallData: Hall[] = [
   {
     hallno: "1",
@@ -329,42 +329,42 @@ export const hallData: Hall[] = [
     },
    isInterchange: false,
   },*/
-]
+];
 
 export const mapYear = (year: number) => {
   switch (year) {
     case 1:
-      return "I"
+      return "I";
     case 2:
-      return "II"
+      return "II";
     case 3:
-      return "III"
+      return "III";
     case 4:
-      return "IV"
+      return "IV";
     default:
-      return "I"
+      return "I";
   }
-}
+};
 
 export const mapSemester = (semester: number) => {
   switch (semester) {
     case 1:
-      return "I"
+      return "I";
     case 2:
-      return "II"
+      return "II";
     case 3:
-      return "III"
+      return "III";
     case 4:
-      return "IV"
+      return "IV";
     case 5:
-      return "V"
+      return "V";
     case 6:
-      return "VI"
+      return "VI";
     case 7:
-      return "VII"
+      return "VII";
     case 8:
-      return "VIII"
+      return "VIII";
     default:
-      return "I"
+      return "I";
   }
-}
+};

@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 
 const SampleData = () => {
   return (
@@ -34,7 +34,7 @@ const SampleData = () => {
         </table>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SampleData
+export default SampleData;

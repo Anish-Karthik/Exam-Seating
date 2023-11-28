@@ -1,7 +1,14 @@
-import React from "react"
+"use client";
 
-const page = () => {
-  return <div>page</div>
-}
+import { usePathname } from "next/navigation";
 
-export default page
+import HallArrangementTable from "@/components/tables/hall-arrangement-plan";
+
+const Page = () => {
+  const pathname = usePathname();
+  const id = pathname.split("/").pop();
+  const index = Number(id?.charAt(id.length - 1));
+  return <HallArrangementTable index={index} />;
+};
+
+export default Page;

@@ -1,35 +1,35 @@
-import { hallData, mapSemester, mapYear, studentData } from "./data"
-import { generateSeatingPlan } from "./seatplan"
-import { Hall, HallPlanPerYear, StudentsPerYear } from "./type"
+import { hallData, mapSemester, mapYear, studentData } from "./data";
+import { generateSeatingPlan } from "./seatplan";
+import { Hall, HallPlanPerYear, StudentsPerYear } from "./type";
 
-const totalStudents = studentData.reduce((acc, curr) => acc + curr.strength, 0)
+const totalStudents = studentData.reduce((acc, curr) => acc + curr.strength, 0);
 
 export const extractDataFromRollno = (data: string) => {
-  if (data === "") return { year: "", section: "", rollNo: 0 }
-  const dataExtract = data.split("-")
-  const year = dataExtract[0]
-  const section = dataExtract[1].split("(")[0]
-  const rollNo = Number(dataExtract[1].split("(")[1].split(")")[0])
-  return { year, section, rollNo }
-}
+  if (data === "") return { year: "", section: "", rollNo: 0 };
+  const dataExtract = data.split("-");
+  const year = dataExtract[0];
+  const section = dataExtract[1].split("(")[0];
+  const rollNo = Number(dataExtract[1].split("(")[1].split(")")[0]);
+  return { year, section, rollNo };
+};
 
 export const generateHallPlanForHall = (
   studentData: StudentsPerYear[],
   hallData: Hall[]
 ) => {
-  const seatPlan = generateSeatingPlan(studentData, hallData)
-  let hallPlan: HallPlanPerYear[] = []
+  const seatPlan = generateSeatingPlan(studentData, hallData);
+  let hallPlan: HallPlanPerYear[] = [];
   for (let hallCount = 0; hallCount < seatPlan.length; hallCount++) {
-    const { hallArrangement: hall, hallStrength, hallno } = seatPlan[hallCount]
-    const [row, col] = [hall.length, hall[0].length]
+    const { hallArrangement: hall, hallStrength, hallno } = seatPlan[hallCount];
+    const [row, col] = [hall.length, hall[0].length];
     let {
       rollNo: startRollNo,
       section,
       year,
-    } = extractDataFromRollno(hall[0][0][0])
-    let semester = ""
-    let dept = ""
-    console.log(startRollNo, section, year)
+    } = extractDataFromRollno(hall[0][0][0]);
+    let semester = "";
+    let dept = "";
+    console.log(startRollNo, section, year);
   }
 
   // let studentCount = 0
@@ -111,4 +111,4 @@ export const generateHallPlanForHall = (
   //   hallStudentCount++
   //   studentCount++
   // }
-}
+};

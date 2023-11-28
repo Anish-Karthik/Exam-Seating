@@ -1,18 +1,18 @@
-import React from "react"
-import Link from "next/link"
+import React from "react";
+import Link from "next/link";
 
-import { exportHTMLTableToExcel } from "@/lib/utils"
+import { exportHTMLTableToExcel } from "@/lib/utils";
 
-import { Button } from "../ui/button"
+import { Button } from "../ui/button";
 
 const DisplayDownloadOptions = ({
   name,
   size,
 }: {
-  name: string
-  size: number
+  name: string;
+  size: number;
 }) => {
-  const arr = new Array(size).fill(0)
+  const arr = new Array(size).fill(0);
   return (
     <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {arr.map((_, index) => (
@@ -39,7 +39,7 @@ const DisplayDownloadOptions = ({
         </div>
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default DisplayDownloadOptions
+export default DisplayDownloadOptions;

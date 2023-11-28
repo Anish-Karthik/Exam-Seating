@@ -1,13 +1,30 @@
-import React from "react"
-import { AttendanceSheet } from "@/server/type"
+import React, { useEffect, useState } from "react";
+import { redirect, useRouter } from "next/navigation";
+import { AttendanceSheet } from "@/server/type";
+import { HallArrangementPlansState, HallAttendancesState } from "@/store/atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
 
-const AttendanceTable = ({
-  data,
-  id,
-}: {
-  data: AttendanceSheet
-  id: string
-}) => {
+import { LOCAL_STORAGE_KEYS } from "@/lib/constants";
+
+const AttendanceTable = ({ index }: { index: number }) => {
+  const id = `attendance${index}`;
+  const router = useRouter();
+  const attendances = useRecoilValue(HallAttendancesState);
+  const [data, setData] = useState<AttendanceSheet>();
+  useEffect(() => {
+    const data =
+      attendances && attendances.length
+        ? attendances
+        : JSON.parse(
+            window.localStorage.getItem(LOCAL_STORAGE_KEYS.hallAttendances) ||
+              "[]"
+          );
+    console.log(data);
+    // @ts-ignore
+    setData(data[index]);
+  }, [attendances, index]);
+
+  if (!data) return <>Not found</>;
   return (
     <div className="table-responsive">
       <table className="table-bordered mx-auto table" id={id}>
@@ -67,7 +84,7 @@ const AttendanceTable = ({
         </tbody>
       </table>
     </div>
-  )
-}
+  );
+};
 
-export default AttendanceTable
+export default AttendanceTable;

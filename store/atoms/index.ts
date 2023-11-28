@@ -2,16 +2,15 @@ import {
   excelDataState,
   fileNamesState,
   hallsState,
-  hallState,
   mergedDataState,
   totalHallCapacityState,
   totalStudentsState,
-} from "./form"
+} from "./form";
 import {
   HallArrangementPlansState,
   HallAttendancesState,
   HallPlansState,
-} from "./output"
+} from "./output";
 
 export {
   excelDataState,
@@ -20,8 +19,7 @@ export {
   HallAttendancesState,
   HallPlansState,
   hallsState,
-  hallState,
   mergedDataState,
   totalHallCapacityState,
   totalStudentsState,
-}
+};
