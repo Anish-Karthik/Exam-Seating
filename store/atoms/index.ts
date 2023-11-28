@@ -15,12 +15,13 @@ import {
 
 export {
   excelDataState,
-  fileNamesState, HallArrangementPlansState,
+  fileNamesState,
+  HallArrangementPlansState,
   HallAttendancesState,
   HallPlansState,
   hallsState,
   hallState,
   mergedDataState,
   totalHallCapacityState,
-  totalStudentsState
+  totalStudentsState,
 }

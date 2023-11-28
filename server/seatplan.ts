@@ -1,18 +1,26 @@
 import { hallData, mapYear, studentData } from "./data"
 import { Hall, HallArrangementPlan, Seat, StudentsPerYear } from "./type"
 
-const totalStudents = studentData.reduce((acc, curr) => acc + curr.strength, 0)
-
 export const generateSeatingPlan = (
   studentData: StudentsPerYear[],
   hallData: Hall[]
 ) => {
+  // console.log(studentData)
+  // console.log(hallData)
+  const totalStudents = studentData.reduce(
+    (acc, curr) => acc + curr.strength,
+    0
+  )
+  let check = 0
   let studentCount = 0
   let overallStudentCount = 0
   let studentArrayIndex = 0
   let hallIndex = 0
   let seatvalue = ""
-  let studentArrayLength = studentData[studentArrayIndex].strength
+  let studentStrength = studentData[studentArrayIndex].strength
+  for (let i = 0; i < studentStrength; i++) {
+    // console.log(studentData[studentArrayIndex].studentData[i])
+  }
   let res: any[][][] = []
   let hallLength = hallData.length
   let i = 0
@@ -27,7 +35,7 @@ export const generateSeatingPlan = (
       }
       table.push(row)
     }
-    console.log(table)
+    // console.log(table)
     res.push(table)
     hallArrangementPlans.push({
       hallArrangement: table,
@@ -41,54 +49,65 @@ export const generateSeatingPlan = (
       // Handle interchange logic
     } else if (hallData[hallIndex].studentsPerBench === 2) {
       if (hallData[hallIndex].isSameYearPerBenchAllowed === true) {
-        for (let j = 0; j < hallData[hallIndex].benches.rows; j++) {
+        for (let j = 0; j < hallData[hallIndex].benches.cols; j++) {
           for (let ind = 0; ind < 2; ind++) {
-            for (let k = 0; k < hallData[hallIndex].benches.cols; k++) {
-              let year = mapYear(studentData[studentArrayIndex].year)
-              let currentSection =
+            for (let k = 0; k < hallData[hallIndex].benches.rows; k++) {
+              const year = mapYear(studentData[studentArrayIndex].year)
+              console.log(studentCount)
+              if (hallIndex > 0) {
+                console.log(studentCount, hallIndex)
+              }
+              // console.log(studentCount,studentData[studentArrayIndex].studentData[studentCount])
+              const currentSection =
                 studentData[studentArrayIndex].studentData[studentCount].section
-              let serielno =
+              const serielno =
                 studentData[studentArrayIndex].studentData[studentCount].sno
-              seatvalue = year + currentSection + serielno
-              hallArrangementPlans[hallIndex].hallArrangement[j][k][ind] =
+              seatvalue = year + "-" + currentSection + `(${serielno})`
+              hallArrangementPlans[hallIndex].hallArrangement[k][j][ind] =
                 seatvalue
+              //console.log(hallArrangementPlans[hallIndex].hallArrangement)
               studentCount++
               overallStudentCount++
+              console.log(overallStudentCount, totalStudents)
               if (overallStudentCount === totalStudents) {
-                break
+                return hallArrangementPlans
               }
-              if (studentCount === studentArrayLength) {
+              if (studentCount === studentStrength) {
                 studentArrayIndex++
                 studentCount = 0
-                studentArrayLength = studentData[studentArrayIndex].strength
+                studentStrength = studentData[studentArrayIndex].strength
               }
             }
           }
         }
+        console.log(studentCount, hallIndex)
+        console.log(hallArrangementPlans[hallIndex].hallArrangement)
+        hallIndex++
+        if (hallIndex === hallLength) {
+          hallIndex = 0
+        }
       } else {
         // Handle other logic for two students per bench
       }
-      console.log(hallArrangementPlans[hallIndex].hallArrangement)
     } else {
       for (let j = 0; j < hallData[hallIndex].benches.cols; j++) {
         for (let k = 0; k < hallData[hallIndex].benches.rows; k++) {
-          let year = mapYear(studentData[studentArrayIndex].year)
-          let currentSection =
+          const year = mapYear(studentData[studentArrayIndex].year)
+          const currentSection =
             studentData[studentArrayIndex].studentData[studentCount].section
-          let serielno =
+          const serielno =
             studentData[studentArrayIndex].studentData[studentCount].sno
           seatvalue = year + "-" + currentSection + `(${serielno})`
           hallArrangementPlans[hallIndex].hallArrangement[k][j][0] = seatvalue
           studentCount++
           overallStudentCount++
-
           if (overallStudentCount === totalStudents) {
-            break
+            return hallArrangementPlans
           }
-          if (studentCount === studentArrayLength) {
+          if (studentCount === studentStrength) {
             studentArrayIndex++
             studentCount = 0
-            studentArrayLength = studentData[studentArrayIndex].strength
+            studentStrength = studentData[studentArrayIndex].strength
           }
         }
       }
@@ -101,4 +120,4 @@ export const generateSeatingPlan = (
   }
   return hallArrangementPlans
 }
-console.log(generateSeatingPlan(studentData, hallData))
+// console.log(generateSeatingPlan(studentData, hallData))

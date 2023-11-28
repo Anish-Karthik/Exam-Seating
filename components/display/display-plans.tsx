@@ -33,14 +33,15 @@ const DisplayPlan = ({
 }) => {
   const studentsPerYearData = useRecoilValue(studentPerYearState)
   const hallsData = useRecoilValue(hallsState)
-  const [data, setData] = useState(sampledata)
+  const [data, setData] = useState([])
 
   useEffect(() => {
     // TODO
     ;(async () => {
       const res = await generatePlan(studentsPerYearData, hallsData)
       // @ts-ignore
-      setData((prev) => [...prev, ...res])
+      setData((prev) => [...res])
+      console.log(res)
     })()
     console.log(sampledata)
   }, [generatePlan, hallsData, sampledata, setData, studentsPerYearData])
