@@ -1,39 +1,50 @@
-"use client"
+"use client";
 
-import { totalHallCapacityState, totalStudentsState } from "@/store/atoms/form"
+import dynamic from "next/dynamic";
+import Link from "next/link";
+import { totalHallCapacityState, totalStudentsState } from "@/store/atoms/form";
 import {
   sampleArrangementPlans,
   sampleAttendancePlans,
   sampleHallPlans,
-} from "@/test/sample-data"
-import { useRecoilValue } from "recoil"
+} from "@/test/sample-data";
+import { useRecoilValue } from "recoil";
 
 import {
   generateAttendaceSheet,
   generateHallArrangement,
   generateHallPlan,
-} from "@/lib/actions"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+} from "@/lib/actions";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import DisplayPlan from "./display-plans"
+import TotalHallCapacity from "../mini-components/total-hall-capacity";
+import TotalStudents from "../mini-components/total-students";
+import { Button } from "../ui/button";
+
+const DisplayPlan = dynamic(
+  () => import("@/components/display/display-plans"),
+  {
+    ssr: false,
+  }
+);
 
 const DisplayPage = () => {
   // const halls = useRecoilValue(hallsState);
   // const excelData = useRecoilValue(excelDataState);
   // const mergedData = useRecoilValue(mergedDataState);
-  const totalHallCapacity = useRecoilValue(totalHallCapacityState)
-  const totalStudents = useRecoilValue(totalStudentsState)
   // const [tab, setTab] = useState<"plan" | "arrangement" | "attendance">("plan");
+
   return (
     <div className="form-group container flex flex-col gap-2 max-sm:min-h-screen max-sm:!p-0">
       <div className="flex items-center justify-between">
+        <div>
+          <Link href="/">
+            <Button variant="outline">Go Back</Button>
+          </Link>
+        </div>
         <div className="flex gap-6 max-md:flex-col">
-          <h1 className="text-2xl font-bold">
-            Total Hall Capacity: {totalHallCapacity}
-          </h1>
-          <h1 className="text-2xl font-bold">
-            Total Students: {totalStudents}
-          </h1>
+          <TotalHallCapacity />
+          <TotalStudents />
         </div>
         {/* <div className="flex gap-6 max-md:flex-col">
           <Button onClick={() => setTab("plan")}>Hall Plan</Button>
@@ -56,25 +67,16 @@ const DisplayPage = () => {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="plan">
-          <DisplayPlan
-            name="hallplan"
-            generatePlan={generateHallPlan}
-            sampledata={sampleHallPlans}
-          />
+          <DisplayPlan name="hallplan" sampledata={sampleHallPlans} />
         </TabsContent>
         <TabsContent value="arrangement">
           <DisplayPlan
             name="seatarrangement"
-            generatePlan={generateHallArrangement}
             sampledata={sampleArrangementPlans}
           />
         </TabsContent>
         <TabsContent value="attendance">
-          <DisplayPlan
-            name="attendance"
-            generatePlan={generateAttendaceSheet}
-            sampledata={sampleAttendancePlans}
-          />
+          <DisplayPlan name="attendance" sampledata={sampleAttendancePlans} />
         </TabsContent>
       </Tabs>
 
@@ -82,7 +84,7 @@ const DisplayPage = () => {
       {tab === "arrangement" && <DisplayHallArrangement />}
       {tab === "attendance" && <DisplayHallAttendance />} */}
     </div>
-  )
-}
+  );
+};
 
-export default DisplayPage
+export default DisplayPage;

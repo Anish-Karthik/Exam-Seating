@@ -2,6 +2,7 @@ import { hallData, mapSemester, mapYear, studentData } from "./data"
 import { Hall, HallArrangementPlan, Seat, StudentsPerYear } from "./type"
 import { intialize } from "./utils"
 
+
 export const generateSeatingPlan = (
   studentData: StudentsPerYear[],
   hallData: Hall[]
@@ -21,6 +22,7 @@ export const generateSeatingPlan = (
   let hallLength = hallData.length
   
   const { hallArrangementPlans, hallArrangementPlansWithSemester } = intialize( hallData )
+
   while (overallStudentCount < totalStudents) {
     let studentCountPerHall=0
     if (hallData[hallIndex].isInterchange === true) {
@@ -32,6 +34,7 @@ export const generateSeatingPlan = (
             for (let k = 0; k < hallData[hallIndex].benches.rows; k++) {
               if(studentCountPerHall===hallData[hallIndex].studentsPerHall){
                 continue
+
               }
               const year = mapYear(studentData[studentArrayIndex].year)
               const semester=mapSemester(studentData[studentArrayIndex].semester)
@@ -40,10 +43,11 @@ export const generateSeatingPlan = (
               const name=studentData[studentArrayIndex].studentData[studentCount].name
               // console.log(studentCount,studentData[studentArrayIndex].studentData[studentCount])
               const currentSection =
-                studentData[studentArrayIndex].studentData[studentCount].section
+                studentData[studentArrayIndex].studentData[studentCount]
+                  .section;
               const serielno =
-                studentData[studentArrayIndex].studentData[studentCount].sno
-              seatvalue = year + "-" + currentSection + `(${serielno})`
+                studentData[studentArrayIndex].studentData[studentCount].sno;
+              seatvalue = year + "-" + currentSection + `(${serielno})`;
               hallArrangementPlans[hallIndex].hallArrangement[k][j][ind] =
                 seatvalue
               hallArrangementPlansWithSemester[hallIndex].hallArrangement[k][j][ind]=seatvalue+"-"+semester+'-'+dept+'-'+regNo+'-'+name
@@ -54,11 +58,12 @@ export const generateSeatingPlan = (
               console.log(overallStudentCount, totalStudents)
               if (overallStudentCount === totalStudents) {
                 return {hallArrangementPlans, hallArrangementPlansWithSemester}
+
               }
               if (studentCount === studentStrength) {
-                studentArrayIndex++
-                studentCount = 0
-                studentStrength = studentData[studentArrayIndex].strength
+                studentArrayIndex++;
+                studentCount = 0;
+                studentStrength = studentData[studentArrayIndex].strength;
               }
             }
           }
@@ -66,7 +71,7 @@ export const generateSeatingPlan = (
         
         hallIndex++
         if (hallIndex === hallLength) {
-          hallIndex = 0
+          hallIndex = 0;
         }
       } else {
         // Handle other logic for two students per bench
@@ -83,7 +88,7 @@ export const generateSeatingPlan = (
           const regNo=studentData[studentArrayIndex].studentData[studentCount].regno
           const name=studentData[studentArrayIndex].studentData[studentCount].name
           const currentSection =
-            studentData[studentArrayIndex].studentData[studentCount].section
+            studentData[studentArrayIndex].studentData[studentCount].section;
           const serielno =
             studentData[studentArrayIndex].studentData[studentCount].sno
           seatvalue = year + "-" + currentSection + `(${serielno})`
@@ -96,16 +101,16 @@ export const generateSeatingPlan = (
             return {hallArrangementPlans, hallArrangementPlansWithSemester}
           }
           if (studentCount === studentStrength) {
-            studentArrayIndex++
-            studentCount = 0
-            studentStrength = studentData[studentArrayIndex].strength
+            studentArrayIndex++;
+            studentCount = 0;
+            studentStrength = studentData[studentArrayIndex].strength;
           }
         }
       }
-      console.log(hallArrangementPlans[hallIndex].hallArrangement)
-      hallIndex++
+      console.log(hallArrangementPlans[hallIndex].hallArrangement);
+      hallIndex++;
       if (hallIndex === hallLength) {
-        hallIndex = 0
+        hallIndex = 0;
       }
     }
   }

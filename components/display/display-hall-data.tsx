@@ -1,7 +1,7 @@
-import React from "react"
-import { Hall } from "@/server/type"
-import * as DialogPrimitive from "@radix-ui/react-dialog"
-import { Edit, Trash } from "lucide-react"
+import React from "react";
+import { Hall } from "@/server/type";
+import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { Edit, Trash } from "lucide-react";
 
 import {
   Dialog,
@@ -10,9 +10,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 
-import { Button } from "../ui/button"
+import { Button } from "../ui/button";
 
 const DisplayHallData = ({
   hall,
@@ -20,10 +20,10 @@ const DisplayHallData = ({
   index,
   onEdit,
 }: {
-  hall: Hall
-  onDelete: (index: number) => void
-  index: number
-  onEdit: (index: number) => void
+  hall: Hall;
+  onDelete: (index: number) => void;
+  index: number;
+  onEdit: (index: number) => void;
 }) => {
   return (
     <div className="flex w-full flex-col-reverse rounded-md bg-slate-700/20 p-2 max-sm:p-0">
@@ -132,7 +132,7 @@ const DisplayHallData = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default DisplayHallData
+export default DisplayHallData;

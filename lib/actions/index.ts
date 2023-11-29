@@ -1,15 +1,15 @@
-"use server"
+"use server";
 
 import { generateAttendancePlanForHall } from "@/server/attendance"
 import { generateHallPlanForHall } from "@/server/hallplan"
-import { generateSeatingPlan } from "@/server/seatplan"
+
 import {
   AttendanceSheet,
   Hall,
   HallArrangementPlan,
   HallPlanPerYear,
   StudentsPerYear,
-} from "@/server/type"
+} from "@/server/type";
 
 export const generateHallArrangement = async (
   studentData: StudentsPerYear[],

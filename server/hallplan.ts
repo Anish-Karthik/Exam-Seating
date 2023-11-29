@@ -4,7 +4,7 @@ import { Hall, HallPlanPerYear, StudentsPerYear ,HallArrangementPlan} from "./ty
 
 import { intialize } from "./utils"
 
-const totalStudents = studentData.reduce((acc, curr) => acc + curr.strength, 0)
+const totalStudents = studentData.reduce((acc, curr) => acc + curr.strength, 0);
 
 export const extractDataFromRollno = (data: string) => {
   if (!data) return { year: "", section: "", rollNo: 0 ,semester:"",dept:"",regNo:0,name:''}

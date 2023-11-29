@@ -1,9 +1,13 @@
-"use client"
+"use client";
 
-import DisplayPage from "@/components/display/display-page"
+import dynamic from "next/dynamic";
+
+const DisplayPage = dynamic(() => import("@/components/display/display-page"), {
+  ssr: false,
+});
 
 const page = () => {
-  return <DisplayPage />
-}
+  return <DisplayPage />;
+};
 
-export default page
+export default page;
