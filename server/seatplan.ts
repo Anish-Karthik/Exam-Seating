@@ -6,7 +6,6 @@ export const generateSeatingPlan = (
   studentData: StudentsPerYear[],
   hallData: Hall[]
 ) => {
-  // console.log(studentData)
   // console.log(hallData)
   const totalStudents = studentData.reduce(
     (acc, curr) => acc + curr.strength,
@@ -37,9 +36,8 @@ export const generateSeatingPlan = (
               const year = mapYear(studentData[studentArrayIndex].year)
               const semester=mapSemester(studentData[studentArrayIndex].semester)
               const dept=studentData[studentArrayIndex].dept
-              if (hallIndex > 0) {
-                console.log(studentCount, hallIndex)
-              }
+              const regNo=studentData[studentArrayIndex].studentData[studentCount].regno
+              const name=studentData[studentArrayIndex].studentData[studentCount].name
               // console.log(studentCount,studentData[studentArrayIndex].studentData[studentCount])
               const currentSection =
                 studentData[studentArrayIndex].studentData[studentCount].section
@@ -48,7 +46,7 @@ export const generateSeatingPlan = (
               seatvalue = year + "-" + currentSection + `(${serielno})`
               hallArrangementPlans[hallIndex].hallArrangement[k][j][ind] =
                 seatvalue
-              hallArrangementPlansWithSemester[hallIndex].hallArrangement[k][j][ind]=seatvalue+"-"+semester+'-'+dept
+              hallArrangementPlansWithSemester[hallIndex].hallArrangement[k][j][ind]=seatvalue+"-"+semester+'-'+dept+'-'+regNo+'-'+name
               //console.log(hallArrangementPlans[hallIndex].hallArrangement)
               studentCount++
               studentCountPerHall++
@@ -65,8 +63,7 @@ export const generateSeatingPlan = (
             }
           }
         }
-        console.log(studentCount, hallIndex)
-        console.log(hallArrangementPlans[hallIndex].hallArrangement)
+        
         hallIndex++
         if (hallIndex === hallLength) {
           hallIndex = 0
@@ -78,19 +75,20 @@ export const generateSeatingPlan = (
       for (let j = 0; j < hallData[hallIndex].benches.cols; j++) {
         for (let k = 0; k < hallData[hallIndex].benches.rows; k++) {
           if(studentCountPerHall===hallData[hallIndex].studentsPerHall){
-            console.log('continue')
                 continue
               }
           const year = mapYear(studentData[studentArrayIndex].year)
           const semester=mapSemester(studentData[studentArrayIndex].semester)
           const dept=studentData[studentArrayIndex].dept
+          const regNo=studentData[studentArrayIndex].studentData[studentCount].regno
+          const name=studentData[studentArrayIndex].studentData[studentCount].name
           const currentSection =
             studentData[studentArrayIndex].studentData[studentCount].section
           const serielno =
             studentData[studentArrayIndex].studentData[studentCount].sno
           seatvalue = year + "-" + currentSection + `(${serielno})`
           hallArrangementPlans[hallIndex].hallArrangement[k][j][0] = seatvalue
-          hallArrangementPlansWithSemester[hallIndex].hallArrangement[k][j][0]=seatvalue+"-"+semester+'-'+dept
+          hallArrangementPlansWithSemester[hallIndex].hallArrangement[k][j][0]=seatvalue+"-"+semester+'-'+dept+'-'+regNo+'-'+name
           studentCount++
           overallStudentCount++
           studentCountPerHall++

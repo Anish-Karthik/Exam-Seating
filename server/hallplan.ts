@@ -7,15 +7,17 @@ import { intialize } from "./utils"
 const totalStudents = studentData.reduce((acc, curr) => acc + curr.strength, 0)
 
 export const extractDataFromRollno = (data: string) => {
-  if (data === "") return { year: "", section: "", rollNo: 0 ,semester:"",dept:""}
+  if (!data) return { year: "", section: "", rollNo: 0 ,semester:"",dept:"",regNo:0,name:''}
   const dataExtract = data.split("-")
   const year = dataExtract[0]
   const section = dataExtract[1].split("(")[0]
   const rollNo = Number(dataExtract[1].split("(")[1].split(")")[0])
-  const semester=dataExtract[dataExtract.length-2]
-  const dept=dataExtract[dataExtract.length-1]
-  console.log(year, section, rollNo,semester,dept,dataExtract)
-  return { year, section, rollNo ,semester,dept}
+  const semester=dataExtract[dataExtract.length-4]
+  const dept=dataExtract[dataExtract.length-3]
+  const regNo=Number(dataExtract[dataExtract.length-2])
+  const name=dataExtract[dataExtract.length-1]
+  
+  return { year, section, rollNo ,semester,dept,regNo,name}
 }
 
 function intializeHallplan(seatPlan: HallArrangementPlan[]){
@@ -80,7 +82,6 @@ export const generateHallPlanForHall = (
     let {rollNo: startRollNo,section:prevSec,year:prevYear,} = extractDataFromRollno(hall[0][0][0])
     // const endRollno='0'
 
-    console.log(startRollNo, prevSec, prevYear)
     
     const istwoperbench = hallData[hallCount].studentsPerBench === 2
 
@@ -115,6 +116,9 @@ export const generateHallPlanForHall = (
             prevYear = year
           }
           else{
+            if(hall[j][i][0]!){
+              endRollno=extractDataFromRollno(hall[j][i][0]).rollNo
+            }
             if(i==col-1 && j==row-1 && hall[j][i][0]!==""){
               mapPlanPerYear.get(prevYear)?.push({
                 section: prevSec,
@@ -140,7 +144,6 @@ export const generateHallPlanForHall = (
         for (let ind = 0; ind < 2; ind++) {
           for (let k = 0; k <row; k++) {
             const { year, section, rollNo ,semester,dept} = extractDataFromRollno(hall[k][j][ind])
-            console.log(rollNo)
             let {rollNo:endRollno}=extractDataFromRollno(hall[k][j][ind])
             if(k!=0 || j!=0){
               let c = ind === 0 ? 1 : 0;
@@ -176,7 +179,9 @@ export const generateHallPlanForHall = (
               prevYear = year
             }
             else{
+              if(hall[k][j][ind]){
               endRollno=extractDataFromRollno(hall[k][j][ind]).rollNo
+              }
             if(j==col-1 && k==row-1 && ind==1 && hall[k][j][ind]!==""){
               mapPlanPerYear.get(prevYear)?.push({
                 section: prevSec,
@@ -201,89 +206,9 @@ export const generateHallPlanForHall = (
   }
   const hallPlanArray: HallPlanPerYear[] = []
   for (const [key, value] of mapPlanPerYear.entries()) {
-    console.log(key, value)
     hallPlanArray.push(value)
   }
   return hallPlanArray
   
 }
 
-// let studentCount = 0
-  // let overallStudentCount = 0
-  // let hallStudentCount = 0
-  // let hallCount = 0
-  // let previousSection = studentData[0].studentData[0].section
-  // let currentSection = studentData[0].studentData[0].section
-  // let studentArrayLength = studentData[0].strength
-  // let studentIndex = 0
-  // let startRollNo = studentData[0].studentData[0].sno
-  // const hallPlan: HallPlanPerYear = []
-  // let endRollno = 0
-
-  // while (true) {
-  //   // isf the reading index strength reachesd Read the next index
-  //   if (studentArrayLength == studentCount) {
-  //     studentIndex++
-  //     studentCount = 0
-  //     if (studentIndex == studentData.length) {
-  //       hallPlan.push({
-  //         section: previousSection,
-  //         hallno: hallData[hallCount].hallno.toString(),
-  //         totalStrength: hallData[hallCount].studentsPerHall,
-  //         rollNo: {
-  //           from: startRollNo.toString(),
-  //           to: endRollno.toString(),
-  //         },
-
-  //         year: mapYear(studentData[studentIndex - 1].year)!,
-  //         semester: mapSemester(studentData[studentIndex - 1].semester)!,
-  //         dept: studentData[studentIndex - 1].dept,
-  //       })
-  //       return hallPlan
-  //     }
-  //   }
-  //   currentSection = studentData[studentIndex].studentData[studentCount].section
-  //   if (
-  //     hallStudentCount == hallData[hallCount].studentsPerHall ||
-  //     previousSection != currentSection ||
-  //     overallStudentCount == totalStudents
-  //   ) {
-  //     if (studentCount == 0) {
-  //       endRollno =
-  //         studentData[studentIndex - 1].studentData[
-  //           studentData[studentIndex - 1].strength - 1
-  //         ].sno
-  //     } else {
-  //       endRollno = studentData[studentIndex].studentData[studentCount - 1].sno
-  //     }
-
-  //     hallPlan.push({
-  //       section: previousSection,
-  //       hallno: hallData[hallCount].hallno.toString(),
-  //       totalStrength: hallData[hallCount].studentsPerHall,
-  //       rollNo: {
-  //         from: startRollNo.toString(),
-  //         to: endRollno.toString(),
-  //       },
-
-  //       year: mapYear(studentData[studentIndex].year)!,
-  //       semester: mapSemester(studentData[studentIndex].semester)!,
-  //       dept: studentData[studentIndex].dept,
-  //     })
-
-  //     if (overallStudentCount == totalStudents) {
-  //       return hallPlan
-  //     }
-
-  //     startRollNo = studentData[studentIndex].studentData[studentCount].sno
-
-  //     if (hallStudentCount == hallData[hallCount].studentsPerHall) {
-  //       hallCount++
-  //       hallStudentCount = 0
-  //     }
-  //     previousSection = currentSection
-  //   }
-  //   overallStudentCount++
-  //   hallStudentCount++
-  //   studentCount++
-  // }

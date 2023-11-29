@@ -5,6 +5,12 @@ export type Student = {
   rollno: string
   section: string
 }
+export type AttendanceStudent = {
+  name: string
+  sno: number
+  regno: number
+  section: string
+}
 
 export type StudentsPerYear = {
   year: 1 | 2 | 3 | 4
@@ -63,5 +69,5 @@ export type HallArrangementPlan = {
 // expected output type is AttendanceSheet[] (i.e. AttendaceSheet for all halls)
 export type AttendanceSheet = {
   hallno: string
-  studentData: Student[]
+  studentData: AttendanceStudent[]
 }
