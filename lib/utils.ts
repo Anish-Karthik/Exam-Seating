@@ -84,3 +84,49 @@ export function exportHTMLTableToExcel(
     ? XLSX.write(workBook, { bookType: type, bookSST: true, type: "base64" })
     : XLSX.writeFile(workBook, (fileName || "Skills") + "." + (type || "xlsx"));
 }
+
+export function romanToInt(s: string): number {
+  const roman = {
+    I: 1,
+    V: 5,
+    X: 10,
+    L: 50,
+    C: 100,
+    D: 500,
+    M: 1000,
+  };
+  // @ts-ignore
+  const integers = s.split("").map((c) => roman[c]);
+
+  return integers.reduce(
+    (acc, x, i) => (x < integers[i + 1] ? acc - x : acc + x),
+    0
+  );
+}
+
+export function intToRoman(num: number): string {
+  const rNums: Record<string, number> = {
+    M: 1000,
+    CM: 900,
+    D: 500,
+    CD: 400,
+    C: 100,
+    XC: 90,
+    L: 50,
+    XL: 40,
+    X: 10,
+    IX: 9,
+    V: 5,
+    IV: 4,
+    I: 1,
+  };
+  let result = "";
+  for (let rN in rNums) {
+    let count = num / rNums[rN];
+    if (count > 0) {
+      result += rN.repeat(count);
+      num = num % rNums[rN];
+    }
+  }
+  return result;
+}

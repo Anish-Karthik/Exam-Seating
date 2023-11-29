@@ -7,8 +7,9 @@ export type Student = {
 };
 
 export type StudentsPerYear = {
-  year: 1 | 2 | 3 | 4;
+  year: number;
   semester: number;
+  filename?: string;
   dept: string;
   strength: number;
   studentData: Student[];

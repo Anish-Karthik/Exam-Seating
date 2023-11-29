@@ -14,7 +14,7 @@ import {
 } from "@/store/atoms";
 import { hallsState } from "@/store/atoms/form";
 import { studentPerYearState } from "@/store/selectors";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 
 import {
   generateAttendaceSheet,
@@ -41,23 +41,34 @@ const DisplayPlan = ({
     useRecoilValue(studentPerYearState)
   );
   const [hallsData, setHallsData] = useRecoilState(hallsState);
-  const [data, setData] = useState([]);
-  const [hallPlans, setHallPlans] = useRecoilState(HallPlansState);
-  const [attendance, setAttendance] = useRecoilState(HallAttendancesState);
-  const [seatarrangement, setseatarrangement] = useRecoilState(
-    HallArrangementPlansState
-  );
+  const [data, setData] = useState<
+    HallArrangementPlan[] | HallPlanPerYear[] | AttendanceSheet[]
+  >([]);
+  const setHallPlans = useSetRecoilState(HallPlansState);
+  const setAttendance = useSetRecoilState(HallAttendancesState);
+  const setseatarrangement = useSetRecoilState(HallArrangementPlansState);
 
   useEffect(() => {
     console.log("RERENDER COUNT");
-    if (!studentsPerYearData || !studentsPerYearData.length)
+    if (
+      (!studentsPerYearData || !studentsPerYearData.length) &&
+      JSON.parse(
+        window.localStorage.getItem(LOCAL_STORAGE_KEYS.studentsPerYearData) ||
+          "[]"
+      ).length
+    )
       setStudentsPerYearData(
         JSON.parse(
           window.localStorage.getItem(LOCAL_STORAGE_KEYS.studentsPerYearData) ||
             "[]"
-        )
+        ).length
       );
-    if (!hallsData || !hallsData.length)
+    if (
+      (!hallsData || !hallsData.length) &&
+      JSON.parse(
+        window.localStorage.getItem(LOCAL_STORAGE_KEYS.hallsData) || "[]"
+      ).length
+    )
       setHallsData(
         JSON.parse(
           window.localStorage.getItem(LOCAL_STORAGE_KEYS.hallsData) || "[]"
@@ -104,8 +115,7 @@ const DisplayPlan = ({
       };
       const res = await generatePlan(studentsPerYearData, hallsData);
       console.log(res);
-      // @ts-ignore
-      setData((prev) => [...res]);
+      setData(res);
       switch (name) {
         case "hallplan":
           window.localStorage.setItem(
@@ -138,6 +148,7 @@ const DisplayPlan = ({
     setAttendance,
     setData,
     setHallPlans,
+    setHallsData,
     setseatarrangement,
     studentsPerYearData,
   ]);
@@ -150,16 +161,18 @@ const DisplayPlan = ({
     <section className="h-full">
       {!(data && data.length) ? (
         <div className="">
-          <h1 className="text-2xl font-bold">No Hall Plan</h1>
-          <p>Please fill in the form to generate the hall plan.</p>
+          <h1 className="text-2xl font-bold">No {name}</h1>
+          <p>Please fill in the form to generate the {name}.</p>
         </div>
       ) : (
         <div className="flex flex-col items-center gap-16">
           <DisplayDownloadOptions name="hallplan" size={data.length} />
           {data.map((plan, index) => (
-            <div className="flex max-w-6xl flex-col gap-8 max-sm:hidden">
-              <div className="flex gap-2">
-                <h1 className="text-2xl font-bold">Hall Plan {index + 1}</h1>
+            <div className="flex max-w-6xl flex-col gap-8">
+              <div className="!mx-3 flex flex-wrap gap-2">
+                <h1 className="text-2xl font-bold">
+                  {name} {index + 1}
+                </h1>
                 <Button
                   onClick={() =>
                     exportHTMLTableToExcel(
@@ -171,7 +184,7 @@ const DisplayPlan = ({
                 >
                   Download
                 </Button>
-                <Link href={`preview/${name}/${name}${index}`}>
+                <Link href={`preview/${name}/${name}${index}`} target="_blank">
                   <Button>Print Preview</Button>
                 </Link>
               </div>
@@ -185,7 +198,7 @@ const DisplayPlan = ({
         </div>
       )}
       {
-        <h1 className="rounded-md bg-slate-100 p-2 sm:hidden">
+        <h1 className="hidden rounded-md bg-slate-100 p-2">
           View In Desktop to see table
         </h1>
       }

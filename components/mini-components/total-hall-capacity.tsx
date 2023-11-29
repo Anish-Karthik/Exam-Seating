@@ -21,7 +21,7 @@ const TotalHallCapacity = () => {
     }
   }, [setTotalHallCapacity, totalHallCapacity]);
   return (
-    <h1 className="text-2xl font-bold">
+    <h1 className="text-lg font-bold md:text-2xl">
       Total Hall Capacity: {totalHallCapacity}
     </h1>
   );

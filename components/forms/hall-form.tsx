@@ -207,7 +207,7 @@ const DisplayHall = ({
                           field.onChange(value === "true");
                         }}
                       >
-                        <SelectTrigger className="min-w-[210px] lg:min-w-[150px] xl:min-w-[135px]">
+                        <SelectTrigger className="xs:min-w-[210px] lg:min-w-[150px] xl:min-w-[135px]">
                           <SelectValue placeholder="Students Per Bench" />
                         </SelectTrigger>
                         <SelectContent defaultValue={"false"}>
@@ -237,7 +237,7 @@ const DisplayHall = ({
                           field.onChange(value === "true");
                         }}
                       >
-                        <SelectTrigger className="min-w-[210px] lg:min-w-[130px] xl:min-w-[115px]">
+                        <SelectTrigger className="xs:min-w-[210px] lg:min-w-[130px] xl:min-w-[115px]">
                           <SelectValue placeholder="Students Per Bench" />
                         </SelectTrigger>
                         <SelectContent defaultValue={"false"}>
@@ -267,7 +267,7 @@ const DisplayHall = ({
                           field.onChange(parseInt(value));
                         }}
                       >
-                        <SelectTrigger className="min-w-[210px] lg:min-w-[130px] xl:min-w-[100px]">
+                        <SelectTrigger className="xs:min-w-[210px] lg:min-w-[130px] xl:min-w-[100px]">
                           <SelectValue placeholder="Students Per Bench" />
                         </SelectTrigger>
                         <SelectContent>
@@ -381,7 +381,7 @@ const DisplayHall = ({
                 )}
               />
             </div>
-            <div className="flex flex-wrap gap-2 max-lg:w-full max-lg:justify-start max-md:pl-2 lg:flex-nowrap">
+            <div className="flex flex-wrap gap-2 pb-2 max-lg:w-full max-lg:justify-start max-md:pl-2 lg:flex-nowrap">
               <Button
                 variant={"outline"}
                 className="rounded-full border-green-800 px-3 text-xl text-green-800"

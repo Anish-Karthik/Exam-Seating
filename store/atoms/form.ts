@@ -1,4 +1,4 @@
-import { Hall, Student } from "@/server/type";
+import { Hall, Student, StudentsPerYear } from "@/server/type";
 import { atom } from "recoil";
 
 export const hallsState = atom<Hall[]>({
@@ -16,12 +16,12 @@ export const totalHallCapacityState = atom<number>({
   default: 0,
 });
 
-export const mergedDataState = atom<Student[][]>({
+export const mergedDataState = atom<StudentsPerYear[]>({
   key: "mergedDataState",
   default: [],
 });
 
-export const excelDataState = atom<Student[][]>({
+export const excelDataState = atom<StudentsPerYear[]>({
   key: "excelDataState",
   default: [],
 });

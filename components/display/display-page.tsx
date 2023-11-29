@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { totalHallCapacityState, totalStudentsState } from "@/store/atoms/form";
 import {
   sampleArrangementPlans,
@@ -18,6 +19,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import TotalHallCapacity from "../mini-components/total-hall-capacity";
 import TotalStudents from "../mini-components/total-students";
+import { Button } from "../ui/button";
 
 const DisplayPlan = dynamic(
   () => import("@/components/display/display-plans"),
@@ -35,6 +37,11 @@ const DisplayPage = () => {
   return (
     <div className="form-group container flex flex-col gap-2 max-sm:min-h-screen max-sm:!p-0">
       <div className="flex items-center justify-between">
+        <div>
+          <Link href="/">
+            <Button variant="outline">Go Back</Button>
+          </Link>
+        </div>
         <div className="flex gap-6 max-md:flex-col">
           <TotalHallCapacity />
           <TotalStudents />

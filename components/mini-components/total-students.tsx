@@ -18,7 +18,9 @@ const TotalStudents = () => {
     }
   }, [setTotalStudents, totalStudents]);
   return (
-    <h1 className="text-2xl font-bold">Total Students: {totalStudents}</h1>
+    <h1 className="text-lg font-bold md:text-2xl">
+      Total Students: {totalStudents}
+    </h1>
   );
 };
 
