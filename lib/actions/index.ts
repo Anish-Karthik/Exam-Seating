@@ -1,5 +1,6 @@
 "use server"
 
+import { generateHallPlanForHall } from "@/server/hallplan"
 import { generateSeatingPlan } from "@/server/seatplan"
 import {
   AttendanceSheet,
@@ -9,19 +10,23 @@ import {
   StudentsPerYear,
 } from "@/server/type"
 
-export const generateHallPlan = async (
-  studentData: StudentsPerYear[],
-  hallData: Hall[]
-): Promise<HallPlanPerYear[]> => {
-  return []
-}
-
 export const generateHallArrangement = async (
   studentData: StudentsPerYear[],
   hallData: Hall[]
 ): Promise<HallArrangementPlan[]> => {
-  return generateSeatingPlan(studentData, hallData)
+  const { hallArrangementPlans, hallArrangementPlansWithSemester } = generateSeatingPlan(studentData, hallData)
+  console.log("check",hallArrangementPlans)
+  console.log("check",hallArrangementPlansWithSemester)
+  return hallArrangementPlans
 }
+export const generateHallPlan = async (
+  studentData: StudentsPerYear[],
+  hallData: Hall[]
+): Promise<HallPlanPerYear[]> => {
+  return generateHallPlanForHall(studentData, hallData)
+}
+
+
 
 export const generateAttendaceSheet = async (
   studentData: StudentsPerYear[],
