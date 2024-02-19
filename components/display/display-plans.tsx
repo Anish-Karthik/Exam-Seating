@@ -156,7 +156,8 @@ const DisplayPlan = ({
   if (!window || !window.localStorage) {
     return <h1>Local Storage not supported</h1>;
   }
-
+  console.log(data);
+  console.log(data.length);
   return (
     <section className="h-full">
       {!(data && data.length) ? (
@@ -166,7 +167,7 @@ const DisplayPlan = ({
         </div>
       ) : (
         <div className="flex flex-col items-center gap-16">
-          <DisplayDownloadOptions name="hallplan" size={data.length} />
+          <DisplayDownloadOptions name={name} size={data.length} />
           {data.map((plan, index) => (
             <div className="flex max-w-6xl flex-col gap-8">
               <div className="!mx-3 flex flex-wrap gap-2">

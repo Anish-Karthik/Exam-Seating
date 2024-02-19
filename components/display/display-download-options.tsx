@@ -18,8 +18,8 @@ const DisplayDownloadOptions = ({
       {arr.map((_, index) => (
         <div>
           <div className="flex w-fit items-center gap-2 rounded-md bg-slate-100 p-1">
-            <h1 className="text-lg  font-bold xl:text-sm">
-              Hall Plan {index + 1}
+            <h1 className="text-lg font-bold xl:text-sm">
+              {name} {index + 1}
             </h1>
             <Button
               onClick={() =>
