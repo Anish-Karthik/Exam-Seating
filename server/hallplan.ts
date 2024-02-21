@@ -214,8 +214,10 @@ export const generateHallPlanForHall = (
     }
   }
   const hallPlanArray: HallPlanPerYear[] = [];
-  for (const value of hallPlanArray) {
+
+  mapPlanPerYear.forEach((value, key) => {
     hallPlanArray.push(value);
-  }
+  });
+
   return hallPlanArray;
 };
