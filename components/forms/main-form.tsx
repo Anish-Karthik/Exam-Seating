@@ -10,6 +10,8 @@ import HandleSumbit from "../mini-components/handle-sumbit";
 import ResetButton from "../mini-components/reset-button";
 import DisplayStudentInputData from "../tables/display-student-input";
 import SampleData from "../tables/sample-data";
+import CollegeDetails from "./college-details";
+import DurationDetails from "./duration-details";
 import HallForm from "./multiples-hall-form";
 
 const TotalHallCapacity = dynamic(
@@ -42,6 +44,8 @@ const MainForm = () => {
       </div>
       <GatherData />
       <SampleData />
+      <CollegeDetails />
+      <DurationDetails />
       <ExcelDataForm />
       <HallForm />
       <DisplayStudentInputData />

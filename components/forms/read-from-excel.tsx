@@ -58,7 +58,7 @@ const formSchema = z.object({
   ),
   semester: z.number().refine(
     (data) => {
-      return data >= 1 && data <= 2;
+      return data >= 1 && data <= 8;
     },
     { message: "must be a number" }
   ),
