@@ -1,6 +1,7 @@
 "use server";
 
 import { generateAttendancePlanForHall } from "@/server/attendance";
+import { groupData } from "@/server/customizeinputData";
 import { generateHallPlanForHall } from "@/server/hallplan";
 import { generateSeatingPlan } from "@/server/seatplan";
 import {
@@ -15,10 +16,17 @@ export const generateHallArrangement = async (
   studentData: StudentsPerYear[],
   hallData: Hall[]
 ): Promise<HallArrangementPlan[]> => {
+  const modifiedStudentData = groupData(studentData);
+  console.log(
+    "modifiedStudentData",
+    modifiedStudentData,
+    modifiedStudentData.length
+  );
   const { hallArrangementPlans, hallArrangementPlansWithSemester } =
     generateSeatingPlan(studentData, hallData);
   console.log("check", hallArrangementPlans);
   console.log("check", hallArrangementPlansWithSemester);
+
   return hallArrangementPlans;
 };
 export const generateHallPlan = async (
