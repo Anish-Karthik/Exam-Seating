@@ -152,7 +152,7 @@ const DisplayHall = ({
               </FormMessage>
             )}
           <div className="flex flex-col flex-wrap items-center gap-2 lg:flex-row xl:flex-nowrap">
-            <div className="form-group max-lg:w-full xl:max-w-[85px]">
+            <div className="form-group h-full max-lg:w-full xl:max-w-[85px]">
               <FormField
                 control={form.control}
                 name="hallno"
@@ -171,7 +171,7 @@ const DisplayHall = ({
                 )}
               />
             </div>
-            <div className="form-group max-lg:w-full">
+            <div className="form-group h-full max-lg:w-full">
               <FormField
                 control={form.control}
                 name="dept"
@@ -191,7 +191,7 @@ const DisplayHall = ({
                 )}
               />
             </div>
-            <div className="form-group max-lg:w-full">
+            <div className="form-group h-full max-lg:w-full">
               <FormField
                 control={form.control}
                 name="isSameYearPerBenchAllowed"
@@ -221,7 +221,7 @@ const DisplayHall = ({
                 )}
               />
             </div>
-            <div className="form-group max-lg:w-full">
+            <div className="form-group h-full max-lg:w-full">
               <FormField
                 control={form.control}
                 name="isInterchange"
@@ -251,7 +251,7 @@ const DisplayHall = ({
                 )}
               />
             </div>
-            <div className="form-group max-lg:w-full">
+            <div className="form-group h-full max-lg:w-full">
               <FormField
                 control={form.control}
                 name="studentsPerBench"
@@ -281,7 +281,7 @@ const DisplayHall = ({
                 )}
               />
             </div>
-            <div className="form-group max-lg:w-full">
+            <div className="form-group h-full max-lg:w-full">
               <FormField
                 control={form.control}
                 name="studentsPerHall"
@@ -306,7 +306,7 @@ const DisplayHall = ({
                 )}
               />
             </div>
-            <div className="form-group max-lg:w-full">
+            <div className="form-group h-full max-lg:w-full">
               <FormField
                 control={form.control}
                 name="benches.rows"
@@ -331,7 +331,7 @@ const DisplayHall = ({
                 )}
               />
             </div>
-            <div className="form-group max-lg:w-full">
+            <div className="form-group h-full max-lg:w-full">
               <FormField
                 control={form.control}
                 name="benches.cols"
@@ -356,7 +356,7 @@ const DisplayHall = ({
                 )}
               />
             </div>
-            <div className="form-group max-lg:w-full">
+            <div className="form-group h-full max-lg:w-full">
               <FormField
                 control={form.control}
                 name="benches.extra"

@@ -97,11 +97,11 @@ export function romanToInt(s: string): number {
   };
   // @ts-ignore
   const integers = s.split("").map((c) => roman[c]);
-
-  return integers.reduce(
+  const res = integers.reduce(
     (acc, x, i) => (x < integers[i + 1] ? acc - x : acc + x),
     0
   );
+  return res;
 }
 
 export function intToRoman(num: number): string {
