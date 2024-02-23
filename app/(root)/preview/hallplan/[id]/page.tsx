@@ -12,7 +12,7 @@ const Page = () => {
   return (
     <div>
       <HeaderPreview name="HallPlan" />
-      <HallPLanTable index={index} />
+      <HallPLanTable index={index} show={true} />
     </div>
   );
 };

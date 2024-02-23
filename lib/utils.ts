@@ -1,11 +1,28 @@
 import { Student } from "@/server/type";
 import { clsx, type ClassValue } from "clsx";
+import jsPDF from "jspdf";
 import { twMerge } from "tailwind-merge";
 import * as XLSX from "xlsx";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+export const exportToPdf = () => {
+  const canvas = document.getElementById("preview");
+
+  if (!canvas) return;
+
+  // use jspdf
+  const doc = new jsPDF({
+    orientation: "portrait",
+    unit: "px",
+    format: "a4",
+  });
+
+  // download the pdf
+  doc.save("canvas.pdf");
+};
 
 export function dataWrangleTheExcelData(data: any) {
   console.log(data);

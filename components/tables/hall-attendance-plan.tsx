@@ -17,13 +17,17 @@ function extractRollNo(rollno: string) {
   return { year, roll, semester, dept, regno, name, section: roll[0] };
 }
 
-const AttendanceTable = ({ index }: { index: number }) => {
+const AttendanceTable = ({
+  index,
+  show = false,
+}: {
+  index: number;
+  show?: boolean;
+}) => {
   const id = `attendance${index}`;
-  const router = useRouter();
-  const pathname = usePathname();
   const attendances = useRecoilValue(HallAttendancesState);
   const [data, setData] = useState<AttendanceSheet>();
-  const { getStartDate, getEndDate } = useDurationDetails();
+  const { getStartDate, getEndDate, details } = useDurationDetails();
   useEffect(() => {
     const data =
       attendances && attendances.length
@@ -50,7 +54,7 @@ const AttendanceTable = ({ index }: { index: number }) => {
   } = extractRollNo(data.studentData[0].rollno);
   return (
     <div>
-      {pathname.split("/").includes("attendance") && (
+      {show && (
         <div className="font-semibold">
           <div className="flex justify-between ">
             {/* Year: IV – A      Semester: VII       Degree: B.E       Branch: CSE */}
@@ -89,12 +93,41 @@ const AttendanceTable = ({ index }: { index: number }) => {
                   Section
                 </th>
                 {/* Can display all exams date */}
+                {details.map(({ date, timings }, ind) => (
+                  <th
+                    key={`${data.hallno}-${ind}`}
+                    className="border px-4 py-2 text-center"
+                    colSpan={timings.fn && timings.an ? 2 : 1}
+                  >
+                    {date}
+                  </th>
+                ))}
               </tr>
               <tr>
                 <th rowSpan={1} className="border px-4 py-2 text-center">
                   Register No
                 </th>
                 {/* Can display all exams session */}
+                {details.map(({ date, timings }, ind) => (
+                  <>
+                    {timings.fn && (
+                      <th
+                        key={`${data.hallno}-${ind}`}
+                        className="border px-4 py-2 text-center"
+                      >
+                        FN
+                      </th>
+                    )}
+                    {timings.an && (
+                      <th
+                        key={`${data.hallno}-${ind}`}
+                        className="border px-4 py-2 text-center"
+                      >
+                        AN
+                      </th>
+                    )}
+                  </>
+                ))}
               </tr>
             </thead>
             <tbody>
@@ -125,6 +158,22 @@ const AttendanceTable = ({ index }: { index: number }) => {
                     {student.section}
                   </td>
                   {/* Can display all empty cells to allow manual signature */}
+                  {details.map(({ date, timings }, ind) => (
+                    <>
+                      {timings.fn && (
+                        <td
+                          key={`${data.hallno}-${ind}-${data.hallno}-${student.regno}`}
+                          className="border px-4 py-2 text-center"
+                        ></td>
+                      )}
+                      {timings.an && (
+                        <td
+                          key={`${data.hallno}-${ind}-${data.hallno}-${student.regno}`}
+                          className="border px-4 py-2 text-center"
+                        ></td>
+                      )}
+                    </>
+                  ))}
                 </tr>
               ))}
             </tbody>

@@ -12,7 +12,7 @@ const Page = () => {
   return (
     <div>
       <HeaderPreview name="Seating Arrangement" />
-      <HallArrangementTable index={index} />
+      <HallArrangementTable index={index} show={true} />
     </div>
   );
 };

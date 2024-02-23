@@ -9,12 +9,17 @@ import { useDurationDetails } from "@/hooks/use-duration-details";
 
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 
-const HallArrangementTable = ({ index }: { index: number }) => {
+const HallArrangementTable = ({
+  index,
+  show = false,
+}: {
+  index: number;
+  show?: boolean;
+}) => {
   const router = useRouter();
   const hallArrangementPlans = useRecoilValue(HallArrangementPlansState);
   const [data, setData] = useState<HallArrangementPlan>();
   const id = `seatarrangement${index}}`;
-  const pathname = usePathname();
   const { getStartDate, getEndDate } = useDurationDetails();
   useEffect(() => {
     const data =
@@ -34,7 +39,7 @@ const HallArrangementTable = ({ index }: { index: number }) => {
   //                                                            02.30 PM - 04.00 PM (AN)
   return (
     <div>
-      {pathname.split("/").includes("seatarrangement") && (
+      {show && (
         <div className="font-semibold">
           <div className="flex justify-between ">
             <div>

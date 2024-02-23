@@ -12,7 +12,7 @@ const Page = () => {
   return (
     <div>
       <HeaderPreview name="attendance Sheet" />
-      <AttendanceTable index={index} />
+      <AttendanceTable index={index} show={true} />
     </div>
   );
 };

@@ -9,9 +9,13 @@ import { useDurationDetails } from "@/hooks/use-duration-details";
 
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 
-const HallPLanTable = ({ index }: { index: number }) => {
-  const router = useRouter();
-  const pathname = usePathname();
+const HallPLanTable = ({
+  index,
+  show = false,
+}: {
+  index: number;
+  show?: boolean;
+}) => {
   const hallPlans = useRecoilValue(HallPlansState);
   const [data, setData] = useState<HallPlan[]>();
   const id = `seatarrangement${index}}`;
@@ -31,7 +35,7 @@ const HallPLanTable = ({ index }: { index: number }) => {
   // IV YEAR / VII SEM          Date: 11-9-23 to 14-9-23
   return (
     <div>
-      {pathname.split("/").includes("hallplan") && (
+      {show && (
         <div className="font-semibold">
           <div className="flex justify-between ">
             <div>
