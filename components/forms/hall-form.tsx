@@ -43,7 +43,7 @@ const formSchema = z
       .max(5)
       .regex(/^[A-Z]+$/),
     studentsPerBench: z.number().min(1).max(2),
-    studentsPerHall: z.number().min(1).max(100),
+    studentsPerHall: z.number().min(1).max(1000),
     isSameYearPerBenchAllowed: z.boolean(),
     isInterchange: z.boolean(),
     benches: z
