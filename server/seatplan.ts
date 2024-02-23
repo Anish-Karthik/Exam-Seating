@@ -1,3 +1,5 @@
+import { waitForAllSettled } from "recoil";
+
 import { groupData } from "./customizeinputData";
 import { hallData, mapSemester, mapYear, studentData } from "./data";
 import { Hall, HallArrangementPlan, Seat, StudentsPerYear } from "./type";
@@ -155,21 +157,26 @@ export const generateSeatingPlan = (
   } else {
     let studentCount = 0;
     let overallStudentCount = 0;
-    let studentArrayIndex = 0;
+    let studentFirstArrayIndex = 0;
+    let studentSecondArrayIndex = 1;
+    let studentFirstCount = 0;
+    let studentSecondCount = 0;
     let hallIndex = 0;
     let seatvalue = "";
-    let studentStrength = studentData[studentArrayIndex].strength;
+    let studentFirstStrength = groupedData[0][0].studentData.length;
+    let studentSecondStrength = groupedData[0][0].studentData.length;
     let hallLength = hallData.length;
 
     const { hallArrangementPlans, hallArrangementPlansWithSemester } =
       intialize(hallData);
-
+    let toggleIndex = 0;
+    // let studentIterateIndex=0
     while (overallStudentCount < totalStudents) {
       let studentCountPerHall = 0;
       if (hallData[hallIndex].isInterchange === true) {
         // Handle interchange logic
       } else if (hallData[hallIndex].studentsPerBench === 2) {
-        if (hallData[hallIndex].isSameYearPerBenchAllowed === true) {
+        if (hallData[hallIndex].isSameYearPerBenchAllowed === true || false) {
           for (let j = 0; j < hallData[hallIndex].benches.cols; j++) {
             for (let ind = 0; ind < 2; ind++) {
               for (let k = 0; k < hallData[hallIndex].benches.rows; k++) {
@@ -178,22 +185,29 @@ export const generateSeatingPlan = (
                 ) {
                   continue;
                 }
-                const year = mapYear(studentData[studentArrayIndex].year);
+                toggleIndex =
+                  ind % 2 ? studentSecondArrayIndex : studentFirstArrayIndex;
+                let studentIterateIndex =
+                  ind % 2 ? studentSecondCount : studentFirstCount;
+                let studentCountIndex =
+                  ind % 2 ? "studentSecondCount" : "studentFirstCount";
+                const year = mapYear(groupedData[toggleIndex][0].year);
                 const semester = mapSemester(
-                  studentData[studentArrayIndex].semester
+                  groupedData[toggleIndex][0].semester
                 );
-                const dept = studentData[studentArrayIndex].dept;
+                const dept = groupedData[toggleIndex][0].dept;
                 const regNo =
-                  studentData[studentArrayIndex].studentData[studentCount]
+                  groupedData[toggleIndex][0].studentData[studentIterateIndex]
                     .regno;
                 const name =
-                  studentData[studentArrayIndex].studentData[studentCount].name;
-                // console.log(studentCount,studentData[studentArrayIndex].studentData[studentCount])
+                  groupedData[toggleIndex][0].studentData[studentIterateIndex]
+                    .name;
                 const currentSection =
-                  studentData[studentArrayIndex].studentData[studentCount]
+                  groupedData[toggleIndex][0].studentData[studentIterateIndex]
                     .section;
                 const serielno =
-                  studentData[studentArrayIndex].studentData[studentCount].sno;
+                  groupedData[toggleIndex][0].studentData[studentIterateIndex]
+                    .sno;
                 seatvalue = year + "-" + currentSection + `(${serielno})`;
                 hallArrangementPlans[hallIndex].hallArrangement[k][j][ind] =
                   seatvalue;
@@ -209,20 +223,40 @@ export const generateSeatingPlan = (
                   regNo +
                   "-" +
                   name;
+
                 studentCount++;
+                studentCountIndex == "studentSecondCount"
+                  ? studentSecondCount++
+                  : studentFirstCount++;
                 studentCountPerHall++;
                 overallStudentCount++;
-                console.log(overallStudentCount, totalStudents);
+                // console.log(overallStudentCount, totalStudents);
+
                 if (overallStudentCount === totalStudents) {
                   return {
                     hallArrangementPlans,
                     hallArrangementPlansWithSemester,
                   };
                 }
-                if (studentCount === studentStrength) {
-                  studentArrayIndex++;
-                  studentCount = 0;
-                  studentStrength = studentData[studentArrayIndex].strength;
+
+                if (studentFirstCount === studentFirstStrength) {
+                  if (toggleIndex + 2 < groupedData.length) {
+                    toggleIndex += 2;
+                  } else {
+                    toggleIndex += 1;
+                  }
+                  studentFirstCount = 0;
+                  studentFirstStrength = groupedData[toggleIndex][0].strength;
+                }
+
+                if (studentSecondCount === studentSecondStrength) {
+                  if (toggleIndex + 2 < groupedData.length) {
+                    toggleIndex += 2;
+                  } else {
+                    toggleIndex -= 1;
+                  }
+                  studentSecondCount = 0;
+                  studentSecondStrength = groupedData[toggleIndex][0].strength;
                 }
               }
             }
@@ -241,19 +275,28 @@ export const generateSeatingPlan = (
             if (studentCountPerHall === hallData[hallIndex].studentsPerHall) {
               continue;
             }
-            const year = mapYear(studentData[studentArrayIndex].year);
+            const year = mapYear(groupedData[studentFirstArrayIndex][0].year);
             const semester = mapSemester(
-              studentData[studentArrayIndex].semester
+              groupedData[studentFirstArrayIndex][0].semester
             );
-            const dept = studentData[studentArrayIndex].dept;
+
+            const dept = groupedData[studentFirstArrayIndex][0].dept;
             const regNo =
-              studentData[studentArrayIndex].studentData[studentCount].regno;
+              groupedData[studentFirstArrayIndex][0].studentData[
+                studentFirstCount
+              ].regno;
             const name =
-              studentData[studentArrayIndex].studentData[studentCount].name;
+              groupedData[studentFirstArrayIndex][0].studentData[
+                studentFirstCount
+              ].name;
             const currentSection =
-              studentData[studentArrayIndex].studentData[studentCount].section;
+              groupedData[studentFirstArrayIndex][0].studentData[
+                studentFirstCount
+              ].section;
             const serielno =
-              studentData[studentArrayIndex].studentData[studentCount].sno;
+              groupedData[studentFirstArrayIndex][0].studentData[
+                studentFirstCount
+              ].sno;
             seatvalue = year + "-" + currentSection + `(${serielno})`;
             hallArrangementPlans[hallIndex].hallArrangement[k][j][0] =
               seatvalue;
@@ -275,10 +318,11 @@ export const generateSeatingPlan = (
             if (overallStudentCount === totalStudents) {
               return { hallArrangementPlans, hallArrangementPlansWithSemester };
             }
-            if (studentCount === studentStrength) {
-              studentArrayIndex++;
+            if (studentCount === studentFirstStrength) {
+              studentFirstArrayIndex++;
               studentCount = 0;
-              studentStrength = studentData[studentArrayIndex].strength;
+              studentFirstStrength =
+                groupedData[studentFirstArrayIndex][0].strength;
             }
           }
         }
