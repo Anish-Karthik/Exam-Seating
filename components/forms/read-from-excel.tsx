@@ -69,6 +69,7 @@ const readExcel = (
   file: File | null,
   form: UseFormReturn<z.infer<typeof formSchema>, any, undefined>
 ) => {
+  console.log(file);
   if (!file) {
     return;
   }
@@ -84,14 +85,18 @@ const readExcel = (
       const wsname = wb.SheetNames[0];
       const ws = wb.Sheets[wsname];
       const data = XLSX.utils.sheet_to_json(ws);
+      console.log(data);
       resolve(data);
     };
     fileReader.onerror = (error) => {
+      console.log(error);
       reject(error);
     };
   });
   promise.then((d) => {
+    console.log(d);
     const data = dataWrangleTheExcelData(d);
+    console.log(data);
     form.setValue("studentData", data);
     form.setValue("strength", data.length);
     form.setValue("filename", file.name);
@@ -126,6 +131,7 @@ const ReadFromExcel = ({
     defaultValues: excelData,
     mode: "onChange",
   });
+  console.log("setting", excelData);
   const { isValid, isSubmitting } = form.formState;
   const toggleEdit = (index: number) => {
     setEditingIndex((prevState) => {
@@ -169,7 +175,7 @@ const ReadFromExcel = ({
     });
     handleSave(index);
   };
-
+  console.log();
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-8">

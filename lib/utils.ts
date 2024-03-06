@@ -46,10 +46,24 @@ export function dataWrangleTheExcelData(data: any) {
         try {
           const student: Student = {
             sno: i++,
-            name: row.__EMPTY_2,
-            regno: row.__EMPTY_1,
-            rollno: row.__EMPTY,
-            section: row.__EMPTY_3,
+            name: row.__EMPTY_2 ?? row.name,
+            regno: row.__EMPTY_1 ?? row.regno,
+            rollno: row.__EMPTY ?? row.rollno,
+            section: row.__EMPTY_3 ?? row.section,
+          };
+          studentData.push(student);
+        } catch (error) {
+          invalidRows.push(row);
+        }
+      }
+      if (row.name && row.regno && row.rollno && row.section) {
+        try {
+          const student: Student = {
+            sno: i++,
+            name: row.name,
+            regno: Number(row.regno),
+            rollno: row.rollno.toString(),
+            section: row.section,
           };
           studentData.push(student);
         } catch (error) {

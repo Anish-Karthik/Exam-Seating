@@ -20,7 +20,7 @@ const ExcelDataForm = () => {
   // const [fileNames, setFileNames] = useRecoilState(fileNamesState);
   const setTotalStudents = useSetRecoilState(totalStudentsState);
   const setMergedData = useSetRecoilState(mergedDataState);
-
+  console.log(excelData);
   const handleAddData = () => {
     setExcelData((prevData) => [
       ...prevData,

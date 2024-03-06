@@ -31,7 +31,7 @@ const HallForm = () => {
         hallno: "101",
         dept: "CSE",
         studentsPerBench: 1,
-        studentsPerHall: 0,
+        studentsPerHall: 30,
         isSameYearPerBenchAllowed: false,
         isInterchange: false,
         benches: {
