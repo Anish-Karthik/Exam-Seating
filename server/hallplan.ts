@@ -1,5 +1,3 @@
-
-
 import { generateSeatingPlan } from "./seatplan";
 import {
   Hall,
@@ -8,8 +6,6 @@ import {
   StudentsPerYear,
 } from "./type";
 import { intialize, mapSemester } from "./utils";
-
-
 
 export const extractDataFromRollno = (data: string) => {
   if (!data)

@@ -28,15 +28,20 @@ const HallForm = () => {
     setHalls((prevHalls) => [
       ...prevHalls,
       {
-        hallno: "101",
+        hallno:
+          prevHalls.length > 0
+            ? (
+                Math.max(...prevHalls.map((h) => Number(h.hallno))) + 1
+              ).toString()
+            : "101",
         dept: "CSE",
         studentsPerBench: 1,
         studentsPerHall: 30,
         isSameYearPerBenchAllowed: false,
         isInterchange: false,
         benches: {
-          rows: 5,
-          cols: 6,
+          rows: 6,
+          cols: 5,
           extra: 0,
         },
       },

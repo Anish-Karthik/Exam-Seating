@@ -1,12 +1,11 @@
+import { useEffect, useState } from "react";
 import { HallPlan } from "@/server/type";
 import { HallPlansState } from "@/store/atoms";
-import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 
-import { useDurationDetails } from "@/hooks/use-duration-details";
 import { LOCAL_STORAGE_KEYS } from "@/lib/constants";
 
-import { format } from "date-fns";
+import DateOfExamModal from "../mini-components/date-of-exam-modal";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 
 const HallPLanTable = ({
@@ -19,7 +18,6 @@ const HallPLanTable = ({
   const hallPlans = useRecoilValue(HallPlansState);
   const [data, setData] = useState<HallPlan[]>();
   const id = `seatarrangement${index}}`;
-  const { getStartDate, getEndDate } = useDurationDetails();
   useEffect(() => {
     const data =
       hallPlans && hallPlans.length
@@ -41,10 +39,7 @@ const HallPLanTable = ({
             <div>
               {data[0].year} YEAR / {data[0].semester} SEM
             </div>
-            <div>
-              Date of Exam: {format(getStartDate(), "dd-MM-yy")}
-              {getStartDate() === getEndDate() ? null : " - " + format(getEndDate(), "dd-MM-yy")}
-            </div>
+            <DateOfExamModal />
           </div>
         </div>
       )}

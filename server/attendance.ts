@@ -1,14 +1,6 @@
-import { hallData, mapSemester, mapYear, studentData } from "./data";
 import { extractDataFromRollno } from "./hallplan";
 import { generateSeatingPlan } from "./seatplan";
-import {
-  AttendanceSheet,
-  Hall,
-  HallArrangementPlan,
-  HallPlanPerYear,
-  Student,
-  StudentsPerYear,
-} from "./type";
+import { AttendanceSheet, Hall, Student, StudentsPerYear } from "./type";
 
 export const generateAttendancePlanForHall = (
   studentData: StudentsPerYear[],

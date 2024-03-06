@@ -1,13 +1,12 @@
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { HallArrangementPlan } from "@/server/type";
 import { HallArrangementPlansState } from "@/store/atoms";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 
-import { useDurationDetails } from "@/hooks/use-duration-details";
 import { LOCAL_STORAGE_KEYS } from "@/lib/constants";
 
-import { format } from "date-fns";
+import DateOfExamModal from "../mini-components/date-of-exam-modal";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 
 const HallArrangementTable = ({
@@ -21,7 +20,6 @@ const HallArrangementTable = ({
   const hallArrangementPlans = useRecoilValue(HallArrangementPlansState);
   const [data, setData] = useState<HallArrangementPlan>();
   const id = `seatarrangement${index}}`;
-  const { getStartDate, getEndDate } = useDurationDetails();
   useEffect(() => {
     const data =
       hallArrangementPlans && hallArrangementPlans.length
@@ -43,10 +41,7 @@ const HallArrangementTable = ({
       {show && (
         <div className="font-semibold">
           <div className="flex justify-between ">
-            <div>
-              Date of Exam: {format(getStartDate(), "dd-MM-yy")}
-              {getStartDate() === getEndDate() ? null : " - " + format(getEndDate(), "dd-MM-yy")}
-            </div>
+            <DateOfExamModal />
             <div>Time: 09.00 AM - 10.30PM (FN)</div>
           </div>
           <div className="flex justify-between ">

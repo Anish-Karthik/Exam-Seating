@@ -330,4 +330,3 @@ export const hallData: Hall[] = [
    isInterchange: false,
   },*/
 ];
-

@@ -1,4 +1,5 @@
 import React from "react";
+import { format } from "date-fns";
 import { X } from "lucide-react";
 
 import { useDurationDetails } from "@/hooks/use-duration-details";
@@ -16,7 +17,7 @@ const DisplayChosenDates = () => {
             key={date}
             className="flex items-center rounded-2xl bg-slate-200 px-1"
           >
-            {date}
+            {format(date, "dd-MM-yyyy")}
             <button
               type="button"
               className="ml-2 text-red-500"

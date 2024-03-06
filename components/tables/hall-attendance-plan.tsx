@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
 import { AttendanceSheet } from "@/server/type";
 import { HallAttendancesState } from "@/store/atoms";
 import { useRecoilValue } from "recoil";
@@ -7,8 +6,8 @@ import { useRecoilValue } from "recoil";
 import { LOCAL_STORAGE_KEYS } from "@/lib/constants";
 import { useDurationDetails } from "@/hooks/use-duration-details";
 
+import DateOfExamModal from "../mini-components/date-of-exam-modal";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
-import { format } from "date-fns";
 
 // rollno: 'I-A(31)-I-CSE-92132313031-BLESSY CATHERINE V'
 
@@ -28,7 +27,7 @@ const AttendanceTable = ({
   const id = `attendance${index}`;
   const attendances = useRecoilValue(HallAttendancesState);
   const [data, setData] = useState<AttendanceSheet>();
-  const { getStartDate, getEndDate, details } = useDurationDetails();
+  const { details } = useDurationDetails();
   useEffect(() => {
     const data =
       attendances && attendances.length
@@ -69,10 +68,7 @@ const AttendanceTable = ({
           <div className="flex justify-between">
             {/* Hall No.:CSE209           Date of Exam: 14-9-23(FN) */}
             <div>Hall No.: {data.hallno}</div>
-            <div>
-              Date of Exam: {format(getStartDate(), "dd-MM-yy")}
-              {getStartDate() === getEndDate() ? null : " - " + format(getEndDate(), "dd-MM-yy")}
-            </div>
+            <DateOfExamModal />
           </div>
         </div>
       )}
