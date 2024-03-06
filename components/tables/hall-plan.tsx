@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
 import { HallPlan } from "@/server/type";
 import { HallPlansState } from "@/store/atoms";
+import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 
-import { LOCAL_STORAGE_KEYS } from "@/lib/constants";
 import { useDurationDetails } from "@/hooks/use-duration-details";
+import { LOCAL_STORAGE_KEYS } from "@/lib/constants";
 
+import { format } from "date-fns";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 
 const HallPLanTable = ({
@@ -42,8 +42,8 @@ const HallPLanTable = ({
               {data[0].year} YEAR / {data[0].semester} SEM
             </div>
             <div>
-              Date of Exam: {getStartDate()}
-              {getStartDate() === getEndDate() ? null : " - " + getEndDate()}
+              Date of Exam: {format(getStartDate(), "dd-MM-yy")}
+              {getStartDate() === getEndDate() ? null : " - " + format(getEndDate(), "dd-MM-yy")}
             </div>
           </div>
         </div>
@@ -97,9 +97,14 @@ const HallPLanTable = ({
             <tbody>
               {data.map((hall, ind) => (
                 <tr>
-                  <td className="border px-4 py-2 text-center">
-                    {hall.year} / {hall.semester}
-                  </td>
+                  {ind == 0 && (
+                    <td
+                      className={`border px-4 py-2 text-center`}
+                      rowSpan={data.length}
+                    >
+                      {hall.year} / {hall.semester}
+                    </td>
+                  )}
                   <td className="border px-4 py-2 text-center">
                     {hall.section}
                   </td>

@@ -8,6 +8,7 @@ import { LOCAL_STORAGE_KEYS } from "@/lib/constants";
 import { useDurationDetails } from "@/hooks/use-duration-details";
 
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
+import { format } from "date-fns";
 
 // rollno: 'I-A(31)-I-CSE-92132313031-BLESSY CATHERINE V'
 
@@ -69,8 +70,8 @@ const AttendanceTable = ({
             {/* Hall No.:CSE209           Date of Exam: 14-9-23(FN) */}
             <div>Hall No.: {data.hallno}</div>
             <div>
-              Date of Exam: {getStartDate()}
-              {getStartDate() === getEndDate() ? null : " - " + getEndDate()}
+              Date of Exam: {format(getStartDate(), "dd-MM-yy")}
+              {getStartDate() === getEndDate() ? null : " - " + format(getEndDate(), "dd-MM-yy")}
             </div>
           </div>
         </div>

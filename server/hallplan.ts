@@ -1,4 +1,5 @@
-import { hallData, mapSemester, mapYear, studentData } from "./data";
+
+
 import { generateSeatingPlan } from "./seatplan";
 import {
   Hall,
@@ -6,9 +7,9 @@ import {
   HallPlanPerYear,
   StudentsPerYear,
 } from "./type";
-import { intialize } from "./utils";
+import { intialize, mapSemester } from "./utils";
 
-const totalStudents = studentData.reduce((acc, curr) => acc + curr.strength, 0);
+
 
 export const extractDataFromRollno = (data: string) => {
   if (!data)
@@ -33,11 +34,12 @@ export const extractDataFromRollno = (data: string) => {
   return { year, section, rollNo, semester, dept, regNo, name };
 };
 
-function intializeHallplan(seatPlan: HallArrangementPlan[]) {
+function intializeHallplan(seatPlan: HallArrangementPlan[], hallData: Hall[]) {
   const mapPlanPerYear = new Map<string, HallPlanPerYear>();
   for (let hallCount = 0; hallCount < seatPlan.length; hallCount++) {
     const { hallArrangement: hall } = seatPlan[hallCount];
     const [row, col] = [hall.length, hall[0].length];
+    console.log(hallData[hallCount], hallData, hallCount);
     const istwoperbench = hallData[hallCount].studentsPerBench === 2;
     //intialize map
 
@@ -81,10 +83,11 @@ export const generateHallPlanForHall = (
     hallData
   );
   // create a map for year y traversing a section
-
+  console.log(hallData);
+  console.log(seatPlan);
   let hallPlan: HallPlanPerYear[] = [];
 
-  const { mapPlanPerYear } = intializeHallplan(seatPlan);
+  const { mapPlanPerYear } = intializeHallplan(seatPlan, hallData);
 
   console.log(mapPlanPerYear);
   for (let hallCount = 0; hallCount < seatPlan.length; hallCount++) {
@@ -214,12 +217,11 @@ export const generateHallPlanForHall = (
     }
   }
   const hallPlanArray: HallPlanPerYear[] = [];
-
-  mapPlanPerYear.forEach((value, key) => {
+  const mapPlanPerYearArray = Array.from(mapPlanPerYear);
+  for (const [key, value] of mapPlanPerYearArray) {
     if (value.length > 0) {
       hallPlanArray.push(value);
     }
-  });
-
+  }
   return hallPlanArray;
 };

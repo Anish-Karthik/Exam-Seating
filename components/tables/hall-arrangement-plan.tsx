@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
 import { HallArrangementPlan } from "@/server/type";
 import { HallArrangementPlansState } from "@/store/atoms";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 
-import { LOCAL_STORAGE_KEYS } from "@/lib/constants";
 import { useDurationDetails } from "@/hooks/use-duration-details";
+import { LOCAL_STORAGE_KEYS } from "@/lib/constants";
 
+import { format } from "date-fns";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 
 const HallArrangementTable = ({
@@ -43,8 +44,8 @@ const HallArrangementTable = ({
         <div className="font-semibold">
           <div className="flex justify-between ">
             <div>
-              Date of Exam: {getStartDate()}
-              {getStartDate() === getEndDate() ? null : " - " + getEndDate()}
+              Date of Exam: {format(getStartDate(), "dd-MM-yy")}
+              {getStartDate() === getEndDate() ? null : " - " + format(getEndDate(), "dd-MM-yy")}
             </div>
             <div>Time: 09.00 AM - 10.30PM (FN)</div>
           </div>
