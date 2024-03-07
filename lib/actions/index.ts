@@ -22,6 +22,12 @@ export const generateHallArrangement = async (
     modifiedStudentData,
     modifiedStudentData.length
   );
+
+  //sort the hall data bassed in hall no
+  hallData.sort((a, b) => {
+    return a.hallno.localeCompare(b.hallno);
+  });
+
   const { hallArrangementPlans, hallArrangementPlansWithSemester } =
     generateSeatingPlan(studentData, hallData);
   console.log("check", hallArrangementPlans);
@@ -33,6 +39,10 @@ export const generateHallPlan = async (
   studentData: StudentsPerYear[],
   hallData: Hall[]
 ): Promise<HallPlanPerYear[]> => {
+  hallData.sort((a, b) => {
+    return a.hallno.localeCompare(b.hallno);
+  }
+  );
   return generateHallPlanForHall(studentData, hallData);
 };
 
@@ -40,5 +50,9 @@ export const generateAttendaceSheet = async (
   studentData: StudentsPerYear[],
   hallData: Hall[]
 ): Promise<AttendanceSheet[]> => {
+  hallData.sort((a, b) => {
+    return a.hallno.localeCompare(b.hallno);
+  }
+  );
   return generateAttendancePlanForHall(studentData, hallData);
 };
