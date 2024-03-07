@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { extractDataFromRollno } from "@/server/hallplan";
 import { AttendanceSheet } from "@/server/type";
 import { HallAttendancesState } from "@/store/atoms";
-import { format, formatDate } from "date-fns";
+import { format } from "date-fns";
 import { useRecoilValue } from "recoil";
 
 import { LOCAL_STORAGE_KEYS } from "@/lib/constants";
@@ -29,6 +30,13 @@ const AttendanceTable = ({
   const attendances = useRecoilValue(HallAttendancesState);
   const [data, setData] = useState<AttendanceSheet>();
   const { details } = useDurationDetails();
+  const getAllSections = useCallback(() => {
+    const sections = new Set<string>();
+    data?.studentData.forEach((student) => {
+      sections.add(extractRollNo(student.rollno).section);
+    });
+    return Array.from(sections);
+  }, [data?.studentData]);
   useEffect(() => {
     const data =
       attendances && attendances.length
@@ -44,6 +52,8 @@ const AttendanceTable = ({
   if (!data) return <>Not found</>;
   console.log(data);
   console.log(data.studentData);
+  const allSections = getAllSections();
+
   const {
     year,
     dept: branch,
@@ -60,7 +70,7 @@ const AttendanceTable = ({
           <div className="flex justify-between ">
             {/* Year: IV – A      Semester: VII       Degree: B.E       Branch: CSE */}
             <div>
-              Year: {year} - {section}
+              Year: {year} - {allSections.join(" & ")}
             </div>
             <div>Semester: {semester}</div>
             <div>Degree: B.E</div>
@@ -74,39 +84,39 @@ const AttendanceTable = ({
         </div>
       )}
       <ScrollArea className="whitespace-nowrap rounded-md max-sm:mx-2 max-sm:w-screen max-sm:border max-sm:px-2">
-        <div className="table-responsive !text-[10px]">
+        <div className="table-responsive !text-[11px]">
           <table className="table-bordered mx-auto table" id={id}>
             <thead>
               <tr>
-                <th rowSpan={2} className="border px-1 py-2 text-center">
-                  S.No
+                <th rowSpan={2} className="border px-1 ">
+                  R.No
                 </th>
-                <th rowSpan={1} className="border px-1 py-2 text-center">
+                <th rowSpan={1} className="border px-1 ">
                   Hall No {data.hallno}
                 </th>
-                <th rowSpan={2} className="border px-1 py-2 text-center">
+                <th rowSpan={2} className="border px-1 ">
                   Name
                 </th>
-                <th
+                {/* <th
                   rowSpan={2}
-                  className="max-w-[100px] whitespace-normal border px-1 py-2 text-center md:max-w-[200px]"
+                  className="max-w-[100px] whitespace-normal border px-1  md:max-w-[200px]"
                 >
                   Section
-                </th>
+                </th> */}
                 {/* Can display all exams date */}
                 {details.map(({ date, timings }, ind) => (
                   <th
                     key={`${data.hallno}-${ind}`}
-                    className="border px-1 py-2 text-center"
+                    className="border px-1 "
                     colSpan={timings.fn && timings.an ? 2 : 1}
                     rowSpan={!(timings.an || timings.fn) ? 2 : 1}
                   >
-                    {format(date, "dd-MM-yy")}
+                    {format(date || new Date(), "dd/MM/yy")}
                   </th>
                 ))}
               </tr>
               <tr>
-                <th rowSpan={1} className="border px-1 py-2 text-center">
+                <th rowSpan={1} className="border px-1 ">
                   Register No
                 </th>
                 {/* Can display all exams session */}
@@ -115,7 +125,7 @@ const AttendanceTable = ({
                     {timings.fn && (
                       <th
                         key={`${data.hallno}-${ind}`}
-                        className="border px-1 py-2 text-center"
+                        className="border px-1 "
                       >
                         FN
                       </th>
@@ -123,7 +133,7 @@ const AttendanceTable = ({
                     {timings.an && (
                       <th
                         key={`${data.hallno}-${ind}`}
-                        className="border px-1 py-2 text-center"
+                        className="border px-1 "
                       >
                         AN
                       </th>
@@ -138,41 +148,41 @@ const AttendanceTable = ({
                 <tr key={`${data.hallno}-${ind}`}>
                   <td
                     key={`${data.hallno}-${ind}-${data.hallno}-${student.regno}`}
-                    className="border px-1 py-2 text-center"
+                    className="border px-1 "
                   >
-                    {student.sno}
+                    {extractDataFromRollno(student.rollno).rollNo}
                   </td>
                   <td
                     key={`${data.hallno}-${ind}-${data.hallno}-${student.regno}`}
-                    className="border px-1 py-2 text-center"
+                    className="border px-1 "
                   >
                     {student.regno}
                   </td>
                   <td
                     key={`${data.hallno}-${ind}-${data.hallno}-${student.regno}`}
-                    className="border px-1 py-2 text-center"
+                    className="border px-1 "
                   >
                     {student.name}
                   </td>
-                  <td
+                  {/* <td
                     key={`${data.hallno}-${ind}-${data.hallno}-${student.regno}`}
-                    className="border px-1 py-2 text-center"
+                    className="border px-1 "
                   >
                     {student.section}
-                  </td>
+                  </td> */}
                   {/* Can display all empty cells to allow manual signature */}
                   {details.map(({ date, timings }, ind) => (
                     <>
                       {timings.fn && (
                         <td
                           key={`${data.hallno}-${ind}-${data.hallno}-${student.regno}`}
-                          className="border py-2 text-center"
+                          className="border "
                         ></td>
                       )}
                       {timings.an && (
                         <td
                           key={`${data.hallno}-${ind}-${data.hallno}-${student.regno}`}
-                          className="border py-2 text-center"
+                          className="border "
                         ></td>
                       )}
                       {!(timings.an || timings.fn) && <td className="border" />}
@@ -180,6 +190,47 @@ const AttendanceTable = ({
                   ))}
                 </tr>
               ))}
+              <tr>
+                <td className="border text-center font-bold" colSpan={3}>
+                  Number of Students Present :
+                </td>
+                {details.map(({ date, timings }, ind) => (
+                  <td className="border" />
+                ))}
+              </tr>
+              <tr>
+                <td className="border text-center font-bold" colSpan={3}>
+                  Number of Students Absent :
+                </td>
+                {details.map(({ date, timings }, ind) => (
+                  <td className="border" />
+                ))}
+              </tr>
+              <tr>
+                <td className="border text-center font-bold" colSpan={3}>
+                  Invigilator Signature
+                </td>
+                {details.map(({ date, timings }, ind) => (
+                  <td className="border" />
+                ))}
+              </tr>
+              <tr>
+                <td className="border text-center font-bold" colSpan={3}>
+                  Designation &amp;Department
+                </td>
+                {details.map(({ date, timings }, ind) => (
+                  <td className="border" />
+                ))}
+              </tr>
+
+              <tr>
+                <td className="text-center font-bold" colSpan={3}>
+                  Note:Mark “AB” for Absent
+                </td>
+                {details.map(({ date, timings }, ind) => (
+                  <td />
+                ))}
+              </tr>
             </tbody>
           </table>
         </div>

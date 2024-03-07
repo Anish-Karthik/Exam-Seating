@@ -150,8 +150,7 @@ const HallPLanTable = ({
                   </td>
                   <td className="border">
                     {" "}
-                    <div>09.00 AM - 10.30PM (FN)</div>
-                    <div>02.30 PM - 04.00 PM (AN)</div>
+                    <div>09.00 AM - 12.30PM (FN)</div>
                   </td>
                 </tr>
               </tbody>
@@ -165,8 +164,7 @@ const HallPLanTable = ({
             <div>
               {data[0].year} YEAR / {data[0].semester} SEM
             </div>
-            <div>09.00 AM - 10.30PM (FN)</div>
-            <div>02.30 PM - 04.00 PM (AN)</div>
+            <div>09.00 AM - 12.30PM (FN)</div>
           </div> */}
         </div>
       )}

@@ -37,19 +37,19 @@ const HallArrangementTable = ({
   }, [hallArrangementPlans, index]);
 
   if (!data) return <>Not found</>;
-  //   Date: 11/9/2023 to 13/9/2023(FN&amp;AN)                  Time: 09.00 AM - 10.30PM (FN)
-  //                                                            02.30 PM - 04.00 PM (AN)
+  //   Date: 11/9/2023 to 13/9/2023(FN&amp;AN)                  Time: 09.00 AM - 12.30PM (FN)
+  //                                                            02s.30 PM - 04.00 PM (AN)
   return (
     <div className={cn("", className)}>
       {show && (
         <div className="font-semibold">
           <div className="flex justify-between ">
             <DateOfExamModal />
-            <div>Time: 09.00 AM - 10.30PM (FN)</div>
+            <div>Time: 09.00 AM - 12.30PM (FN)</div>
           </div>
           <div className="flex justify-between ">
             <div>HALL NO: {data.hallno}</div>
-            <div>02.30 PM - 04.00 PM (AN)</div>
+            <div>Total: {data.hallStrength}</div>
           </div>
         </div>
       )}

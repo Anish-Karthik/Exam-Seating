@@ -64,7 +64,20 @@ const CollegeDetails = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      ...collegeDetails,
+      academicYear: collegeDetails.academicYear || "2023-2024",
+      collegeName:
+        collegeDetails.collegeName ||
+        "PSNA COLLEGE OF ENGINEERING AND TECHNOLOGY",
+      description:
+        collegeDetails.description ||
+        "An Autonomous Institution affiliated to Anna University",
+      department:
+        collegeDetails.department ||
+        "DEPARTMENT OF COMPUTER SCIENCE AND ENGINEERING",
+      departmentCode: collegeDetails.departmentCode || "CSE",
+      examName: collegeDetails.examName || "SERIAL TEST - I",
+      semester: collegeDetails.semester || "ODD",
+      districtName: collegeDetails.districtName || "DINDIGUL",
     },
   });
 

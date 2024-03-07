@@ -12,7 +12,6 @@ import {
   StudentsPerYear,
 } from "@/server/type";
 
-
 export const generateHallArrangement = async (
   studentData: StudentsPerYear[],
   hallData: Hall[]
@@ -26,25 +25,19 @@ export const generateHallArrangement = async (
   const { hallArrangementPlans, hallArrangementPlansWithSemester } =
     generateSeatingPlan(studentData, hallData);
 
-  
   return hallArrangementPlans;
 };
-
 
 export const generateHallPlan = async (
   studentData: StudentsPerYear[],
   hallData: Hall[]
 ): Promise<HallPlanPerYear[]> => {
-
   return generateHallPlanForHall(studentData, hallData);
 };
-
-
 
 export const generateAttendaceSheet = async (
   studentData: StudentsPerYear[],
   hallData: Hall[]
 ): Promise<AttendanceSheet[]> => {
-
   return generateAttendancePlanForHall(studentData, hallData);
 };

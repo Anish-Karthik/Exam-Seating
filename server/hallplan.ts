@@ -5,7 +5,6 @@ import {
   HallPlanPerYear,
   StudentsPerYear,
 } from "./type";
-import { intialize, mapSemester } from "./utils";
 
 export const extractDataFromRollno = (data: string) => {
   if (!data)
@@ -18,8 +17,7 @@ export const extractDataFromRollno = (data: string) => {
       regNo: 0,
       name: "",
     };
-  
-    
+
   const dataExtract = data.split("-");
   const year = dataExtract[0];
   const section = dataExtract[1].split("(")[0];
@@ -28,7 +26,6 @@ export const extractDataFromRollno = (data: string) => {
   const dept = dataExtract[3];
   const regNo = Number(dataExtract[4]);
   const name = dataExtract[5];
-  
 
   console.log(data, semester);
 
