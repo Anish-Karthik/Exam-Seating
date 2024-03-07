@@ -18,14 +18,17 @@ export const extractDataFromRollno = (data: string) => {
       regNo: 0,
       name: "",
     };
+  
+    
   const dataExtract = data.split("-");
   const year = dataExtract[0];
   const section = dataExtract[1].split("(")[0];
   const rollNo = Number(dataExtract[1].split("(")[1].split(")")[0]);
-  const semester = dataExtract[dataExtract.length - 4];
-  const dept = dataExtract[dataExtract.length - 3];
-  const regNo = Number(dataExtract[dataExtract.length - 2]);
-  const name = dataExtract[dataExtract.length - 1];
+  const semester = dataExtract[2];
+  const dept = dataExtract[3];
+  const regNo = Number(dataExtract[4]);
+  const name = dataExtract[5];
+  
 
   return { year, section, rollNo, semester, dept, regNo, name };
 };
