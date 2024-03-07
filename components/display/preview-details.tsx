@@ -1,16 +1,19 @@
 import React from "react";
 
+import { cn } from "@/lib/utils";
 import { CollegeDetails } from "@/hooks/use-college-details";
 
 const PreviewDetails = ({
   collegeDetails,
   name = "HallPlan",
+  className,
 }: {
   collegeDetails: CollegeDetails;
   name?: string;
+  className?: string;
 }) => {
   return (
-    <div className="flex h-full w-full flex-col items-center">
+    <div className={cn("flex h-full w-full flex-col items-center", className)}>
       <div className="text-md mt-4 flex flex-col items-center text-center">
         <h2 className="font-bold">
           {`${collegeDetails.collegeName || "College Name"}, ${

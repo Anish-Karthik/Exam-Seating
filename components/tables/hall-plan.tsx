@@ -128,6 +128,48 @@ const HallPLanTable = ({
         </div>
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
+      {show && (
+        <div className="mt-1">
+          <div className="font-bold">Exam Timings:</div>
+          <div className="table-responsive">
+            <table
+              className="table-bordered mx-auto table"
+              cellPadding={2}
+              border={1}
+            >
+              <thead>
+                <tr className="bg-gaey-500 bg">
+                  <th className="border bg-gray-300">Year & Semester</th>
+                  <th className="border bg-gray-300">Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td align="center" className="border">
+                    {data[0].year} / {data[0].semester}
+                  </td>
+                  <td className="border">
+                    {" "}
+                    <div>09.00 AM - 10.30PM (FN)</div>
+                    <div>02.30 PM - 04.00 PM (AN)</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div className="mb-1 mt-20 flex w-full justify-between">
+            <div className="font-bold">Exam Cell In-charge</div>
+            <div className="text-right font-bold">HOD-{data[0].dept}</div>
+          </div>
+          {/* <div className="flex justify-between ">
+            <div>
+              {data[0].year} YEAR / {data[0].semester} SEM
+            </div>
+            <div>09.00 AM - 10.30PM (FN)</div>
+            <div>02.30 PM - 04.00 PM (AN)</div>
+          </div> */}
+        </div>
+      )}
     </div>
   );
 };

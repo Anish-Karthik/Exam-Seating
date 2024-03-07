@@ -5,6 +5,7 @@ import { HallArrangementPlansState } from "@/store/atoms";
 import { useRecoilValue } from "recoil";
 
 import { LOCAL_STORAGE_KEYS } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 
 import DateOfExamModal from "../mini-components/date-of-exam-modal";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
@@ -12,9 +13,11 @@ import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 const HallArrangementTable = ({
   index,
   show = false,
+  className,
 }: {
   index: number;
   show?: boolean;
+  className?: string;
 }) => {
   const router = useRouter();
   const hallArrangementPlans = useRecoilValue(HallArrangementPlansState);
@@ -37,7 +40,7 @@ const HallArrangementTable = ({
   //   Date: 11/9/2023 to 13/9/2023(FN&amp;AN)                  Time: 09.00 AM - 10.30PM (FN)
   //                                                            02.30 PM - 04.00 PM (AN)
   return (
-    <div>
+    <div className={cn("", className)}>
       {show && (
         <div className="font-semibold">
           <div className="flex justify-between ">
@@ -45,7 +48,7 @@ const HallArrangementTable = ({
             <div>Time: 09.00 AM - 10.30PM (FN)</div>
           </div>
           <div className="flex justify-between ">
-            <div>-</div>
+            <div>HALL NO: {data.hallno}</div>
             <div>02.30 PM - 04.00 PM (AN)</div>
           </div>
         </div>
