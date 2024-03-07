@@ -10,9 +10,11 @@ import PreviewDetails from "./preview-details";
 const HeaderPreview = ({
   isSubmitted = true,
   name = "HallPlan",
+  className,
 }: {
   isSubmitted?: boolean;
   name?: string;
+  className?: string;
 }) => {
   const { collegeDetails: collegeDetailsPreview } = usePreviewCollegeDetails();
   const { collegeDetails } = useCollegeDetails();
@@ -20,6 +22,7 @@ const HeaderPreview = ({
     <PreviewDetails
       collegeDetails={isSubmitted ? collegeDetails : collegeDetailsPreview}
       name={name}
+      className={className}
     />
   );
 };

@@ -108,6 +108,7 @@ export function exportHTMLTableToExcel(
   fileName: string,
   isBase64: boolean = false
 ): File | null | string {
+  console.log("exporting");
   var tableElement = document.getElementById(tableId);
   if (null == tableElement) return null;
   var workBook = XLSX.utils.table_to_book(tableElement, { sheet: "skills" });
