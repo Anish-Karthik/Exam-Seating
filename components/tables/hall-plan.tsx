@@ -36,7 +36,7 @@ const HallPLanTable = ({
       {show && (
         <div className="font-semibold">
           <div className="flex justify-between ">
-            <div>
+            <div className="overflow-auto">
               {data[0].year} YEAR / {data[0].semester} SEM
             </div>
             <DateOfExamModal />
@@ -50,7 +50,7 @@ const HallPLanTable = ({
               <tr>
                 <th
                   rowSpan={2}
-                  className="max-w-[100px] border px-4 py-2 text-center md:max-w-[200px]"
+                  className="max-w-[100px] whitespace-normal border px-4 py-2 text-center md:max-w-[200px] md:text-base"
                 >
                   Year / Semester
                 </th>
@@ -69,13 +69,14 @@ const HallPLanTable = ({
                 </th>
                 <th
                   rowSpan={2}
-                  className="max-w-[100px] border px-4 py-2 text-center md:max-w-[200px]"
+                  className="max-w-[100px] whitespace-normal border px-4 py-2 text-center md:max-w-[200px] md:text-base"
                 >
                   Hall No. & Total Strength
                 </th>
+
                 <th
                   rowSpan={2}
-                  className="max-w-[100px] border px-4 py-2 text-center md:max-w-[200px]"
+                  className="max-w-[100px] whitespace-normal border px-4 py-2 text-center md:max-w-[200px] md:text-base"
                 >
                   Block / Floor
                 </th>

@@ -24,8 +24,6 @@ export const generateHallArrangement = async (
   );
   const { hallArrangementPlans, hallArrangementPlansWithSemester } =
     generateSeatingPlan(studentData, hallData);
-  console.log("check", hallArrangementPlans);
-  console.log("check", hallArrangementPlansWithSemester);
 
   return hallArrangementPlans;
 };

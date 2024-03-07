@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { AttendanceSheet } from "@/server/type";
 import { HallAttendancesState } from "@/store/atoms";
+import { format, formatDate } from "date-fns";
 import { useRecoilValue } from "recoil";
 
 import { LOCAL_STORAGE_KEYS } from "@/lib/constants";
@@ -86,7 +87,10 @@ const AttendanceTable = ({
                 <th rowSpan={2} className="border px-4 py-2 text-center">
                   Name
                 </th>
-                <th rowSpan={2} className="border px-4 py-2 text-center">
+                <th
+                  rowSpan={2}
+                  className="max-w-[100px] whitespace-normal border px-4 py-2 text-center md:max-w-[200px] md:text-base"
+                >
                   Section
                 </th>
                 {/* Can display all exams date */}
@@ -96,7 +100,7 @@ const AttendanceTable = ({
                     className="border px-4 py-2 text-center"
                     colSpan={timings.fn && timings.an ? 2 : 1}
                   >
-                    {date}
+                    {format(date, "dd-MM-yy")}
                   </th>
                 ))}
               </tr>
@@ -160,13 +164,13 @@ const AttendanceTable = ({
                       {timings.fn && (
                         <td
                           key={`${data.hallno}-${ind}-${data.hallno}-${student.regno}`}
-                          className="border px-4 py-2 text-center"
+                          className="border py-2 text-center text-xs"
                         ></td>
                       )}
                       {timings.an && (
                         <td
                           key={`${data.hallno}-${ind}-${data.hallno}-${student.regno}`}
-                          className="border px-4 py-2 text-center"
+                          className="border py-2 text-center text-xs"
                         ></td>
                       )}
                     </>
