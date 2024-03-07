@@ -74,22 +74,22 @@ const AttendanceTable = ({
         </div>
       )}
       <ScrollArea className="whitespace-nowrap rounded-md max-sm:mx-2 max-sm:w-screen max-sm:border max-sm:px-2">
-        <div className="table-responsive">
+        <div className="table-responsive !text-[10px]">
           <table className="table-bordered mx-auto table" id={id}>
             <thead>
               <tr>
-                <th rowSpan={2} className="border px-4 py-2 text-center">
+                <th rowSpan={2} className="border px-1 py-2 text-center">
                   S.No
                 </th>
-                <th rowSpan={1} className="border px-4 py-2 text-center">
+                <th rowSpan={1} className="border px-1 py-2 text-center">
                   Hall No {data.hallno}
                 </th>
-                <th rowSpan={2} className="border px-4 py-2 text-center">
+                <th rowSpan={2} className="border px-1 py-2 text-center">
                   Name
                 </th>
                 <th
                   rowSpan={2}
-                  className="max-w-[100px] whitespace-normal border px-4 py-2 text-center md:max-w-[200px] md:text-base"
+                  className="max-w-[100px] whitespace-normal border px-1 py-2 text-center md:max-w-[200px]"
                 >
                   Section
                 </th>
@@ -97,15 +97,16 @@ const AttendanceTable = ({
                 {details.map(({ date, timings }, ind) => (
                   <th
                     key={`${data.hallno}-${ind}`}
-                    className="border px-4 py-2 text-center"
+                    className="border px-1 py-2 text-center"
                     colSpan={timings.fn && timings.an ? 2 : 1}
+                    rowSpan={!(timings.an || timings.fn) ? 2 : 1}
                   >
                     {format(date, "dd-MM-yy")}
                   </th>
                 ))}
               </tr>
               <tr>
-                <th rowSpan={1} className="border px-4 py-2 text-center">
+                <th rowSpan={1} className="border px-1 py-2 text-center">
                   Register No
                 </th>
                 {/* Can display all exams session */}
@@ -114,7 +115,7 @@ const AttendanceTable = ({
                     {timings.fn && (
                       <th
                         key={`${data.hallno}-${ind}`}
-                        className="border px-4 py-2 text-center"
+                        className="border px-1 py-2 text-center"
                       >
                         FN
                       </th>
@@ -122,11 +123,12 @@ const AttendanceTable = ({
                     {timings.an && (
                       <th
                         key={`${data.hallno}-${ind}`}
-                        className="border px-4 py-2 text-center"
+                        className="border px-1 py-2 text-center"
                       >
                         AN
                       </th>
                     )}
+                    {!(timings.an || timings.fn) && <td />}
                   </>
                 ))}
               </tr>
@@ -136,25 +138,25 @@ const AttendanceTable = ({
                 <tr key={`${data.hallno}-${ind}`}>
                   <td
                     key={`${data.hallno}-${ind}-${data.hallno}-${student.regno}`}
-                    className="border px-4 py-2 text-center"
+                    className="border px-1 py-2 text-center"
                   >
                     {student.sno}
                   </td>
                   <td
                     key={`${data.hallno}-${ind}-${data.hallno}-${student.regno}`}
-                    className="border px-4 py-2 text-center"
+                    className="border px-1 py-2 text-center"
                   >
                     {student.regno}
                   </td>
                   <td
                     key={`${data.hallno}-${ind}-${data.hallno}-${student.regno}`}
-                    className="border px-4 py-2 text-center"
+                    className="border px-1 py-2 text-center"
                   >
                     {student.name}
                   </td>
                   <td
                     key={`${data.hallno}-${ind}-${data.hallno}-${student.regno}`}
-                    className="border px-4 py-2 text-center"
+                    className="border px-1 py-2 text-center"
                   >
                     {student.section}
                   </td>
@@ -164,15 +166,16 @@ const AttendanceTable = ({
                       {timings.fn && (
                         <td
                           key={`${data.hallno}-${ind}-${data.hallno}-${student.regno}`}
-                          className="border py-2 text-center text-xs"
+                          className="border py-2 text-center"
                         ></td>
                       )}
                       {timings.an && (
                         <td
                           key={`${data.hallno}-${ind}-${data.hallno}-${student.regno}`}
-                          className="border py-2 text-center text-xs"
+                          className="border py-2 text-center"
                         ></td>
                       )}
+                      {!(timings.an || timings.fn) && <td className="border" />}
                     </>
                   ))}
                 </tr>

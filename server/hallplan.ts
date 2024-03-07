@@ -27,6 +27,8 @@ export const extractDataFromRollno = (data: string) => {
   const regNo = Number(dataExtract[dataExtract.length - 2]);
   const name = dataExtract[dataExtract.length - 1];
 
+  console.log(data, semester);
+
   return { year, section, rollNo, semester, dept, regNo, name };
 };
 
@@ -121,7 +123,7 @@ export const generateHallPlanForHall = (
                 to: endRollno.toString(),
               },
               year: prevYear,
-              semester: mapSemester(Number(semester))!,
+              semester: semester,
               dept: dept!,
             });
             startRollNo = rollNo;
@@ -141,7 +143,7 @@ export const generateHallPlanForHall = (
                   to: endRollno.toString(),
                 },
                 year: prevYear,
-                semester: mapSemester(Number(semester))!,
+                semester: semester,
                 dept: dept!,
               });
             }
@@ -177,7 +179,7 @@ export const generateHallPlanForHall = (
                   // to: (rollNo - 1).toString(),
                 },
                 year: prevYear,
-                semester: mapSemester(Number(semester))!,
+                semester: semester,
                 dept: dept,
               });
               startRollNo = rollNo;
@@ -202,7 +204,7 @@ export const generateHallPlanForHall = (
                     to: endRollno.toString(),
                   },
                   year: prevYear,
-                  semester: mapSemester(Number(semester))!,
+                  semester: semester,
                   dept: dept,
                 });
               }
