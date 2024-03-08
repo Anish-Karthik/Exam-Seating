@@ -16,6 +16,7 @@ export const extractDataFromRollno = (data: string) => {
       dept: "",
       regNo: 0,
       name: "",
+      vertical: "",
     };
 
   const dataExtract = data.split("-");
@@ -26,10 +27,11 @@ export const extractDataFromRollno = (data: string) => {
   const dept = dataExtract[3];
   const regNo = Number(dataExtract[4]);
   const name = dataExtract[5];
+  const vertical = dataExtract[dataExtract.length - 1];
 
   console.log(data, semester);
 
-  return { year, section, rollNo, semester, dept, regNo, name };
+  return { year, section, rollNo, semester, dept, regNo, name, vertical };
 };
 
 function intializeHallplan(seatPlan: HallArrangementPlan[], hallData: Hall[]) {

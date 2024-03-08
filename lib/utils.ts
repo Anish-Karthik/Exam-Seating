@@ -50,6 +50,7 @@ export function dataWrangleTheExcelData(data: any) {
             regno: row.__EMPTY_1 ?? row.regno,
             rollno: row.__EMPTY ?? row.rollno,
             section: row.__EMPTY_3 ?? row.section,
+            vertical: row.__EMPTY_4 ?? row.vertical,
           };
           studentData.push(student);
         } catch (error) {
@@ -64,6 +65,7 @@ export function dataWrangleTheExcelData(data: any) {
             regno: Number(row.regno),
             rollno: row.rollno.toString(),
             section: row.section,
+            vertical: row.vertical,
           };
           studentData.push(student);
         } catch (error) {

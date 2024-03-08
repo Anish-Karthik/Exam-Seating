@@ -47,6 +47,7 @@ const formSchema = z.object({
       section: z.string(),
       sno: z.number(),
       regno: z.number(),
+      vertical: z.string(),
     })
   ),
   strength: z.number(),

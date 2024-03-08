@@ -34,36 +34,24 @@ export const generateSeatingPlan = (
               if (studentCountPerHall === hallData[hallIndex].studentsPerHall) {
                 continue;
               }
-              const year = mapYear(studentData[studentArrayIndex].year);
-              const semester = mapSemester(
-                studentData[studentArrayIndex].semester
-              );
-              const dept = studentData[studentArrayIndex].dept;
-              const regNo =
-                studentData[studentArrayIndex].studentData[studentCount].regno;
-              const name =
-                studentData[studentArrayIndex].studentData[studentCount].name;
-              // console.log(studentCount,studentData[studentArrayIndex].studentData[studentCount])
-              const currentSection =
-                studentData[studentArrayIndex].studentData[studentCount]
-                  .section;
-              const serielno =
-                studentData[studentArrayIndex].studentData[studentCount].rollno;
+              const currentStudentData = studentData[studentArrayIndex];
+              const year = mapYear(currentStudentData.year);
+              const semester = mapSemester(currentStudentData.semester);
+              const dept = currentStudentData.dept;
+              const {
+                regno: regNo,
+                name,
+                vertical,
+                section: currentSection,
+                rollno: serielno,
+              } = currentStudentData.studentData[studentCount];
+
               seatvalue = year + "-" + currentSection + `(${serielno})`;
               hallArrangementPlans[hallIndex].hallArrangement[k][j][ind] =
                 seatvalue;
               hallArrangementPlansWithSemester[hallIndex].hallArrangement[k][j][
                 ind
-              ] =
-                seatvalue +
-                "-" +
-                semester +
-                "-" +
-                dept +
-                "-" +
-                regNo +
-                "-" +
-                name;
+              ] = [seatvalue, semester, dept, regNo, name, vertical].join("-");
               //console.log(hallArrangementPlans[hallIndex].hallArrangement)
               studentCount++;
               studentCountPerHall++;
@@ -78,7 +66,7 @@ export const generateSeatingPlan = (
               if (studentCount === studentStrength) {
                 studentArrayIndex++;
                 studentCount = 0;
-                studentStrength = studentData[studentArrayIndex].strength;
+                studentStrength = currentStudentData.strength;
               }
             }
           }
@@ -97,21 +85,23 @@ export const generateSeatingPlan = (
           if (studentCountPerHall === hallData[hallIndex].studentsPerHall) {
             continue;
           }
-          const year = mapYear(studentData[studentArrayIndex].year);
-          const semester = mapSemester(studentData[studentArrayIndex].semester);
-          const dept = studentData[studentArrayIndex].dept;
-          const regNo =
-            studentData[studentArrayIndex].studentData[studentCount].regno;
-          const name =
-            studentData[studentArrayIndex].studentData[studentCount].name;
-          const currentSection =
-            studentData[studentArrayIndex].studentData[studentCount].section;
-          const serielno =
-            studentData[studentArrayIndex].studentData[studentCount].rollno;
+          const currentStudentData = studentData[studentArrayIndex];
+          const year = mapYear(currentStudentData.year);
+          const semester = mapSemester(currentStudentData.semester);
+          const dept = currentStudentData.dept;
+          const {
+            regno: regNo,
+            name,
+            vertical,
+            section: currentSection,
+            rollno: serielno,
+          } = currentStudentData.studentData[studentCount];
           seatvalue = year + "-" + currentSection + `(${serielno})`;
           hallArrangementPlans[hallIndex].hallArrangement[k][j][0] = seatvalue;
           hallArrangementPlansWithSemester[hallIndex].hallArrangement[k][j][0] =
             seatvalue + "-" + semester + "-" + dept + "-" + regNo + "-" + name;
+          hallArrangementPlansWithSemester[hallIndex].hallArrangement[k][j][0] =
+            [seatvalue, semester, dept, regNo, name, vertical].join("-");
           studentCount++;
           overallStudentCount++;
           studentCountPerHall++;

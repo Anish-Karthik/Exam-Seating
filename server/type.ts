@@ -4,6 +4,7 @@ export type Student = {
   regno: number;
   rollno: string;
   section: string;
+  vertical: string;
 };
 
 export type StudentsPerYear = {

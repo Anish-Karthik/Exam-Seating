@@ -24,7 +24,7 @@ export const generateAttendancePlanForHall = (
       for (let i = 0; i < col; i++) {
         for (let j = 0; j < row; j++) {
           if (hall[j][i][0]) {
-            const { name, section, regNo } = extractDataFromRollno(
+            const { name, section, regNo, vertical } = extractDataFromRollno(
               hall[j][i][0]
             );
             sno++;
@@ -34,6 +34,7 @@ export const generateAttendancePlanForHall = (
               section: section,
               regno: regNo,
               rollno: hall[j][i][0],
+              vertical: vertical,
             });
           }
         }
@@ -44,7 +45,7 @@ export const generateAttendancePlanForHall = (
         for (let ind = 0; ind < 2; ind++) {
           for (let k = 0; k < row; k++) {
             if (hall[k][j][ind]) {
-              const { name, section, regNo } = extractDataFromRollno(
+              const { name, section, regNo, vertical } = extractDataFromRollno(
                 hall[k][j][ind]
               );
               sno++;
@@ -54,6 +55,7 @@ export const generateAttendancePlanForHall = (
                 section: section,
                 regno: regNo,
                 rollno: hall[k][j][ind],
+                vertical: vertical,
               });
             }
           }

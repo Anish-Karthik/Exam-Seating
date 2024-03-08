@@ -2,11 +2,12 @@
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import {
-  sampleArrangementPlans,
-  sampleAttendancePlans,
-  sampleHallPlans,
-} from "@/test/sample-data";
+
+// import {
+//   sampleArrangementPlans,
+//   sampleAttendancePlans,
+//   sampleHallPlans,
+// } from "@/test/sample-data";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -48,16 +49,13 @@ const DisplayPage = () => {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="plan">
-          <DisplayPlan name="hallplan" sampledata={sampleHallPlans} />
+          <DisplayPlan name="hallplan" />
         </TabsContent>
         <TabsContent value="arrangement">
-          <DisplayPlan
-            name="seatarrangement"
-            sampledata={sampleArrangementPlans}
-          />
+          <DisplayPlan name="seatarrangement" />
         </TabsContent>
         <TabsContent value="attendance">
-          <DisplayPlan name="attendance" sampledata={sampleAttendancePlans} />
+          <DisplayPlan name="attendance" />
         </TabsContent>
       </Tabs>
     </div>

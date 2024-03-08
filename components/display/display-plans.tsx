@@ -32,10 +32,8 @@ import DisplayDownloadOptions from "./display-download-options";
 
 const DisplayPlan = ({
   name,
-  sampledata,
 }: {
   name: "hallplan" | "seatarrangement" | "attendance";
-  sampledata: HallArrangementPlan[] | HallPlanPerYear[] | AttendanceSheet[];
 }) => {
   const [studentsPerYearData, setStudentsPerYearData] = useState(
     useRecoilValue(studentPerYearState)
@@ -144,7 +142,6 @@ const DisplayPlan = ({
   }, [
     hallsData,
     name,
-    sampledata,
     setAttendance,
     setData,
     setHallPlans,
