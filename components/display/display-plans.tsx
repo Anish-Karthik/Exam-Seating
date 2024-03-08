@@ -27,13 +27,14 @@ import { exportHTMLTableToExcel } from "@/lib/utils";
 import HallArrangementTable from "../tables/hall-arrangement-plan";
 import AttendanceTable from "../tables/hall-attendance-plan";
 import HallPLanTable from "../tables/hall-plan";
+import VerticalCountTable from "../tables/vertical-count";
 import { Button } from "../ui/button";
 import DisplayDownloadOptions from "./display-download-options";
 
 const DisplayPlan = ({
   name,
 }: {
-  name: "hallplan" | "seatarrangement" | "attendance";
+  name: "hallplan" | "seatarrangement" | "attendance" | "verticalcount";
 }) => {
   const [studentsPerYearData, setStudentsPerYearData] = useState(
     useRecoilValue(studentPerYearState)
@@ -157,7 +158,9 @@ const DisplayPlan = ({
   console.log(data.length);
   return (
     <section className="h-full">
-      {!(data && data.length) ? (
+      {name === "verticalcount" ? (
+        <VerticalCountTable />
+      ) : !(data && data.length) ? (
         <div className="">
           <h1 className="text-2xl font-bold">No {name}</h1>
           <p>Please fill in the form to generate the {name}.</p>

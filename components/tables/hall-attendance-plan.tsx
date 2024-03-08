@@ -88,13 +88,13 @@ const AttendanceTable = ({
           <table className="table-bordered mx-auto table" id={id}>
             <thead>
               <tr>
-                <th rowSpan={2} className="border px-1 ">
+                <th rowSpan={2} className="border px-1 !text-[12px]">
                   R.No
                 </th>
-                <th rowSpan={1} className="border px-1 ">
+                <th rowSpan={1} className="border px-1 !text-[12px]">
                   Hall No {data.hallno}
                 </th>
-                <th rowSpan={2} className="border px-1 ">
+                <th rowSpan={2} className="border px-1 !text-[12px]">
                   Name
                 </th>
                 {/* <th
@@ -148,19 +148,19 @@ const AttendanceTable = ({
                 <tr key={`${data.hallno}-${ind}`}>
                   <td
                     key={`${data.hallno}-${ind}-${data.hallno}-${student.regno}`}
-                    className="border px-1 "
+                    className="border px-1 !text-[12px]"
                   >
                     {extractDataFromRollno(student.rollno).rollNo}
                   </td>
                   <td
                     key={`${data.hallno}-${ind}-${data.hallno}-${student.regno}`}
-                    className="border px-1 "
+                    className="border px-1 !text-[12px]"
                   >
                     {student.regno}
                   </td>
                   <td
                     key={`${data.hallno}-${ind}-${data.hallno}-${student.regno}`}
-                    className="border px-1 "
+                    className="border px-1 !text-[12px]"
                   >
                     {student.name}
                   </td>

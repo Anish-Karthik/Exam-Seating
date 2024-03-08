@@ -9,7 +9,7 @@ const DisplayDownloadOptions = ({
   name,
   size,
 }: {
-  name: "hallplan" | "seatarrangement" | "attendance";
+  name: "hallplan" | "seatarrangement" | "attendance" | "verticalcount";
   size: number;
 }) => {
   const arr = new Array(size).fill(0);
@@ -50,7 +50,7 @@ const DisplayDownloadOptions = ({
                 <div>
                   <div className="flex w-fit items-center gap-2 rounded-md bg-slate-100 p-1">
                     <h1 className="text-lg font-bold xl:text-sm">
-                      {name} {index + 1}
+                      {name} {index + 1}, {index + 2} Halls
                     </h1>
                     <Button
                       onClick={() => {
@@ -76,8 +76,9 @@ const DisplayDownloadOptions = ({
                           ? ""
                           : "two"
                       }`}
+                      target="_blank"
                     >
-                      <Button>Print 2 Preview</Button>
+                      <Button>Print Preview</Button>
                     </Link>
                   </div>
                 </div>

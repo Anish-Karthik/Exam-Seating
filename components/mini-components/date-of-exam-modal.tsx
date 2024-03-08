@@ -7,10 +7,10 @@ const DateOfExamModal = () => {
   const { getStartDate, getEndDate } = useDurationDetails();
   return (
     <div>
-      Date of Exam: {format(getStartDate(), "dd-MM-yy")}
+      Date of Exam: {format(getStartDate(), "dd/MM/yy")}
       {getStartDate() === getEndDate()
         ? null
-        : " - " + format(getEndDate(), "dd-MM-yy")}
+        : " - " + format(getEndDate(), "dd/MM/yy")}
     </div>
   );
 };

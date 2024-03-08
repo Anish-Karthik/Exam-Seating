@@ -47,6 +47,9 @@ const DisplayPage = () => {
           <TabsTrigger value="attendance" className="w-full">
             Attendance
           </TabsTrigger>
+          <TabsTrigger value="verticalcount" className="w-full">
+            Vertical Count
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="plan">
           <DisplayPlan name="hallplan" />
@@ -56,6 +59,9 @@ const DisplayPage = () => {
         </TabsContent>
         <TabsContent value="attendance">
           <DisplayPlan name="attendance" />
+        </TabsContent>
+        <TabsContent value="verticalcount">
+          <DisplayPlan name="verticalcount" />
         </TabsContent>
       </Tabs>
     </div>
