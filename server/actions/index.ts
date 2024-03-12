@@ -13,7 +13,7 @@ import {
   StudentsPerYear,
 } from "../type";
 
-const num = 1;
+const num = 3;
 const localPath = path.join(process.cwd(), `test/data/data${num}`);
 
 export const generateHallArrangement = async (
