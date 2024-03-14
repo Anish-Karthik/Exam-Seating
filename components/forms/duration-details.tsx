@@ -18,8 +18,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-import MultipleSelectorDemo from "../mini-components/multi-select";
-
 const formSchema = z.object({
   date: z.string(),
 });

@@ -46,8 +46,8 @@ function intializeHallplan(seatPlan: HallArrangementPlan[]) {
           if (hall[j][i][0] === "") {
             continue;
           }
-          const { year,dept } = extractDataFromRollno(hall[j][i][0]);
-          const key=year+dept;
+          const { year, dept } = extractDataFromRollno(hall[j][i][0]);
+          const key = year + dept;
           if (!mapPlanPerYear.has(key)) {
             mapPlanPerYear.set(key, []);
           }
@@ -60,8 +60,8 @@ function intializeHallplan(seatPlan: HallArrangementPlan[]) {
             if (hall[k][j][ind] === "") {
               continue;
             }
-            const { year,dept } = extractDataFromRollno(hall[k][j][ind]);
-            const key=year+dept
+            const { year, dept } = extractDataFromRollno(hall[k][j][ind]);
+            const key = year + dept;
             if (!mapPlanPerYear.has(key)) {
               mapPlanPerYear.set(key, []);
             }
@@ -72,42 +72,37 @@ function intializeHallplan(seatPlan: HallArrangementPlan[]) {
   }
   return { mapPlanPerYear };
 }
-
-
 export const generateHallPlanForHall = (
   studentData: StudentsPerYear[],
   hallData: Hall[]
-) =>{
-
+) => {
   // grouped the data based on year,dept,section,hallno
   const { hallArrangementPlansWithSemester: seatPlan } = generateSeatingPlan(
     studentData,
     hallData
   );
   let hallPlan: HallPlanPerYear[] = [];
-
   const { mapPlanPerYear } = intializeHallplan(seatPlan);
   for (let hallCount = 0; hallCount < seatPlan.length; hallCount++) {
     const { hallArrangement: hall, hallStrength, hallno } = seatPlan[hallCount];
     const [row, col] = [hall.length, hall[0].length];
-    const istwoperbench =hallData[hallCount].studentsPerBench === 2;
-    const mapPlanPerYeardept = new Map<string, number[]>();
+    const istwoperbench = hallData[hallCount].studentsPerBench === 2;
+    const mapPlanPerYeardept = new Map<string, (string | number)[]>();
 
-      if (!istwoperbench) {
+    if (!istwoperbench) {
       for (let i = 0; i < col; i++) {
         for (let j = 0; j < row; j++) {
           if (hall[j][i][0] === "") {
             continue;
           }
-          const { year,dept,section,rollNo} = extractDataFromRollno(hall[j][i][0]);
-          const key=year+dept+section+hallno;
+          const { year, dept, section, rollNo, semester } =
+            extractDataFromRollno(hall[j][i][0]);
+          const key = year + dept + section + hallno;
           if (!mapPlanPerYeardept.has(key)) {
-            mapPlanPerYeardept.set(key, [rollNo,rollNo]);
-          }
-          else{
-            let v=mapPlanPerYeardept.get(key)    
-            if(v)
-            mapPlanPerYeardept.set(key,[v[0],rollNo])
+            mapPlanPerYeardept.set(key, [rollNo, rollNo, semester]);
+          } else {
+            let v = mapPlanPerYeardept.get(key);
+            if (v) mapPlanPerYeardept.set(key, [v[0], rollNo, semester]);
           }
         }
       }
@@ -118,123 +113,54 @@ export const generateHallPlanForHall = (
             if (hall[k][j][ind] === "") {
               continue;
             }
-            const { year,dept,section } = extractDataFromRollno(hall[k][j][ind]);
-            const key=year+dept+section+hallno
+            const { year, dept, section, rollNo, semester } =
+              extractDataFromRollno(hall[k][j][ind]);
+            const key = year + dept + section + hallno;
             if (!mapPlanPerYeardept.has(key)) {
-              mapPlanPerYeardept.set(key, []);
+              mapPlanPerYeardept.set(key, [rollNo, rollNo, semester]);
+            } else {
+              let v = mapPlanPerYeardept.get(key);
+              if (v) mapPlanPerYeardept.set(key, [v[0], rollNo, semester]);
             }
           }
         }
       }
+      mapPlanPerYeardept.forEach((value, key) => {
+        if (value.length > 0) {
+          //extract data from key
+          console.log("key", key);
+          const year = key.slice(0, 1);
+          const dept = key.slice(1, 2);
+          const section = key.slice(2, 3);
+          const hallno = key.slice(3, 4);
+          const totalStrength = value.length;
+          const rollNo = {
+            from: value[0],
+            to: value[1],
+          };
+          const semester = value[2];
+          mapPlanPerYear.get(year + dept)?.push({
+            section: section,
+            hallno: hallno.toString(),
+            totalStrength: hallStrength,
+            rollNo: {
+              from: rollNo.from.toString(),
+              to: rollNo.to.toString(),
+            },
+            year: year,
+            semester: mapSemester(Number(semester))!,
+            dept: dept!,
+          });
+        }
+      });
     }
-
-  // if (i == col - 1 && j == row - 1 && hall[j][i][0] !== "") {
-  //             mapPlanPerYear.get(prevYear)?.push({
-  //               section: prevSec,
-  //               hallno: hallno.toString(),
-  //               totalStrength: hallStrength,
-  //               rollNo: {
-  //                 from: startRollNo.toString(),
-  //                 to: endRollno.toString(),
-  //               },
-  //               year: prevYear,
-  //               semester: mapSemester(Number(semester))!,
-  //               dept: dept!,
-  //             });
-
-    mapPlanPerYeardept.forEach((value, key) => {
-      if (value.length > 0) {
-        //extract data from key
-        console.log("key",key)
-        const year = key.slice(0, 1);
-        const dept = key.slice(1, 2);
-        const section = key.slice(2, 3);
-        const hallno = key.slice(3, 4);
-        const totalStrength = value.length;
-        const rollNo = {
-          from: value[0],
-          to: value[1],
-        };
-        const semester = value[2];
-        
-       
-      
-      }
-    });
-
-
-
   }
-
-
-
-   // grouped the halldata based on year,dept,section,hallno
-}
-  
-    // grouped the halldata based on year,dept,section,hallno
-
-  //  iterate thr hall using reduce
-     // grouped the halldata based on year,dept,section,hallno
-
-    // const groupforstudent = hall.reduce((acc, curr,ind) => {
-    //   console.log("curr",curr)
-    //   const { year, section, rollNo, semester, dept, regNo, name } =
-    //     extractDataFromRollno(curr[0][0]);
-
-    //   const key = `${year}-${dept}-${section}-${hallno}`;
-    //   if (!acc[key]) {
-    //     acc[key] = [];
-    //   }
-    //   acc[key].push(curr[0][0]);
-    //   return acc;
-    // }, {} as { [key: string]: string[] });
-
-    
-
-
-  
-
-
-
-
-// export const generateHallPlanForHall = (
-//   studentData: StudentsPerYear[],
-//   hallData: Hall[]
-// ) => {
-//   const { hallArrangementPlansWithSemester: seatPlan } = generateSeatingPlan(
-//     studentData,
-//     hallData
-//   );
-//   // create a map for year y traversing a section
-
-//   let hallPlan: HallPlanPerYear[] = [];
-
-//   const { mapPlanPerYear } = intializeHallplan(seatPlan);
-
-//   console.log(mapPlanPerYear);
-//   for (let hallCount = 0; hallCount < seatPlan.length; hallCount++) {
-//     const { hallArrangement: hall, hallStrength, hallno } = seatPlan[hallCount];
-//     const [row, col] = [hall.length, hall[0].length];
-//     let {
-//       rollNo: startRollNo,
-//       section: prevSec,
-//       year: prevYear,
-//     } = extractDataFromRollno(hall[0][0][0]);
-//     // const endRollno='0'
-
-//     const istwoperbench = hallData[hallCount].studentsPerBench === 2;
-
-//   const hallPlanArray: HallPlanPerYear[] = [];
-
-//   mapPlanPerYear.forEach((value, key) => {
-//     if (value.length > 0) {
-//       hallPlanArray.push(value);
-//     }
-//   });
-//   console.log(hallPlanArray)
-
-//   return hallPlanArray;
-// };
-
-
-  
+  const hallPlanArray: HallPlanPerYear[] = [];
+  const mapPlanPerYearArray = Array.from(mapPlanPerYear);
+  for (const [key, value] of mapPlanPerYearArray) {
+    if (value.length > 0) {
+      hallPlanArray.push(value);
+    }
+  }
+  return hallPlanArray;
+};

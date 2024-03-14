@@ -41,8 +41,7 @@ export const generateHallPlan = async (
 ): Promise<HallPlanPerYear[]> => {
   hallData.sort((a, b) => {
     return a.hallno.localeCompare(b.hallno);
-  }
-  );
+  });
   return generateHallPlanForHall(studentData, hallData);
 };
 
@@ -52,7 +51,6 @@ export const generateAttendaceSheet = async (
 ): Promise<AttendanceSheet[]> => {
   hallData.sort((a, b) => {
     return a.hallno.localeCompare(b.hallno);
-  }
-  );
+  });
   return generateAttendancePlanForHall(studentData, hallData);
 };

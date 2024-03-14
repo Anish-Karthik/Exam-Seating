@@ -1,5 +1,3 @@
-import { waitForAllSettled } from "recoil";
-
 import { groupData } from "./customizeinputData";
 import { hallData, mapSemester, mapYear, studentData } from "./data";
 import { Hall, HallArrangementPlan, Seat, StudentsPerYear } from "./type";
@@ -27,7 +25,6 @@ export const generateSeatingPlan = (
 
     const { hallArrangementPlans, hallArrangementPlansWithSemester } =
       intialize(hallData);
-      
 
     while (overallStudentCount < totalStudents) {
       let studentCountPerHall = 0;
@@ -171,11 +168,11 @@ export const generateSeatingPlan = (
     const { hallArrangementPlans, hallArrangementPlansWithSemester } =
       intialize(hallData);
     let toggleIndex = 0;
-    let studentIterateIndex=0
-    let studentCountIndex='studentFirstCount'
+    let studentIterateIndex = 0;
+    let studentCountIndex = "studentFirstCount";
     while (overallStudentCount < totalStudents) {
       let studentCountPerHall = 0;
-      if (hallData[hallIndex].isInterchange === true) {
+      if (hallData[hallIndex].isInterchange) {
         // Handle interchange logic
       } else if (hallData[hallIndex].studentsPerBench === 2) {
         if (hallData[hallIndex].isSameYearPerBenchAllowed === true || false) {
@@ -277,84 +274,86 @@ export const generateSeatingPlan = (
             if (studentCountPerHall === hallData[hallIndex].studentsPerHall) {
               continue;
             }
-            
-              const year = mapYear(groupedData[toggleIndex][0].year);
-              const semester = mapSemester(
-                groupedData[toggleIndex][0].semester
-              );
-              const dept = groupedData[toggleIndex][0].dept;
-              const regNo =
-                groupedData[toggleIndex][0].studentData[studentIterateIndex]
-                  .regno;
-              const name =
-                groupedData[toggleIndex][0].studentData[studentIterateIndex]
-                  .name;
-              const currentSection =
-                groupedData[toggleIndex][0].studentData[studentIterateIndex]
-                  .section;
-              const serielno =
-                groupedData[toggleIndex][0].studentData[studentIterateIndex]
-                  .sno;
-              seatvalue = year + "-" + currentSection + `(${serielno})`;
-              hallArrangementPlans[hallIndex].hallArrangement[k][j][0] =
-                seatvalue;
-              hallArrangementPlansWithSemester[hallIndex].hallArrangement[k][
-                j
-              ][0] =
-                seatvalue +
-                "-" +
-                semester +
-                "-" +
-                dept +
-                "-" +
-                regNo +
-                "-" +
-                name;
 
-              studentCount++;
-              studentCountIndex == "studentSecondCount"
-                ? studentSecondCount++
-                : studentFirstCount++;
-              studentCountPerHall++;
-              overallStudentCount++;
-              // console.log(overallStudentCount, totalStudents);
+            const year = mapYear(groupedData[toggleIndex][0].year);
+            const semester = mapSemester(groupedData[toggleIndex][0].semester);
+            const dept = groupedData[toggleIndex][0].dept;
+            const regNo =
+              groupedData[toggleIndex][0].studentData[studentIterateIndex]
+                .regno;
+            const name =
+              groupedData[toggleIndex][0].studentData[studentIterateIndex].name;
+            const currentSection =
+              groupedData[toggleIndex][0].studentData[studentIterateIndex]
+                .section;
+            const serielno =
+              groupedData[toggleIndex][0].studentData[studentIterateIndex].sno;
+            seatvalue = year + "-" + currentSection + `(${serielno})`;
+            hallArrangementPlans[hallIndex].hallArrangement[k][j][0] =
+              seatvalue;
+            hallArrangementPlansWithSemester[hallIndex].hallArrangement[k][
+              j
+            ][0] =
+              seatvalue +
+              "-" +
+              semester +
+              "-" +
+              dept +
+              "-" +
+              regNo +
+              "-" +
+              name;
 
-              if (overallStudentCount === totalStudents) {
-                return {
-                  hallArrangementPlans,
-                  hallArrangementPlansWithSemester,
-                };
-              }           
-              if (studentFirstCount === studentFirstStrength) {
-                if (toggleIndex + 2 < groupedData.length) {
-                  toggleIndex += 2;
-                } else {
-                  toggleIndex += 1;
-                }
-                studentFirstCount = 0;
-                studentFirstStrength = groupedData[toggleIndex][0].strength;
-              }
-
-              if (studentSecondCount === studentSecondStrength) {
-                if (toggleIndex + 2 < groupedData.length) {
-                  toggleIndex += 2;
-                } else {
-                  toggleIndex -= 1;
-                }
-                studentSecondCount = 0;
-                studentSecondStrength = groupedData[toggleIndex][0].strength;
-              }
+            studentCount++;
+            studentCountIndex == "studentSecondCount"
+              ? studentSecondCount++
+              : studentFirstCount++;
+            studentCountPerHall++;
+            overallStudentCount++;
+            // console.log(overallStudentCount, totalStudents);
+            if (overallStudentCount === totalStudents) {
+              return {
+                hallArrangementPlans,
+                hallArrangementPlansWithSemester,
+              };
             }
-              toggleIndex=toggleIndex ==studentSecondArrayIndex ? studentFirstArrayIndex:studentSecondArrayIndex ;
-              studentCountIndex=studentCountIndex=="studentFirstCount "? "studentSecondCount":"studentFirstCount"
-              studentIterateIndex= studentIterateIndex ==studentFirstCount ? studentSecondCount:studentFirstCount
+            if (studentFirstCount === studentFirstStrength) {
+              if (toggleIndex + 2 < groupedData.length) {
+                toggleIndex += 2;
+              } else {
+                toggleIndex += 1;
+              }
+              studentFirstCount = 0;
+              studentFirstStrength = groupedData[toggleIndex][0].strength;
+            }
+            if (studentSecondCount === studentSecondStrength) {
+              if (toggleIndex + 2 < groupedData.length) {
+                toggleIndex += 2;
+              } else {
+                toggleIndex -= 1;
+              }
+              studentSecondCount = 0;
+              studentSecondStrength = groupedData[toggleIndex][0].strength;
+            }
           }
+          toggleIndex =
+            toggleIndex == studentSecondArrayIndex
+              ? studentFirstArrayIndex
+              : studentSecondArrayIndex;
+          studentCountIndex =
+            studentCountIndex == "studentFirstCount "
+              ? "studentSecondCount"
+              : "studentFirstCount";
+          studentIterateIndex =
+            studentIterateIndex == studentFirstCount
+              ? studentSecondCount
+              : studentFirstCount;
         }
-
-        hallIndex++;
-        if (hallIndex === hallLength) {
-          hallIndex = 0;
-        }
+      }
+      hallIndex++;
+      if (hallIndex === hallLength) {
+        hallIndex = 0;
+      }
     }
     return { hallArrangementPlans, hallArrangementPlansWithSemester };
   }
